@@ -1,12 +1,15 @@
 package com.cdk.ea.data.query;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.IntStream;
 
+import com.cdk.ea.data.generators.DataCollector;
+import com.cdk.ea.data.generators.Generator;
 import com.cdk.ea.data.types.Type;
 
-public class QueryRunner implements Runnable {
+import lombok.ToString;
+
+@ToString
+class QueryRunner {
     
     private final Query query; 
     
@@ -14,17 +17,15 @@ public class QueryRunner implements Runnable {
 	this.query = query;
     }
 
-    @Override
-    public void run() {
-	Set<Object> generatedData = new HashSet<>();
+    public void run(DataCollector dataCollector) {
 	Type dataType = query.getTypeBuilder().buildType();
+	Generator<?> generator = dataType.generator();
 	IntStream.rangeClosed(1, query.getQuantity())
-			.forEach(i -> generatedData.add(dataType.generator().generate()));
-	generatedData.stream().forEach(System.out::println);
+			.forEach(i -> dataCollector.getData().add(generator.generate()));
     }
     
     @SuppressWarnings(value = { "all" })
-    public static QueryRunner from(String... queryParams) {
+    static QueryRunner from(String... queryParams) {
 	return new QueryRunner(new Query.QueryBuilder().build(queryParams));
     }
 

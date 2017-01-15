@@ -11,6 +11,7 @@ public enum Identifiers implements Identifier<Character> {
     TYPE(':'),
     PROPERTY('-'),
     LENGTH('l'),
+    QUERY_SEPARATOR('|'),
     QUANTITY('=');
     
     @Getter private final Character identifier;

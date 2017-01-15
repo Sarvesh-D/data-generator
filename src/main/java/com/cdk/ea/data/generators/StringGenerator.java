@@ -34,8 +34,7 @@ public class StringGenerator implements Generator<String> {
     
     public static StringGenerator of(StringType stringType) {
 	assertNotNull("String Type cannot be null", stringType);
-	if(null == instance)
-	    instance = new StringGenerator(stringType);
+	instance = new StringGenerator(stringType);
 	 return instance;
     }
     

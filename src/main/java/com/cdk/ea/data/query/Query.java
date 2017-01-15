@@ -7,7 +7,9 @@ import com.cdk.ea.data.types.TypeProperties;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 final class Query {
     
     @Getter private final TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;

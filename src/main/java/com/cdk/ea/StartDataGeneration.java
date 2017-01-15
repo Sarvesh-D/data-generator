@@ -1,6 +1,9 @@
 package com.cdk.ea;
 
-import com.cdk.ea.data.query.QueryRunner;
+import java.util.Collection;
+
+import com.cdk.ea.data.generators.DataCollector;
+import com.cdk.ea.data.query.DataGenerator;
 
 public class StartDataGeneration {
     
@@ -9,7 +12,10 @@ public class StartDataGeneration {
     }
 
     public static void main(String... args) {
-	QueryRunner.from(args).run();
+	//QueryRunner.from(args).run();
+	//DataGenerator dataGenerator = DataGenerator.from(args);
+	Collection<DataCollector> dataCollected = DataGenerator.from(args).generate();
+	dataCollected.stream().forEach(System.out::println);
     }
 
 }
