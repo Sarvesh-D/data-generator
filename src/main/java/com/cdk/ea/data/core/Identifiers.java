@@ -11,8 +11,10 @@ public enum Identifiers implements Identifier<Character> {
     TYPE(':'),
     PROPERTY('-'),
     LENGTH('l'),
+    QUANTITY('='),
     QUERY_SEPARATOR('|'),
-    QUANTITY('=');
+    FILE('f'),
+    CSV_HEADER('_');
     
     @Getter private final Character identifier;
     
