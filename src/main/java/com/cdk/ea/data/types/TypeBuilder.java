@@ -9,9 +9,13 @@ public interface TypeBuilder<T,U> {
     
     TypeBuilder<T,U> setDataType(DataType dataType);
     
-    TypeBuilder<T,U> setTypeProperties(Set<U> properties);
+    default TypeBuilder<T,U> setTypeProperties(Set<U> properties) {
+	return this;
+    }
     
-    TypeBuilder<T,U> setLength(int length);
+    default TypeBuilder<T,U> setLength(int length) {
+	return this;
+    }
     
     default TypeBuilder<T,U> setData(Collection<Object> data) {
 	return this;

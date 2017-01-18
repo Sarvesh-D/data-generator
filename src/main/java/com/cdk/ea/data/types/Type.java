@@ -1,6 +1,7 @@
 package com.cdk.ea.data.types;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import com.cdk.ea.data.core.DataType;
@@ -15,7 +16,9 @@ public abstract class Type {
     
     public abstract DataType getDataType();
     
-    public abstract Set<? extends TypeProperties> getProperties();
+    public Set<? extends TypeProperties> getProperties() {
+	return Collections.EMPTY_SET;
+    }
 
     public abstract Generator<?> generator();
     
