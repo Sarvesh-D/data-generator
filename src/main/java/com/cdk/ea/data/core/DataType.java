@@ -15,7 +15,8 @@ public enum DataType implements Identifier<Character> {
 
     STRING('s'),
     NUMBER('n'),
-    LIST('l');
+    LIST('l'),
+    REGEX('r');
 
     @Getter private final Character identifier;
 

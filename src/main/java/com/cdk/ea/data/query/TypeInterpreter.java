@@ -13,11 +13,13 @@ import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.core.ListProperties;
 import com.cdk.ea.data.core.NumberProperties;
 import com.cdk.ea.data.core.Properties;
+import com.cdk.ea.data.core.RegexProperties;
 import com.cdk.ea.data.core.StringProperties;
 import com.cdk.ea.data.exception.InterpretationException;
 import com.cdk.ea.data.query.Query.QueryBuilder;
 import com.cdk.ea.data.types.ListType.ListTypeBuilder;
 import com.cdk.ea.data.types.NumberType.NumberTypeBuilder;
+import com.cdk.ea.data.types.RegexType.RegexTypeBuilder;
 import com.cdk.ea.data.types.StringType.StringTypeBuilder;
 
 class TypeInterpreter implements Interpreter {
@@ -124,6 +126,31 @@ class TypeInterpreter implements Interpreter {
 	    }
 	    
 	    queryBuilder.setTypeBuilder(listTypeBuilder);
+	    break;
+	case REGEX:
+	    RegexTypeBuilder regexTypeBuilder = new RegexTypeBuilder();
+	    EnumSet<RegexProperties> regexProps = EnumSet.noneOf(RegexProperties.class);
+	    
+	    try {
+		propertyIdentifiers.stream()
+                        		.map(RegexProperties::of)
+                        		.forEach(regexProps::add);
+	    } catch(Exception e) {
+		throw new InterpretationException("Invalid Regex Property. Possible Values are : "+RegexProperties.ENUM_MAP.keySet());
+	    }
+	    
+	    regexTypeBuilder.setDataType(dataType);
+	    regexTypeBuilder.setTypeProperties(regexProps);
+	    try {
+	    String regex = StringUtils.substringBetween(Arrays.toString(identifiers), "{{", "}}");
+	    regexTypeBuilder.setRegex(regex);
+	    } catch(Exception e) {
+		throw new InterpretationException("Define regex string between {...}");
+	    }
+	    
+	    queryBuilder.setTypeBuilder(regexTypeBuilder);
+	    break;
+	default:
 	    break;
 	}
     } 

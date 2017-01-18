@@ -17,7 +17,8 @@ public enum Properties implements Identifier<Character> {
     NUMERIC_STRING('n'),
     SPECIAL_STRING('s'),
     INTEGER_NUMBER('i'),
-    CUSTOM_LIST('u');
+    CUSTOM_LIST('u'),
+    REGEX_EXPR('r');
 
     @Getter private final Character identifier;
 
