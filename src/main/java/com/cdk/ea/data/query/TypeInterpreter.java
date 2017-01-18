@@ -115,12 +115,8 @@ class TypeInterpreter implements Interpreter {
 	   
 	    if(listProps.contains(ListProperties.CUSTOM)) {
 		try {
-		String[] customListDataArrIdentifier = Arrays.stream(identifiers)
-                                			.map(s -> StringUtils.substringsBetween(s, "[", "]"))
-                                			.filter(customListData -> (null != customListData && customListData.length == 1))
-                                			.findFirst()
-                                			.get();
-		String[] customListDataArr = StringUtils.split(customListDataArrIdentifier[0], ",");
+		String customListDataIdentifier = StringUtils.substringBetween(Arrays.toString(identifiers), "[[", "]]");
+		String[] customListDataArr = StringUtils.split(customListDataIdentifier, ",");
 		listTypeBuilder.setData(Arrays.asList(customListDataArr));
 		} catch (Exception e) {
 		    throw new InterpretationException("Define Elements for custom list between [...]");
