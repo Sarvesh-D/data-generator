@@ -51,12 +51,6 @@ public class ListType extends Type {
 	}
 
 	@Override
-	public TypeBuilder<ListType, ListProperties> setLength(int length) {
-	    // TODO check if ListType can make use of length property
-	    return this;
-	}
-	
-	@Override
 	public TypeBuilder<ListType, ListProperties> setData(Collection<Object> data) {
 	    this.data = data;
 	    return this;
