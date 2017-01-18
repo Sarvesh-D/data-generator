@@ -5,16 +5,13 @@ import static org.junit.Assert.assertNotNull;
 import com.cdk.ea.data.common.StringUtils;
 import com.cdk.ea.data.types.NumberType;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class NumberGenerator implements Generator<Number> {
     
     private final NumberType numberType;
     
-    private static NumberGenerator instance;
-    
-    private NumberGenerator(NumberType numberType) {
-	this.numberType = numberType;
-    }
-
     @Override
     public Number generate() {
 	/* TODO
@@ -34,9 +31,7 @@ public class NumberGenerator implements Generator<Number> {
     
     public static NumberGenerator of(NumberType numberType) {
 	assertNotNull("Number Type cannot be null", numberType);
-	if(null == instance)
-	    instance = new NumberGenerator(numberType);
-	 return instance;
+	 return new NumberGenerator(numberType);
     }
 
 }

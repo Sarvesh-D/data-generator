@@ -5,16 +5,13 @@ import static org.junit.Assert.assertNotNull;
 import com.cdk.ea.data.common.StringUtils;
 import com.cdk.ea.data.types.StringType;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class StringGenerator implements Generator<String> {
     
     private final StringType stringType;
     
-    private static StringGenerator instance;
-    
-    private StringGenerator(StringType stringType) {
-	this.stringType = stringType;
-    }
-
     @Override
     public String generate() {
 	/* TODO
@@ -34,8 +31,7 @@ public class StringGenerator implements Generator<String> {
     
     public static StringGenerator of(StringType stringType) {
 	assertNotNull("String Type cannot be null", stringType);
-	instance = new StringGenerator(stringType);
-	 return instance;
+	return new StringGenerator(stringType);
     }
     
 }
