@@ -6,13 +6,17 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.cdk.ea.data.core.DataType;
 import com.cdk.ea.data.core.Identifiers;
+import com.cdk.ea.data.core.ListProperties;
 import com.cdk.ea.data.core.NumberProperties;
 import com.cdk.ea.data.core.Properties;
 import com.cdk.ea.data.core.StringProperties;
 import com.cdk.ea.data.exception.InterpretationException;
 import com.cdk.ea.data.query.Query.QueryBuilder;
+import com.cdk.ea.data.types.ListType.ListTypeBuilder;
 import com.cdk.ea.data.types.NumberType.NumberTypeBuilder;
 import com.cdk.ea.data.types.StringType.StringTypeBuilder;
 
@@ -93,6 +97,37 @@ class TypeInterpreter implements Interpreter {
 	    stringTypeBuilder.setLength(length);
 
 	    queryBuilder.setTypeBuilder(stringTypeBuilder);
+	    break;
+	case LIST:
+	    ListTypeBuilder listTypeBuilder = new ListTypeBuilder();
+	    EnumSet<ListProperties> listProps = EnumSet.noneOf(ListProperties.class);
+	    
+	    try {
+		propertyIdentifiers.stream()
+                        		.map(ListProperties::of)
+                        		.forEach(listProps::add);
+	    } catch(Exception e) {
+		throw new InterpretationException("Invalid List Property. Possible Values are : "+ListProperties.ENUM_MAP.keySet());
+	    }
+	    
+	    listTypeBuilder.setDataType(dataType);
+	    listTypeBuilder.setTypeProperties(listProps);
+	   
+	    if(listProps.contains(ListProperties.CUSTOM)) {
+		try {
+		String[] customListDataArrIdentifier = Arrays.stream(identifiers)
+                                			.map(s -> StringUtils.substringsBetween(s, "[", "]"))
+                                			.filter(customListData -> (null != customListData && customListData.length == 1))
+                                			.findFirst()
+                                			.get();
+		String[] customListDataArr = StringUtils.split(customListDataArrIdentifier[0], ",");
+		listTypeBuilder.setData(Arrays.asList(customListDataArr));
+		} catch (Exception e) {
+		    throw new InterpretationException("Define Elements for custom list between [...]");
+		}
+	    }
+	    
+	    queryBuilder.setTypeBuilder(listTypeBuilder);
 	    break;
 	}
     } 
