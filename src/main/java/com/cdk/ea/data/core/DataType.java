@@ -14,7 +14,8 @@ import lombok.Getter;
 public enum DataType implements Identifier<Character> {
 
     STRING('s'),
-    NUMBER('n');
+    NUMBER('n'),
+    LIST('l');
 
     @Getter private final Character identifier;
 
