@@ -13,6 +13,7 @@ public enum Identifiers implements Identifier<Character> {
     LENGTH('l'),
     QUANTITY('='),
     QUERY_SEPARATOR('|'),
+    QUERY_TERMINATOR(';'),
     FILE('f'),
     CSV_HEADER('_');
     

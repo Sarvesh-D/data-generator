@@ -24,13 +24,16 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
     private DataExporter dataExporter; 
 
     private DataGenerator(String...dataGenParams) {
-	String completeQueryString = StringUtils.join(dataGenParams, " ");
+	String completeQueryString = StringUtils.substringBefore(StringUtils.join(dataGenParams, " "), Identifiers.QUERY_TERMINATOR.getIdentifier().toString());
 	String[] queries = StringUtils.split(completeQueryString, Identifiers.QUERY_SEPARATOR.getIdentifier());
 	
 	// gather all CMD queries to generate data
 	Arrays.stream(queries)
-		.map(query -> QueryRunner.from(StringUtils.split(query, " ")))
+		.filter(query -> StringUtils.isNotEmpty(StringUtils.trimToEmpty(query)))
+		.map(query -> QueryRunner.from(StringUtils.split(StringUtils.trimToEmpty(query), " ")))
 		.forEach(queryRunners::add);
+	
+	System.out.println(queryRunners);
 	
 	//  check query for any data exporters
 	boolean exportToFile = ArrayUtils.contains(dataGenParams, Identifiers.FILE.getIdentifier().toString());
