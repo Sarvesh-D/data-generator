@@ -51,6 +51,7 @@ public class CSVFileExporter implements FileExporter {
 	int dataCollectors = dataCollector.size();
 	
 	String[][] data = new String[maxLines][dataCollectors];
+	// TODO Re-factor to simplify
 	IntStream.range(0, maxLines)
 		.forEach(lineNum -> {
 		    IntStream.range(0, dataCollectors)
