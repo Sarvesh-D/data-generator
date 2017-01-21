@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -57,7 +58,19 @@ public class CSVFileExporter implements FileExporter {
 
     // TODO figure out why this method is getting called twice.
     private String[][] getCSVLinesFrom(Collection<DataCollector> dataCollectors) {
-	List<List<Object>> dataAsLists = dataCollectors.stream()
+	
+	// map whose key is csvHeaderName and value is dataCollector whose data the csvColumn will hold.
+	// This map is needed since the relevantDataCollectors passed to this method might be less in
+	// case there are different csv columns with same dataCollector.
+	// So we need a map which will hold dataCollector as value for each CSV column header (map key)
+	Map<String,DataCollector> csvColumnData = new LinkedHashMap<>();
+	csvColumnDetails.entrySet()
+			.stream()
+			.forEachOrdered(entry -> csvColumnData.put(entry.getKey(), getDataCollector(entry.getValue(), dataCollectors)));
+	
+	
+	// list of list. The inner list is a list of data that each DataCollector holds 
+	List<List<Object>> dataAsLists = csvColumnData.values().stream()
 						.map(collector -> collector.getData())
 						.map(collector -> new ArrayList<>(collector))
 						.collect(Collectors.toList());
@@ -66,7 +79,7 @@ public class CSVFileExporter implements FileExporter {
 							.map(collector -> collector.getData().size())
 							.collect(Collectors.toList());
 	int totalLines = Collections.max(dataQuantities);
-	int totaldataCollectors = dataCollectors.size();
+	int totaldataCollectors = csvColumnData.values().size();
 	
 	String[][] data = new String[totalLines][totaldataCollectors];
 	
@@ -90,6 +103,15 @@ public class CSVFileExporter implements FileExporter {
 	
 	return data;
 		
+    }
+
+    private DataCollector getDataCollector(String collectorName, Collection<DataCollector> dataCollectors) {
+	try {
+	    return dataCollectors.stream().filter(collector -> collector.getName().equals(collectorName)).findFirst().get();
+	} catch(Exception e) {
+	    throw new NoSuchElementException("No collector found for name [" + collectorName + "]. Please check if ["
+		    + collectorName + "] is associated with any data generation query");
+	}
     }
 
     @Override
