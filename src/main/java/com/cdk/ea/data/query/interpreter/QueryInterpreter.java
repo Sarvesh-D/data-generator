@@ -1,11 +1,11 @@
-package com.cdk.ea.data.query;
+package com.cdk.ea.data.query.interpreter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.cdk.ea.data.query.Query.QueryBuilder;
 
-class QueryInterpreter implements Interpreter {
+public class QueryInterpreter implements Interpreter {
     
     private Set<Interpreter> queryInterpreters = new HashSet<>();
 

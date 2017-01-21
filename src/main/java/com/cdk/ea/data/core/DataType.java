@@ -6,11 +6,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.cdk.ea.data.common.Identifier;
-import com.cdk.ea.data.query.AbstractTypeInterpretationStrategy;
-import com.cdk.ea.data.query.ListTypeInterpretationStrategy;
-import com.cdk.ea.data.query.NumberTypeInterpretationStrategy;
-import com.cdk.ea.data.query.RegexTypeInterpretationStrategy;
-import com.cdk.ea.data.query.StringTypeInterpretationStrategy;
+import com.cdk.ea.data.query.interpreter.AbstractTypeInterpretationStrategy;
+import com.cdk.ea.data.query.interpreter.ListTypeInterpretationStrategy;
+import com.cdk.ea.data.query.interpreter.NumberTypeInterpretationStrategy;
+import com.cdk.ea.data.query.interpreter.RegexTypeInterpretationStrategy;
+import com.cdk.ea.data.query.interpreter.StringTypeInterpretationStrategy;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

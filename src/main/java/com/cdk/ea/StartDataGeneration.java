@@ -3,8 +3,12 @@ package com.cdk.ea;
 import java.util.Collection;
 
 import com.cdk.ea.data.generators.DataCollector;
-import com.cdk.ea.data.query.DataGenerator;
-import com.cdk.ea.data.query.json.JsonQueryBuilder;
+import com.cdk.ea.data.generators.DataGenerator;
+import com.cdk.ea.data.query.converter.CmdQueryConverter;
+import com.cdk.ea.data.query.converter.JsonQueryConverter;
+import com.cdk.ea.data.query.converter.QueryConverter;
+import com.cdk.ea.data.query.holder.CmdQueryHolder;
+import com.cdk.ea.data.query.holder.JsonQueryHolder;
 
 public class StartDataGeneration {
     
@@ -16,12 +20,20 @@ public class StartDataGeneration {
 	//QueryRunner.from(args).run();
 	//DataGenerator dataGenerator = DataGenerator.from(args);
 	Collection<DataCollector> dataCollected = null;
+	String query = null;
 	
 	if("json".equals(args[0])) {
-	    dataCollected = DataGenerator.from(new JsonQueryBuilder().build(args[1])).generate();
+	    JsonQueryConverter jsonQueryConverter = new JsonQueryConverter();
+	    jsonQueryConverter.init(args);
+	    JsonQueryHolder jsonQueryHolder = new JsonQueryHolder();
+	    query = jsonQueryHolder.getQuery(jsonQueryConverter);
 	} else {
-	    dataCollected = DataGenerator.from(args).generate();
+	    CmdQueryConverter cmdQueryConverter = new CmdQueryConverter();
+	    cmdQueryConverter.init(args);
+	    CmdQueryHolder cmdQueryHolder = new CmdQueryHolder();
+	    query = cmdQueryHolder.getQuery(cmdQueryConverter);
 	}
+	dataCollected = DataGenerator.from(query).generate();
 	dataCollected.stream().forEach(System.out::println);
     }
 

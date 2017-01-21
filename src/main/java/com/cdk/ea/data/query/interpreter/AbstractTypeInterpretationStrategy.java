@@ -1,4 +1,4 @@
-package com.cdk.ea.data.query;
+package com.cdk.ea.data.query.interpreter;
 
 import java.util.Arrays;
 import java.util.Collections;

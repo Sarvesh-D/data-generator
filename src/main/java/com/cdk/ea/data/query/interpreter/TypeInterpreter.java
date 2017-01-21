@@ -1,4 +1,4 @@
-package com.cdk.ea.data.query;
+package com.cdk.ea.data.query.interpreter;
 
 import com.cdk.ea.data.core.DataType;
 import com.cdk.ea.data.query.Query.QueryBuilder;

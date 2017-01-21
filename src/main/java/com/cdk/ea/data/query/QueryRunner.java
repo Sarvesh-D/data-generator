@@ -9,7 +9,7 @@ import com.cdk.ea.data.types.Type;
 import lombok.ToString;
 
 @ToString
-class QueryRunner {
+public class QueryRunner {
     
     private final Query query; 
     
@@ -27,7 +27,7 @@ class QueryRunner {
     }
     
     @SuppressWarnings(value = { "all" })
-    static QueryRunner from(String... queryParams) {
+    public static QueryRunner from(String... queryParams) {
 	return new QueryRunner(new Query.QueryBuilder().build(queryParams));
     }
 

@@ -8,11 +8,11 @@ import java.util.Set;
 import lombok.Data;
 
 @Data
-public class JsonQueryType {
+public class DataDetails {
     
-    private String type = "";
+    private String type;
     private Set<String> properties = new HashSet<>();
     private List<String> list = new ArrayList<>();
-    private String regex = "";
-    
+    private String regex;
+
 }

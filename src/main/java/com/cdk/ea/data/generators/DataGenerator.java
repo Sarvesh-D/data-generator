@@ -1,4 +1,4 @@
-package com.cdk.ea.data.query;
+package com.cdk.ea.data.generators;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +14,8 @@ import org.junit.Assert;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.exporters.CSVFileExporter;
 import com.cdk.ea.data.exporters.DataExporter;
-import com.cdk.ea.data.generators.DataCollector;
-import com.cdk.ea.data.generators.Generator;import com.cdk.ea.data.query.json.CsvColumnDetails;
+import com.cdk.ea.data.query.QueryRunner;
+import com.cdk.ea.data.query.json.CsvColumnDetails;
 
 public class DataGenerator implements Generator<Collection<DataCollector>> {
     
@@ -25,8 +25,8 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
     
     private List<DataExporter> dataExporters = new ArrayList<>(); 
 
-    private DataGenerator(String...dataGenParams) {
-	String completeDataGenQueryString = StringUtils.substringBetween(StringUtils.join(dataGenParams, " "),
+    private DataGenerator(String cmdLineQuery) {
+	String completeDataGenQueryString = StringUtils.substringBetween(cmdLineQuery,
 		Identifiers.DATA_GEN_QUERY_PREFIX.getIdentifier().toString(), Identifiers.DATA_GEN_QUERY_SUFFIX.getIdentifier().toString());
 	
 	// gather all CMD queries to generate data
@@ -35,13 +35,13 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	// build query runner for each data generate query and add to queryRunners
 	Arrays.stream(dataGenQueries)
 		.filter(query -> StringUtils.isNotEmpty(StringUtils.trimToEmpty(query)))
-		.map(query -> QueryRunner.from(StringUtils.split(StringUtils.trimToEmpty(query), " ")))
+		.map(query -> QueryRunner.from(StringUtils.split(query, " ")))
 		.forEach(queryRunners::add);
 	
 	//  check query for any data exporters
-	boolean exportToFile = ArrayUtils.contains(dataGenParams, Identifiers.FILE.getIdentifier().toString());
+	boolean exportToFile = ArrayUtils.contains(StringUtils.split(cmdLineQuery), Identifiers.FILE.getIdentifier().toString());
 	if(exportToFile) {
-	    String completeDataExportQueryString = StringUtils.substringBetween(StringUtils.join(dataGenParams, " "),
+	    String completeDataExportQueryString = StringUtils.substringBetween(cmdLineQuery,
 			Identifiers.DATA_EXPORT_QUERY_PREFIX.getIdentifier().toString(), Identifiers.DATA_EXPORT_QUERY_SUFFIX.getIdentifier().toString());
 	    
 	    // gather all CMD queries to export data
@@ -79,8 +79,8 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	dataExporters.stream().forEach(dataExporter -> dataExporter.export(dataCollectors));
     }
 
-    public static DataGenerator from(String... dataGenParams) {
-	return new DataGenerator(dataGenParams);
+    public static DataGenerator from(String cmdLineQuery) {
+	return new DataGenerator(cmdLineQuery);
     }
 
 }
