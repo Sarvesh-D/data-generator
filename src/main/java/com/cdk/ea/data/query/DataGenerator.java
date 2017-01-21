@@ -5,68 +5,78 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.ArrayUtils;
+import org.junit.Assert;
 
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.exporters.CSVFileExporter;
 import com.cdk.ea.data.exporters.DataExporter;
 import com.cdk.ea.data.generators.DataCollector;
-import com.cdk.ea.data.generators.Generator;
+import com.cdk.ea.data.generators.Generator;import com.cdk.ea.data.query.json.CsvColumnDetails;
 
 public class DataGenerator implements Generator<Collection<DataCollector>> {
     
     private List<QueryRunner> queryRunners = new ArrayList<>();
     
-    private Collection<DataCollector> dataCollectors = new ArrayList<>();
+    private List<DataCollector> dataCollectors = new ArrayList<>();
     
-    private DataExporter dataExporter; 
+    private List<DataExporter> dataExporters = new ArrayList<>(); 
 
     private DataGenerator(String...dataGenParams) {
-	String completeQueryString = StringUtils.substringBefore(StringUtils.join(dataGenParams, " "), Identifiers.QUERY_TERMINATOR.getIdentifier().toString());
-	String[] queries = StringUtils.split(completeQueryString, Identifiers.QUERY_SEPARATOR.getIdentifier());
+	String completeDataGenQueryString = StringUtils.substringBetween(StringUtils.join(dataGenParams, " "),
+		Identifiers.DATA_GEN_QUERY_PREFIX.getIdentifier().toString(), Identifiers.DATA_GEN_QUERY_SUFFIX.getIdentifier().toString());
 	
 	// gather all CMD queries to generate data
-	Arrays.stream(queries)
+	String[] dataGenQueries = StringUtils.split(completeDataGenQueryString, Identifiers.QUERY_SEPARATOR.getIdentifier());
+	
+	// build query runner for each data generate query and add to queryRunners
+	Arrays.stream(dataGenQueries)
 		.filter(query -> StringUtils.isNotEmpty(StringUtils.trimToEmpty(query)))
 		.map(query -> QueryRunner.from(StringUtils.split(StringUtils.trimToEmpty(query), " ")))
 		.forEach(queryRunners::add);
 	
-	System.out.println(queryRunners);
-	
 	//  check query for any data exporters
 	boolean exportToFile = ArrayUtils.contains(dataGenParams, Identifiers.FILE.getIdentifier().toString());
 	if(exportToFile) {
-	    // if data exporter is present in query, then instantiate respective data exporter
+	    String completeDataExportQueryString = StringUtils.substringBetween(StringUtils.join(dataGenParams, " "),
+			Identifiers.DATA_EXPORT_QUERY_PREFIX.getIdentifier().toString(), Identifiers.DATA_EXPORT_QUERY_SUFFIX.getIdentifier().toString());
 	    
-	    String filePath = Arrays.stream(dataGenParams)
-		    		    .filter(i -> i.endsWith(".csv"))
-		    		    .findFirst()
-		    		    .get();
-	    List<String> headers = Arrays.stream(dataGenParams)
-                        	    	  .filter(i -> i.charAt(0) == (Identifiers.CSV_HEADER.getIdentifier()))
-                        	    	  .map(header -> header.substring(1))
-                        	    	  .collect(Collectors.toList());
-	    dataExporter = CSVFileExporter.from(filePath, headers.toArray(new String[headers.size()]));
+	    // gather all CMD queries to export data
+	    String[] dataExportQueries = StringUtils.split(completeDataExportQueryString, Identifiers.QUERY_SEPARATOR.getIdentifier());
+	    
+	    // build data-exporter for each data export query and add to dataExporters
+	    Arrays.stream(dataExportQueries)
+	    	.filter(query -> StringUtils.isNotEmpty(StringUtils.trimToEmpty(query)))
+	    	.map(queryStr -> Arrays.asList(StringUtils.split(queryStr)))
+	    	.forEach(queryParams -> {
+	    	    String filePath = queryParams.stream().filter(i -> i.endsWith(".csv")).findFirst().get();
+	    	    List<String> headerNames = queryParams.stream().filter(i -> i.startsWith(Identifiers.CSV_HEADER_PREFIX.getIdentifier().toString())).map(i -> i.substring(1)).collect(Collectors.toList());
+	    	    List<String> dataRefs = queryParams.stream().filter(i -> i.startsWith(Identifiers.CSV_COL_DATA_REF.getIdentifier().toString())).map(i -> i.substring(1)).collect(Collectors.toList());
+	    	    Assert.assertTrue("Header Names and Header's Data Ref must be of equal number", headerNames.size() == dataRefs.size());
+	    	    
+	    	    List<CsvColumnDetails> csvColumnDetails = new ArrayList<>();
+	    	    IntStream.range(0, headerNames.size()).forEach(i -> csvColumnDetails.add(new CsvColumnDetails(headerNames.get(i), dataRefs.get(i))));
+	    	    
+	    	    dataExporters.add(CSVFileExporter.from(filePath, csvColumnDetails));
+	    	});
+	    
 	}
     }
 
     @Override
     public Collection<DataCollector> generate() {
-	queryRunners.forEach(queryRunner -> { 
-	    DataCollector dataCollector = new DataCollector();
-	    queryRunner.run(dataCollector);
-	    dataCollectors.add(dataCollector);
-	});
+	queryRunners.forEach(queryRunner -> dataCollectors.add(queryRunner.run()));
 	// export data if data exporter is instantiated
-	if(null != dataExporter)
+	if(!dataExporters.isEmpty())
 	    export();
 	return dataCollectors;
     }
     
     private void export() {
-	dataExporter.export(dataCollectors);
+	dataExporters.stream().forEach(dataExporter -> dataExporter.export(dataCollectors));
     }
 
     public static DataGenerator from(String... dataGenParams) {

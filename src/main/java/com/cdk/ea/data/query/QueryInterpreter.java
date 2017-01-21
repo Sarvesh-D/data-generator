@@ -18,6 +18,7 @@ class QueryInterpreter implements Interpreter {
     private void regiesterQueryInterpreters() {
 	queryInterpreters.add(new TypeInterpreter());
 	queryInterpreters.add(new QuantityInterpreter());
+	queryInterpreters.add(new DataCollectorInterpreter());
     }
 
 }

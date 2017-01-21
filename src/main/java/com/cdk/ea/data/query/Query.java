@@ -1,6 +1,7 @@
 package com.cdk.ea.data.query;
 
 import com.cdk.ea.data.common.Builder;
+import com.cdk.ea.data.generators.DataCollector;
 import com.cdk.ea.data.types.Type;
 import com.cdk.ea.data.types.TypeBuilder;
 import com.cdk.ea.data.types.TypeProperties;
@@ -14,10 +15,12 @@ final class Query {
     
     @Getter private final TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
     @Getter private final int quantity;
+    @Getter private final DataCollector dataCollector;
     
     private Query(QueryBuilder queryBuilder) {
 	this.typeBuilder = queryBuilder.typeBuilder;
 	this.quantity = queryBuilder.quantity;
+	this.dataCollector = queryBuilder.dataCollector;
     }
     
     @Data
@@ -25,6 +28,7 @@ final class Query {
 	
 	private TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
 	private int quantity;
+	private DataCollector dataCollector;
 
 	@Override
 	public Query build(String... queryParams) {

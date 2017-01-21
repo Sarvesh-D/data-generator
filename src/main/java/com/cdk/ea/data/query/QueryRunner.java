@@ -17,11 +17,13 @@ class QueryRunner {
 	this.query = query;
     }
 
-    public void run(DataCollector dataCollector) {
+    public DataCollector run() {
 	Type dataType = query.getTypeBuilder().buildType();
 	Generator<?> generator = dataType.generator();
+	DataCollector dataCollector = query.getDataCollector();
 	IntStream.rangeClosed(1, query.getQuantity())
 			.forEach(i -> dataCollector.getData().add(generator.generate()));
+	return dataCollector;
     }
     
     @SuppressWarnings(value = { "all" })

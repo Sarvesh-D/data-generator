@@ -5,31 +5,48 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.cdk.ea.data.generators.DataCollector;
+import com.cdk.ea.data.query.json.CsvColumnDetails;
 import com.opencsv.CSVWriter;
 
 public class CSVFileExporter implements FileExporter {
     
     private String filePath;
     
-    private String[] csvHeaders;
+    // map with csvHeaderName as key and dataRef as value
+    private Map<String,String> csvColumnDetails = new LinkedHashMap<>();
     
-    private CSVFileExporter(String filePath, String... csvHeaders) {
+    private CSVFileExporter(String filePath, List<CsvColumnDetails> columnDetails) {
 	setFilePath(filePath);
-	this.csvHeaders = csvHeaders;
+	Map<String,String> unsortedCsvColumnDetailsMap = columnDetails.stream().collect(Collectors.toMap(CsvColumnDetails::getHeaderName,CsvColumnDetails::getDataRef));
+	unsortedCsvColumnDetailsMap.entrySet()
+				.stream()
+				.sorted(Map.Entry.comparingByValue()) // ordering by dataCollector name to ensure correct data is written under correct csv header
+				.forEachOrdered(x -> csvColumnDetails.put(x.getKey(), x.getValue()));
     }
 
     @Override
-    public void export(Collection<DataCollector> dataCollector) {
+    public void export(Collection<DataCollector> dataCollectors) {
 	try {
 	    CSVWriter csvWriter = new CSVWriter(new FileWriter(filePath));
-	    csvWriter.writeNext(csvHeaders); // write header row
 	    
-	    String[][] data = getCSVLinesFrom(dataCollector);
+	    // write header row for header names as requested by client
+	    String[] headers = csvColumnDetails.keySet().toArray(new String[csvColumnDetails.keySet().size()]);
+	    csvWriter.writeNext(headers);
+	    
+	    // get data for relevant data collectors only (which the client has asked for)
+	    Collection<DataCollector> relevantDataCollectors = dataCollectors.stream()
+		    .sorted() // ordering by dataCollector name to ensure correct data is written under correct csv header
+		    .filter(collector -> csvColumnDetails.values().contains(collector.getName()))
+		    .collect(Collectors.toList());
+	    
+	    String[][] data = getCSVLinesFrom(relevantDataCollectors);
 	    Arrays.stream(data).forEach(csvWriter::writeNext); // write data
 	    csvWriter.close();
 	} catch (Exception e) {
@@ -37,24 +54,27 @@ public class CSVFileExporter implements FileExporter {
 	    e.printStackTrace();
 	}
     }
-    
-    private String[][] getCSVLinesFrom(Collection<DataCollector> dataCollector) {
-	List<List<Object>> dataAsLists = dataCollector.stream()
+
+    // TODO figure out why this method is getting called twice.
+    private String[][] getCSVLinesFrom(Collection<DataCollector> dataCollectors) {
+	List<List<Object>> dataAsLists = dataCollectors.stream()
 						.map(collector -> collector.getData())
 						.map(collector -> new ArrayList<>(collector))
 						.collect(Collectors.toList());
 	
-	List<Integer> dataQuantities = dataCollector.stream()
+	List<Integer> dataQuantities = dataCollectors.stream()
 							.map(collector -> collector.getData().size())
 							.collect(Collectors.toList());
-	int maxLines = Collections.max(dataQuantities);
-	int dataCollectors = dataCollector.size();
+	int totalLines = Collections.max(dataQuantities);
+	int totaldataCollectors = dataCollectors.size();
 	
-	String[][] data = new String[maxLines][dataCollectors];
+	String[][] data = new String[totalLines][totaldataCollectors];
+	
+	
 	// TODO Re-factor to simplify
-	IntStream.range(0, maxLines)
+	IntStream.range(0, totalLines)
 		.forEach(lineNum -> {
-		    IntStream.range(0, dataCollectors)
+		    IntStream.range(0, totaldataCollectors)
 		    		.forEach(collectorNum -> {
 		    		    try {
 		    			Object colData = dataAsLists.get(collectorNum).get(lineNum);
@@ -77,8 +97,8 @@ public class CSVFileExporter implements FileExporter {
 	this.filePath = path;
     }
 
-    public static CSVFileExporter from(String filePath, String... csvHeaders) {
-	return new CSVFileExporter(filePath, csvHeaders);
+    public static CSVFileExporter from(String filePath, List<CsvColumnDetails> columnDetails) {
+	return new CSVFileExporter(filePath, columnDetails);
     }
 
 }

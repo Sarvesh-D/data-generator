@@ -13,9 +13,14 @@ public enum Identifiers implements Identifier<Character> {
     LENGTH('l'),
     QUANTITY('='),
     QUERY_SEPARATOR('|'),
-    QUERY_TERMINATOR(';'),
+    DATA_COLLECTOR_PREFIX('@'),
+    DATA_GEN_QUERY_PREFIX('('),
+    DATA_GEN_QUERY_SUFFIX(')'),
     FILE('f'),
-    CSV_HEADER('_');
+    DATA_EXPORT_QUERY_PREFIX('<'),
+    DATA_EXPORT_QUERY_SUFFIX('>'),
+    CSV_HEADER_PREFIX('_'),
+    CSV_COL_DATA_REF('=');
     
     @Getter private final Character identifier;
     
