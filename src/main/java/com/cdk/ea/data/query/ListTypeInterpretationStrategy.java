@@ -2,6 +2,7 @@ package com.cdk.ea.data.query;
 
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -32,7 +33,7 @@ public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationSt
 	    try {
 		String customListDataIdentifier = StringUtils.substringBetween(Arrays.toString(identifiers), "[[", "]]");
 		String[] customListDataArr = StringUtils.split(customListDataIdentifier, ",");
-		listTypeBuilder.setData(Arrays.asList(customListDataArr));
+		listTypeBuilder.setData(Arrays.stream(customListDataArr).filter(StringUtils::isNotBlank).collect(Collectors.toList()));
 	    } catch (Exception e) {
 		throw new InterpretationException("Define Elements for custom list between [...]");
 	    }
