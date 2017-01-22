@@ -16,7 +16,8 @@ public class RegexGenerator implements Generator<String> {
     public String generate() {
 	return regex.random();
     }
-    
+
+    // TODO accept length for genrated regex string
     public static RegexGenerator from(RegexType regexType) {
 	return new RegexGenerator(regexType.getRegex());
     }
