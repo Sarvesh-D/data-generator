@@ -7,5 +7,6 @@ public class DataGenerationDetails {
 
     private String name;
     private DataDetails details;
+    private int quantity;
 
 }

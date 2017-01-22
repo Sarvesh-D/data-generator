@@ -12,6 +12,7 @@ public class DataDetails {
     
     private String type;
     private Set<String> properties = new HashSet<>();
+    private int length;
     private List<String> list = new ArrayList<>();
     private String regex;
 
