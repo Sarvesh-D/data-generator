@@ -35,7 +35,7 @@ public class CSVFileExporter implements FileExporter {
     @Override
     public void export(Collection<DataCollector> dataCollectors) {
 	try {
-	    CSVWriter csvWriter = new CSVWriter(new FileWriter(filePath));
+	    CSVWriter csvWriter = new CSVWriter(new FileWriter(filePath), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER);
 	    
 	    // write header row for header names as requested by client
 	    String[] headers = csvColumnDetails.keySet().toArray(new String[csvColumnDetails.keySet().size()]);
