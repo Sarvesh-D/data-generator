@@ -32,14 +32,15 @@ public abstract class AbstractTypeInterpretationStrategy {
     public static int getDataLength(String... queryParams) {
 	int length = DEFAULT_LENGTH;
 	try {
-	    return Arrays.stream(queryParams)
-		    .filter(i -> i.charAt(0) == Identifiers.LENGTH.getIdentifier())
-		    .map(i -> Integer.valueOf(i.substring(1)))
-		    .findFirst()
-		    .get();
+	    length = Arrays.stream(queryParams)
+        		    .filter(i -> i.charAt(0) == Identifiers.LENGTH.getIdentifier())
+        		    .map(i -> Integer.valueOf(i.substring(1)))
+        		    .findFirst()
+        		    .get();
+	    return length > 0 ? length : DEFAULT_LENGTH; 
 	} catch(Exception e) {
 	    // TODO handle giving default length set message
-	    return length;
+	    return DEFAULT_LENGTH;
 	} 
     }
     
