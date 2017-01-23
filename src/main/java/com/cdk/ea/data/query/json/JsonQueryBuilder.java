@@ -60,6 +60,14 @@ public class JsonQueryBuilder implements Builder<String>{
 			});
 		cmdQueryBuilder.append(Identifiers.DATA_EXPORT_QUERY_SUFFIX.getIdentifier());
 	    }
+	    
+	    // overrrides must be at end of the CMD query
+	    if(null != jsonQueryDetails.getDefaults()) {
+		cmdQueryBuilder.append(Constants.GLOBAL_OVERRIDE);
+		cmdQueryBuilder.append(Constants.SPACE);
+		appendOverrides(cmdQueryBuilder, jsonQueryDetails.getDefaults());
+	    }
+	    
 	} catch(Exception e) {
 	    throw new InterpretationException("Error while Building CMD query from JSON file ["+jsonFile+"]. Error : "+e.getMessage());
 	}
@@ -157,6 +165,14 @@ public class JsonQueryBuilder implements Builder<String>{
     private void appendQuerySeparator(StringBuilder cmdQueryBuilder) {
 	cmdQueryBuilder.append(Identifiers.QUERY_SEPARATOR.getIdentifier());
 	cmdQueryBuilder.append(Constants.SPACE);
+    }
+    
+    private void appendOverrides(StringBuilder cmdQueryBuilder, DefaultOverrides overrides) {
+	if(overrides.getQuantity() > 0) {
+	    cmdQueryBuilder.append(Identifiers.QUANTITY.getIdentifier());
+	    cmdQueryBuilder.append(overrides.getQuantity());
+	    cmdQueryBuilder.append(Constants.SPACE);
+	}
     }
     
 }

@@ -16,6 +16,7 @@ import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.exporters.CSVFileExporter;
 import com.cdk.ea.data.exporters.DataExporter;
 import com.cdk.ea.data.query.QueryRunner;
+import com.cdk.ea.data.query.interpreter.GlobalDefaultOverrideInterpreter;
 import com.cdk.ea.data.query.json.CsvColumnDetails;
 
 public class DataGenerator implements Generator<Collection<DataCollector>> {
@@ -81,6 +82,10 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
     }
 
     public static DataGenerator from(String cmdLineQuery) {
+	// see if there are global overrides
+	if(cmdLineQuery.contains(Constants.GLOBAL_OVERRIDE)) {
+	    new GlobalDefaultOverrideInterpreter().doInterpret(null, StringUtils.split(StringUtils.substringAfter(cmdLineQuery, Constants.GLOBAL_OVERRIDE)));
+	}
 	return new DataGenerator(cmdLineQuery);
     }
 

@@ -20,6 +20,7 @@ public enum Identifiers implements Identifier<Character> {
     DATA_EXPORT_QUERY_PREFIX('<'),
     DATA_EXPORT_QUERY_SUFFIX('>'),
     CSV_HEADER_PREFIX('_'),
+    OVERRIDE('o'),
     CSV_COL_DATA_REF('=');
     
     @Getter private final Character identifier;
