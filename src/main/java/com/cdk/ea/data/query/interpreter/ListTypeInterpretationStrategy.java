@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.ListProperties;
 import com.cdk.ea.data.exception.InterpretationException;
 import com.cdk.ea.data.query.Query.QueryBuilder;
@@ -31,8 +32,8 @@ public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationSt
 
 	if(listProps.contains(ListProperties.CUSTOM)) {
 	    try {
-		String customListDataIdentifier = StringUtils.substringBetween(Arrays.toString(identifiers), "[[", "]]");
-		String[] customListDataArr = StringUtils.split(customListDataIdentifier, ",");
+		String customListDataIdentifier = StringUtils.substringBetween(Arrays.toString(identifiers), Constants.CUSTOM_LIST_VALS_PREFIX, Constants.CUSTOM_LIST_VALS_SUFFIX);
+		String[] customListDataArr = StringUtils.split(customListDataIdentifier, Constants.COMMA);
 		listTypeBuilder.setData(Arrays.stream(customListDataArr).filter(StringUtils::isNotBlank).collect(Collectors.toList()));
 	    } catch (Exception e) {
 		throw new InterpretationException("Define Elements for custom list between [...]");

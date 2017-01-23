@@ -11,6 +11,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 
+import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.exporters.CSVFileExporter;
 import com.cdk.ea.data.exporters.DataExporter;
@@ -35,7 +36,7 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	// build query runner for each data generate query and add to queryRunners
 	Arrays.stream(dataGenQueries)
 		.filter(query -> StringUtils.isNotEmpty(StringUtils.trimToEmpty(query)))
-		.map(query -> QueryRunner.from(StringUtils.split(query, " ")))
+		.map(query -> QueryRunner.from(StringUtils.split(query, Constants.SPACE)))
 		.forEach(queryRunners::add);
 	
 	//  check query for any data exporters

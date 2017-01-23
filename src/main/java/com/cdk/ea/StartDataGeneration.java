@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.generators.DataCollector;
 import com.cdk.ea.data.generators.DataGenerator;
 import com.cdk.ea.data.query.json.JsonQueryBuilder;
@@ -24,7 +25,7 @@ public class StartDataGeneration {
 	    finalCMDQuery = new JsonQueryBuilder().build(jsonFiles);
 	}
 	else
-	    finalCMDQuery = StringUtils.join(args, " ");
+	    finalCMDQuery = StringUtils.join(args, Constants.SPACE);
 	
 	dataCollected = DataGenerator.from(finalCMDQuery).generate();
 	dataCollected.stream().forEach(System.out::println);

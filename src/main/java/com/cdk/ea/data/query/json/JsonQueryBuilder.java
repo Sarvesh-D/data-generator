@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdk.ea.data.common.Builder;
+import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.DataType;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.core.Properties;
@@ -45,9 +46,9 @@ public class JsonQueryBuilder implements Builder<String>{
 	    cmdQueryBuilder.append(Identifiers.DATA_GEN_QUERY_SUFFIX.getIdentifier());
 	    
 	    if(jsonQueryDetails.isExportToCsv()) {
-		cmdQueryBuilder.append(" ");
+		cmdQueryBuilder.append(Constants.SPACE);
 		cmdQueryBuilder.append(Identifiers.FILE.getIdentifier());
-		cmdQueryBuilder.append(" ");
+		cmdQueryBuilder.append(Constants.SPACE);
 		
 		cmdQueryBuilder.append(Identifiers.DATA_EXPORT_QUERY_PREFIX.getIdentifier());
 		jsonQueryDetails.getExportDetails()
@@ -69,7 +70,7 @@ public class JsonQueryBuilder implements Builder<String>{
     private void appendDataCollectorName(StringBuilder cmdQueryBuilder, String collectorName) {
 	cmdQueryBuilder.append(Identifiers.DATA_COLLECTOR_PREFIX.getIdentifier());
 	cmdQueryBuilder.append(collectorName);
-	cmdQueryBuilder.append(" ");
+	cmdQueryBuilder.append(Constants.SPACE);
     }
 
     private void appendDataDetails(StringBuilder cmdQueryBuilder, DataDetails dataDetails) {
@@ -96,7 +97,7 @@ public class JsonQueryBuilder implements Builder<String>{
     private void appendDataType(StringBuilder cmdQueryBuilder, String type) {
 	cmdQueryBuilder.append(Identifiers.TYPE.getIdentifier());
 	cmdQueryBuilder.append(DataType.valueOf(type).getIdentifier());
-	cmdQueryBuilder.append(" ");
+	cmdQueryBuilder.append(Constants.SPACE);
     }
     
     private void appendDataProperties(StringBuilder cmdQueryBuilder, Set<String> properties) {
@@ -104,39 +105,41 @@ public class JsonQueryBuilder implements Builder<String>{
 		.forEach(property -> {
 		    cmdQueryBuilder.append(Identifiers.PROPERTY.getIdentifier());
 		    cmdQueryBuilder.append(Properties.valueOf(property).getIdentifier());
-		    cmdQueryBuilder.append(" ");
+		    cmdQueryBuilder.append(Constants.SPACE);
 		});
     }
     
     private void appendDataLength(StringBuilder cmdQueryBuilder, int quantity) {
 	cmdQueryBuilder.append(Identifiers.LENGTH.getIdentifier());
 	cmdQueryBuilder.append(quantity);
-	cmdQueryBuilder.append(" ");
+	cmdQueryBuilder.append(Constants.SPACE);
     }
     
     private void appendCustomListVals(StringBuilder cmdQueryBuilder, List<String> list) {
 	String listVals = list.stream()
-		.collect(Collectors.joining(",", "[[", "]]"));
+		.collect(Collectors.joining(Constants.COMMA, Constants.CUSTOM_LIST_VALS_PREFIX, Constants.CUSTOM_LIST_VALS_SUFFIX));
 	cmdQueryBuilder.append(listVals);
-	cmdQueryBuilder.append(" ");
+	cmdQueryBuilder.append(Constants.SPACE);
     }
     
     private void appendRegex(StringBuilder cmdQueryBuilder, String regex) {
-	StringJoiner sj = new StringJoiner("", "{{", "}}");
+	StringJoiner sj = new StringJoiner("", Constants.REGEX_EXPR_PREFIX, Constants.REGEX_EXPR_SUFFIX);
 	sj.add(StringUtils.trimToEmpty(regex));
 	cmdQueryBuilder.append(sj.toString());
-	cmdQueryBuilder.append(" ");
+	cmdQueryBuilder.append(Constants.SPACE);
     }
     
     private void appendQuantity(StringBuilder cmdQueryBuilder, int quantity) {
-	cmdQueryBuilder.append(Identifiers.QUANTITY.getIdentifier());
-	cmdQueryBuilder.append(quantity);
-	cmdQueryBuilder.append(" ");
+	if(quantity > 0) {
+	    cmdQueryBuilder.append(Identifiers.QUANTITY.getIdentifier());
+	    cmdQueryBuilder.append(quantity);
+	    cmdQueryBuilder.append(Constants.SPACE);
+	}
     }
     
     private void appendCSVFileName(StringBuilder cmdQueryBuilder, String csvFileName) {
 	cmdQueryBuilder.append(csvFileName);
-	cmdQueryBuilder.append(" ");
+	cmdQueryBuilder.append(Constants.SPACE);
     }
     
     private void appendCSVColumnDetails(StringBuilder cmdQueryBuilder, List<CsvColumnDetails> csvColumnDetails) {
@@ -144,16 +147,16 @@ public class JsonQueryBuilder implements Builder<String>{
 			.forEach(csvColumnDetail -> {
 			    cmdQueryBuilder.append(Identifiers.CSV_HEADER_PREFIX.getIdentifier());
 			    cmdQueryBuilder.append(csvColumnDetail.getHeaderName());
-			    cmdQueryBuilder.append(" ");
+			    cmdQueryBuilder.append(Constants.SPACE);
 			    cmdQueryBuilder.append(Identifiers.CSV_COL_DATA_REF.getIdentifier());
 			    cmdQueryBuilder.append(csvColumnDetail.getDataRef());
-			    cmdQueryBuilder.append(" ");
+			    cmdQueryBuilder.append(Constants.SPACE);
 			});
     }
     
     private void appendQuerySeparator(StringBuilder cmdQueryBuilder) {
 	cmdQueryBuilder.append(Identifiers.QUERY_SEPARATOR.getIdentifier());
-	cmdQueryBuilder.append(" ");
+	cmdQueryBuilder.append(Constants.SPACE);
     }
     
 }
