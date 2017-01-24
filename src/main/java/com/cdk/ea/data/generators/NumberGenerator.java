@@ -26,7 +26,7 @@ public class NumberGenerator implements Generator<Number> {
                 	    .map(property -> StringUtils.append(generatedNumber, property.getGenerator().generate()))
                 	    .count(); // TODO fix the way stream is terminating
 	}
-	return Integer.valueOf(generatedNumber.toString());
+	return Long.valueOf(generatedNumber.toString());
     }
     
     public static NumberGenerator of(NumberType numberType) {
