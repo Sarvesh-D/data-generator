@@ -100,8 +100,31 @@ public class JsonQueryBuilder implements Builder<String>{
 	if(StringUtils.isNotBlank(dataDetails.getRegex())) {
 	    appendRegex(cmdQueryBuilder, dataDetails.getRegex());
 	}
+	
+	// get prefix if present
+	if(StringUtils.isNotBlank(dataDetails.getPrefix())) {
+	    appendPrefix(cmdQueryBuilder, dataDetails.getPrefix());
+	}
+	
+	// get suffix if present
+	if(StringUtils.isNotBlank(dataDetails.getSuffix())) {
+	    appendSuffix(cmdQueryBuilder, dataDetails.getSuffix());
+	}
     }
     
+    private void appendSuffix(StringBuilder cmdQueryBuilder, String suffix) {
+	cmdQueryBuilder.append(Identifiers.SUFFIX.getIdentifier());
+	cmdQueryBuilder.append(suffix);
+	cmdQueryBuilder.append(Constants.SPACE);
+	
+    }
+
+    private void appendPrefix(StringBuilder cmdQueryBuilder, String prefix) {
+	cmdQueryBuilder.append(Identifiers.PREFIX.getIdentifier());
+	cmdQueryBuilder.append(prefix);
+	cmdQueryBuilder.append(Constants.SPACE);
+    }
+
     private void appendDataType(StringBuilder cmdQueryBuilder, String type) {
 	cmdQueryBuilder.append(Identifiers.TYPE.getIdentifier());
 	cmdQueryBuilder.append(DataType.valueOf(type).getIdentifier());

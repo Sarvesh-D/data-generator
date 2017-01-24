@@ -21,7 +21,9 @@ public enum Identifiers implements Identifier<Character> {
     DATA_EXPORT_QUERY_SUFFIX('>'),
     CSV_HEADER_PREFIX('_'),
     OVERRIDE('o'),
-    CSV_COL_DATA_REF('=');
+    CSV_COL_DATA_REF('='),
+    PREFIX(PatternStringProperties.PREFIX.getIdentifier()),
+    SUFFIX(PatternStringProperties.SUFFIX.getIdentifier());
     
     @Getter private final Character identifier;
     

@@ -14,6 +14,10 @@ public abstract class Type {
     
     @Getter @Setter private Collection<Object> data;
     
+    @Getter @Setter private String prefix;
+    
+    @Getter @Setter private String suffix;
+    
     public abstract DataType getDataType();
     
     public Set<? extends TypeProperties> getProperties() {

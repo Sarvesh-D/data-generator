@@ -15,5 +15,7 @@ public class DataDetails {
     private int length;
     private List<String> list = new ArrayList<>();
     private String regex;
+    private String prefix;
+    private String suffix;
 
 }
