@@ -154,7 +154,7 @@ public class JsonQueryBuilder implements Builder<String>{
     }
     
     private void appendRegex(StringBuilder cmdQueryBuilder, String regex) {
-	StringJoiner sj = new StringJoiner("", Constants.REGEX_EXPR_PREFIX, Constants.REGEX_EXPR_SUFFIX);
+	StringJoiner sj = new StringJoiner(Constants.EMPTY_STRING, Constants.REGEX_EXPR_PREFIX, Constants.REGEX_EXPR_SUFFIX);
 	sj.add(StringUtils.trimToEmpty(regex));
 	cmdQueryBuilder.append(sj.toString());
 	cmdQueryBuilder.append(Constants.SPACE);

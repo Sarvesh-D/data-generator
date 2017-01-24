@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.generators.DataCollector;
 import com.cdk.ea.data.query.json.CsvColumnDetails;
 import com.opencsv.CSVWriter;
@@ -94,7 +95,7 @@ public class CSVFileExporter implements FileExporter {
 		    			if(null != colData)
 		    			    data[lineNum][collectorNum] = colData.toString();
 		    			else
-		    			data[lineNum][collectorNum] = "";
+		    			    data[lineNum][collectorNum] = Constants.EMPTY_STRING;
 		    		    } catch(Exception e) {
 		    			// TODO handle it
 		    		    }

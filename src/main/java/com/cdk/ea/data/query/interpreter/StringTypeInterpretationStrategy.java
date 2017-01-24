@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 
+import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.core.StringProperties;
 import com.cdk.ea.data.exception.InterpretationException;
@@ -56,7 +57,7 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 		.map(i -> i.substring(1))
 		.findFirst();
 	
-	return prefix.isPresent() ? StringUtils.trimToEmpty(prefix.get()) : "";
+	return prefix.isPresent() ? StringUtils.trimToEmpty(prefix.get()) : Constants.EMPTY_STRING;
     }
     
     private String getSuffix(String... identifiers) {
@@ -65,7 +66,7 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 		.map(i -> i.substring(1))
 		.findFirst();
 	
-	return suffix.isPresent() ? StringUtils.trimToEmpty(suffix.get()) : "";
+	return suffix.isPresent() ? StringUtils.trimToEmpty(suffix.get()) : Constants.EMPTY_STRING;
     }
 
 }

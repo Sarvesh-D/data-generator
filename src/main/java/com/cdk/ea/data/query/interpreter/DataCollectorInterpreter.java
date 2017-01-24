@@ -5,7 +5,6 @@ import java.util.Arrays;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.exception.InterpretationException;
 import com.cdk.ea.data.generators.DataCollector;
-import com.cdk.ea.data.query.Query;
 import com.cdk.ea.data.query.Query.QueryBuilder;
 
 class DataCollectorInterpreter implements Interpreter {

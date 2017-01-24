@@ -2,7 +2,7 @@ package com.cdk.ea.data.core;
 
 public class Constants {
 
-    public static final String GLOBAL_OVERRIDE = ""+Identifiers.PROPERTY.getIdentifier()
+    public static final String GLOBAL_OVERRIDE = Constants.EMPTY_STRING+Identifiers.PROPERTY.getIdentifier()
     + Identifiers.PROPERTY.getIdentifier() + Identifiers.OVERRIDE.getIdentifier();  // --o
 
     public static final String SPACE = " ";
