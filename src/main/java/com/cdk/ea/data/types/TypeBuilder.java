@@ -21,14 +21,6 @@ public interface TypeBuilder<T,U> {
 	return this;
     }
     
-    default TypeBuilder<T,U> setPrefix(String prefix) {
-	return this;
-    }
-    
-    default TypeBuilder<T,U> setSuffix(String suffix) {
-	return this;
-    }
-    
     T buildType();
     
 }

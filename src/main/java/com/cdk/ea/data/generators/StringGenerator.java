@@ -2,7 +2,10 @@ package com.cdk.ea.data.generators;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.StringJoiner;
+
 import com.cdk.ea.data.common.StringUtils;
+import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.types.StringType;
 
 import lombok.AllArgsConstructor;
@@ -19,14 +22,16 @@ public class StringGenerator implements Generator<String> {
 	 * the map function on the Stream will be called [StringProperties.values().length - 1] times
 	 * unnecessarily. Fix this.
 	 */
-	StringBuilder generatedString = new StringBuilder(stringType.getLength());
-	while(StringUtils.canAppend(generatedString)) {
+	StringBuilder baseString = new StringBuilder(stringType.getLength());
+	StringJoiner finalString = new StringJoiner(Constants.EMPTY_STRING, stringType.getPrefix(), stringType.getSuffix());
+	while(StringUtils.canAppend(baseString)) {
 	    stringType.getProperties()
                 	    .stream()
-                	    .map(property -> StringUtils.append(generatedString, property.getGenerator().generate()))
+                	    .map(property -> StringUtils.append(baseString, property.getGenerator().generate()))
                 	    .count(); // TODO fix the way stream is terminating
 	}
-	return generatedString.toString();
+	finalString.add(baseString);
+	return finalString.toString();
     }
     
     public static StringGenerator of(StringType stringType) {

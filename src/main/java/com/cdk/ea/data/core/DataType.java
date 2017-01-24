@@ -9,7 +9,6 @@ import com.cdk.ea.data.common.Identifier;
 import com.cdk.ea.data.query.interpreter.AbstractTypeInterpretationStrategy;
 import com.cdk.ea.data.query.interpreter.ListTypeInterpretationStrategy;
 import com.cdk.ea.data.query.interpreter.NumberTypeInterpretationStrategy;
-import com.cdk.ea.data.query.interpreter.PatternStringTypeInterpretationStrategy;
 import com.cdk.ea.data.query.interpreter.RegexTypeInterpretationStrategy;
 import com.cdk.ea.data.query.interpreter.StringTypeInterpretationStrategy;
 
@@ -20,7 +19,6 @@ import lombok.Getter;
 public enum DataType implements Identifier<Character> {
 
     STRING('s', StringTypeInterpretationStrategy.class),
-    PATTERN_STRING('p', PatternStringTypeInterpretationStrategy.class),
     NUMBER('n', NumberTypeInterpretationStrategy.class),
     LIST('l', ListTypeInterpretationStrategy.class),
     REGEX('r', RegexTypeInterpretationStrategy.class);

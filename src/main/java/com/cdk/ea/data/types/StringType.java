@@ -18,11 +18,15 @@ public class StringType extends Type {
     private final DataType dataType;
     private final Set<StringProperties> properties;
     private final int length;
+    private final String prefix;
+    private final String suffix;
 
     private StringType(StringTypeBuilder builder) {
 	this.dataType = builder.dataType;
 	this.properties = builder.properties;
 	this.length = builder.length;
+	this.prefix = builder.prefix;
+	this.suffix = builder.suffix;
     }
     
     @Override
@@ -36,6 +40,8 @@ public class StringType extends Type {
 	private DataType dataType;
 	private Set<StringProperties> properties;
 	private int length;
+	private String prefix;
+	private String suffix;
 	
 	@Override
 	public TypeBuilder<StringType,StringProperties> setDataType(DataType dataType) {
@@ -52,6 +58,16 @@ public class StringType extends Type {
 	@Override
 	public TypeBuilder<StringType,StringProperties> setLength(int length) {
 	    this.length = length;
+	    return this;
+	}
+	
+	public TypeBuilder<StringType, StringProperties> setPrefix(String prefix) {
+	    this.prefix = prefix;
+	    return this;
+	}
+	
+	public TypeBuilder<StringType, StringProperties> setSuffix(String suffix) {
+	    this.suffix = suffix;
 	    return this;
 	}
 

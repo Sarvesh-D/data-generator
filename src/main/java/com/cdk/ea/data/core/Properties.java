@@ -16,8 +16,6 @@ public enum Properties implements Identifier<Character> {
     ALPHA_STRING('a'),
     NUMERIC_STRING('n'),
     SPECIAL_STRING('s'),
-    STRING_PREFIX('P'),
-    STRING_SUFFIX('S'),
     INTEGER_NUMBER('i'),
     CUSTOM_LIST('u'),
     REGEX_EXPR('r');
