@@ -22,8 +22,8 @@ public class StartDataGeneration {
 	
 	long start = System.nanoTime();
 	
-	if("json".equals(args[0])) {
-	    String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(".json")).toArray(size -> new String[size]);
+	if(Constants.JSON.equals(args[0])) {
+	    String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON)).toArray(size -> new String[size]);
 	    finalCMDQuery = new JsonQueryBuilder().build(jsonFiles);
 	}
 	else
