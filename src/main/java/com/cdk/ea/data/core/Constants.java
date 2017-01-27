@@ -5,6 +5,8 @@ public class Constants {
     public static final String GLOBAL_OVERRIDE = Constants.EMPTY_STRING+Identifiers.PROPERTY.getIdentifier()
     + Identifiers.PROPERTY.getIdentifier() + Identifiers.OVERRIDE.getIdentifier();  // --o
     
+    public static final String JSON_EXTENSTION = ".json";
+    
     public static final String JSON = "json";
 
     public static final String SPACE = " ";
