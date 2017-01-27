@@ -13,10 +13,14 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.cdk.ea.data.core.Constants;
+import com.cdk.ea.data.exception.DataExportException;
 import com.cdk.ea.data.generators.DataCollector;
 import com.cdk.ea.data.query.json.CsvColumnDetails;
 import com.opencsv.CSVWriter;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CSVFileExporter implements FileExporter {
     
     private String filePath;
@@ -52,8 +56,7 @@ public class CSVFileExporter implements FileExporter {
 	    Arrays.stream(data).forEach(csvWriter::writeNext); // write data
 	    csvWriter.close();
 	} catch (Exception e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    throw new DataExportException(e.getMessage());
 	}
     }
 
@@ -80,6 +83,7 @@ public class CSVFileExporter implements FileExporter {
 							.map(collector -> collector.getData().size())
 							.collect(Collectors.toList());
 	int totalLines = Collections.max(dataQuantities);
+	log.debug("Total {} lines would be written to file {}",totalLines,filePath);
 	int totaldataCollectors = csvColumnData.values().size();
 	
 	String[][] data = new String[totalLines][totaldataCollectors];
@@ -121,6 +125,7 @@ public class CSVFileExporter implements FileExporter {
     }
 
     public static CSVFileExporter from(String filePath, List<CsvColumnDetails> columnDetails) {
+	log.debug("Creating instance of CSVFileExporter for csv file {} with data details as {}",filePath,columnDetails);
 	return new CSVFileExporter(filePath, columnDetails);
     }
 

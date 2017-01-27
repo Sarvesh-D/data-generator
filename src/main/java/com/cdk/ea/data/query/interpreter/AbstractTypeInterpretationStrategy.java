@@ -7,10 +7,13 @@ import java.util.stream.Collectors;
 
 import com.cdk.ea.data.core.DataType;
 import com.cdk.ea.data.core.Identifiers;
-import com.cdk.ea.data.core.Properties;
-import com.cdk.ea.data.exception.InterpretationException;
+import com.cdk.ea.data.exception.PropertiesInterpretationException;
+import com.cdk.ea.data.exception.TypeInterpretationException;
 import com.cdk.ea.data.query.Query.QueryBuilder;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class AbstractTypeInterpretationStrategy {
     
     private static final int DEFAULT_LENGTH = 8;
@@ -25,7 +28,7 @@ public abstract class AbstractTypeInterpretationStrategy {
                 		    .findFirst()
 		    .get();
 	} catch(Exception e) {
-	    throw new InterpretationException(typeErrorMessage());
+	    throw new TypeInterpretationException();
 	}
     }
     
@@ -39,7 +42,7 @@ public abstract class AbstractTypeInterpretationStrategy {
         		    .get();
 	    return length > 0 ? length : DEFAULT_LENGTH; 
 	} catch(Exception e) {
-	    // TODO handle giving default length set message
+	    log.warn("Error occured while interpreting length for data : {}. Default length [{}] shall be used",e.getMessage(), DEFAULT_LENGTH);
 	    return DEFAULT_LENGTH;
 	} 
     }
@@ -53,28 +56,8 @@ public abstract class AbstractTypeInterpretationStrategy {
                         		    .collect(Collectors.toSet());
 	    return propertyIdentifiers;
 	} catch(Exception e) {
-	    throw new InterpretationException(propertyErrorMessage());
+	    throw new PropertiesInterpretationException();
 	}
     }
     
-    private static String typeErrorMessage() {
-	StringBuilder message = new StringBuilder();
-	message.append("Invalid Type\n");
-	message.append("Usage:- "+Identifiers.TYPE.getIdentifier()+"<type>\n");
-	message.append("types:\n");
-	message.append(DataType.ENUM_MAP);
-	message.append("\n");
-	return message.toString();
-    }
-
-    private static String propertyErrorMessage() {
-	StringBuilder message = new StringBuilder();
-	message.append("Invalid Property\n");
-	message.append("Usage:- "+Identifiers.PROPERTY.getIdentifier()+"<property>\n");
-	message.append("properties:\n");
-	message.append(Properties.ENUM_MAP);
-	message.append("\n");
-	return message.toString();
-    }
-
 }

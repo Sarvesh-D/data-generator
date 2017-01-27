@@ -13,22 +13,26 @@ import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.DataType;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.core.Properties;
-import com.cdk.ea.data.exception.InterpretationException;
+import com.cdk.ea.data.exception.QueryInterpretationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JsonQueryBuilder implements Builder<String>{
 
     // TODO see about accepting multiple JSON files. Currently only first JSON file will be used to generate data.
     @Override
     public String build(String... jsonFiles) {
 	String jsonFile = jsonFiles[0]; // convert one JSON file to CMD query.
+	log.debug("Building query from JSON file {}",jsonFile);
 	ObjectMapper mapper = new ObjectMapper();
 	JsonQueryDetails jsonQueryDetails = null;
 	try {
 	    jsonQueryDetails = mapper.readValue(new File(jsonFile), JsonQueryDetails.class);
+	    log.debug("Json Query Details set as => {}",jsonQueryDetails);
 	} catch (Exception e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
+	    throw new QueryInterpretationException(e.getMessage());
 	}
 	
 	final StringBuilder cmdQueryBuilder = new StringBuilder();
@@ -38,6 +42,7 @@ public class JsonQueryBuilder implements Builder<String>{
 	    jsonQueryDetails.getDataDetails()
 	    			.stream()
 	    			.forEach(dataDetail -> {
+	    			    log.debug("Interpreting data generation details for {}",dataDetail);
 	    			    appendDataCollectorName(cmdQueryBuilder, dataDetail.getName());
 	    			    appendDataDetails(cmdQueryBuilder, dataDetail.getDetails());
 	    			    appendQuantity(cmdQueryBuilder, dataDetail.getQuantity());
@@ -46,6 +51,7 @@ public class JsonQueryBuilder implements Builder<String>{
 	    cmdQueryBuilder.append(Identifiers.DATA_GEN_QUERY_SUFFIX.getIdentifier());
 	    
 	    if(jsonQueryDetails.isExportToCsv()) {
+		log.debug("Export to CSV is True");
 		cmdQueryBuilder.append(Constants.SPACE);
 		cmdQueryBuilder.append(Identifiers.FILE.getIdentifier());
 		cmdQueryBuilder.append(Constants.SPACE);
@@ -54,6 +60,7 @@ public class JsonQueryBuilder implements Builder<String>{
 		jsonQueryDetails.getExportDetails()
 			.stream()
 			.forEach(exportDetail -> {
+			    log.debug("Interpreting export details for {}",exportDetail);
 			    appendCSVFileName(cmdQueryBuilder, exportDetail.getCsvFile());
 			    appendCSVColumnDetails(cmdQueryBuilder, exportDetail.getCsvDetails());
 			    appendQuerySeparator(cmdQueryBuilder);
@@ -63,13 +70,14 @@ public class JsonQueryBuilder implements Builder<String>{
 	    
 	    // overrrides must be at end of the CMD query
 	    if(null != jsonQueryDetails.getDefaults()) {
+		log.debug("Encountered override flag");
 		cmdQueryBuilder.append(Constants.GLOBAL_OVERRIDE);
 		cmdQueryBuilder.append(Constants.SPACE);
 		appendOverrides(cmdQueryBuilder, jsonQueryDetails.getDefaults());
 	    }
 	    
 	} catch(Exception e) {
-	    throw new InterpretationException("Error while Building CMD query from JSON file ["+jsonFile+"]. Error : "+e.getMessage());
+	    throw new QueryInterpretationException("Error while Building CMD query from JSON file ["+jsonFile+"]. Error : "+e.getMessage());
 	}
 	
 	return cmdQueryBuilder.toString();

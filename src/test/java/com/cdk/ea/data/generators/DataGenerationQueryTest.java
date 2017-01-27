@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.data.exception.InterpretationException;
+import com.cdk.ea.data.exception.QueryInterpretationException;
 import com.cdk.ea.data.exception.PropertiesInterpretationException;
 import com.cdk.ea.data.exception.TypeInterpretationException;
 
@@ -58,7 +58,7 @@ public class DataGenerationQueryTest {
 	DataGenerator.from(invalidQuery);
     }
 
-    @Test(expected = InterpretationException.class)
+    @Test(expected = QueryInterpretationException.class)
     public final void testInvalidQueryForExport() {
 	final String invalidQuery = "(@RandomStrings :s -a l10 =100) f <_Strings =RandomStrings>";
 	DataGenerator.from(invalidQuery);

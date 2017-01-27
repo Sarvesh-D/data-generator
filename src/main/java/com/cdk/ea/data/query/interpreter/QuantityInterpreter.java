@@ -7,7 +7,9 @@ import com.cdk.ea.data.query.Query.QueryBuilder;
 
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 class QuantityInterpreter implements Interpreter {
 
     @NonNull
@@ -25,6 +27,7 @@ class QuantityInterpreter implements Interpreter {
 	    		.findFirst()
 	    		.get();
 	} catch(Exception e) {
+	    log.warn("Error occured while interpreting quantity : {}. Default quantity of {} shall be used",e.getMessage(),defaultQuantity);
 	    quantity = defaultQuantity;
 	} finally {
 	    queryBuilder.setQuantity(quantity);

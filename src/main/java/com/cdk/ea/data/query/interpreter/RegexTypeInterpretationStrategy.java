@@ -7,10 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.RegexProperties;
-import com.cdk.ea.data.exception.InterpretationException;
+import com.cdk.ea.data.exception.PropertiesInterpretationException;
+import com.cdk.ea.data.exception.QueryInterpretationException;
 import com.cdk.ea.data.query.Query.QueryBuilder;
 import com.cdk.ea.data.types.RegexType.RegexTypeBuilder;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RegexTypeInterpretationStrategy extends AbstractTypeInterpretationStrategy {
 
     @Override
@@ -23,16 +27,17 @@ public class RegexTypeInterpretationStrategy extends AbstractTypeInterpretationS
 	    .map(RegexProperties::of)
 	    .forEach(regexProps::add);
 	} catch(Exception e) {
-	    throw new InterpretationException("Invalid Regex Property. Possible Values are : "+RegexProperties.ENUM_MAP.keySet());
+	    throw new PropertiesInterpretationException("Invalid Regex Property. Possible Values are : "+RegexProperties.ENUM_MAP.keySet());
 	}
 
 	regexTypeBuilder.setDataType(getDataType(identifiers));
 	regexTypeBuilder.setTypeProperties(regexProps);
 	try {
 	    String regex = StringUtils.substringBetween(Arrays.toString(identifiers), Constants.REGEX_EXPR_PREFIX, Constants.REGEX_EXPR_SUFFIX);
+	    log.debug("Setting regex as ",regex);
 	    regexTypeBuilder.setRegex(regex);
 	} catch(Exception e) {
-	    throw new InterpretationException("Define regex string between {...}");
+	    throw new QueryInterpretationException("Define regex string between {...}");
 	}
 
 	queryBuilder.setTypeBuilder(regexTypeBuilder);

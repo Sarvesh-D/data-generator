@@ -8,6 +8,9 @@ import org.junit.Assert;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.query.Query.QueryBuilder;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class GlobalDefaultOverrideInterpreter implements Interpreter {
 
     @Override
@@ -25,9 +28,9 @@ public class GlobalDefaultOverrideInterpreter implements Interpreter {
 				.filter(i -> i.charAt(0) == Identifiers.QUANTITY.getIdentifier())
 				.map(i -> Integer.valueOf(i.substring(1)))
 		    		.findFirst();
-	
 	if(quantityOverride.isPresent()) {
 	    QuantityInterpreter.setDefaultQuantity(quantityOverride.get());
+	    log.debug("Default quantity overriden to [{}]", quantityOverride.get());
 	}
 
     }

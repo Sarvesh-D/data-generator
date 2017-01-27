@@ -10,10 +10,13 @@ import org.junit.Assert;
 import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.core.StringProperties;
-import com.cdk.ea.data.exception.InterpretationException;
+import com.cdk.ea.data.exception.PropertiesInterpretationException;
 import com.cdk.ea.data.query.Query.QueryBuilder;
 import com.cdk.ea.data.types.StringType.StringTypeBuilder;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class StringTypeInterpretationStrategy extends AbstractTypeInterpretationStrategy {
 
     @Override
@@ -26,7 +29,7 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 	    .map(StringProperties::of)
 	    .forEach(stringProps::add);
 	} catch(Exception e) {
-	    throw new InterpretationException("Invalid String Property. Possible Values are : "+StringProperties.ENUM_MAP.keySet());
+	    throw new PropertiesInterpretationException("Invalid String Property. Possible Values are : "+StringProperties.ENUM_MAP.keySet());
 	}
 	
 	// default string type
@@ -48,6 +51,7 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 	stringTypeBuilder.setPrefix(prefix);
 	stringTypeBuilder.setSuffix(suffix);
 
+	log.debug("String Type builder set as : ",stringTypeBuilder);
 	queryBuilder.setTypeBuilder(stringTypeBuilder);
     }
     
