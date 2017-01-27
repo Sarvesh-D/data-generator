@@ -1,0 +1,102 @@
+{
+  "dataDetails": [
+    {
+      "name": "Strings",
+      "details": {
+        "type": "STRING",
+        "properties": [
+          "ALPHA_STRING",
+          "NUMERIC_STRING",
+          "SPECIAL_STRING"
+        ],
+        "length": 10,
+        "list": null,
+        "regex": null,
+        "prefix": "pre",
+        "suffix": "suf"
+      },
+      "quantity": 10
+    },
+    {
+      "name": "ListVals",
+      "details": {
+        "type": "LIST",
+        "properties": [
+          "CUSTOM_LIST"
+        ],
+        "length": null,
+        "list": [
+          "Mr.",
+          "Miss"
+        ],
+        "regex": null
+      },
+      "quantity": 10
+    },
+    {
+      "name": "Numbers",
+      "details": {
+        "type": "NUMBER",
+        "properties": [
+          "INTEGER_NUMBER"
+        ],
+        "length": null,
+        "list": null,
+        "regex": null
+      }
+    },
+    {
+      "name": "customRegex",
+      "details": {
+        "type": "REGEX",
+        "properties": [
+          "REGEX_EXPR"
+        ],
+        "length": 6,
+        "list": null,
+        "regex": "[a-zA-Z]+[@][0-9]+"
+      },
+      "quantity": 10
+    }
+  ],
+  "exportToCsv": true,
+  "exportDetails": [
+    {
+      "csvFile": "sample_1.csv",
+      "csvDetails": [
+        {
+          "headerName": "FunnyStrings",
+          "dataRef": "Strings"
+        },
+        {
+          "headerName": "NamePrefixs",
+          "dataRef": "ListVals"
+        },
+        {
+          "headerName": "AnyNumber",
+          "dataRef": "Numbers"
+        },
+        {
+          "headerName": "MyRegex",
+          "dataRef": "customRegex"
+        }
+      ]
+    },
+    {
+      "csvFile": "sample_2.csv",
+      "csvDetails": [
+        {
+          "headerName": "FunnyStrings",
+          "dataRef": "Strings"
+        },
+        {
+          "headerName": "FunnyTexts",
+          "dataRef": "customRegex"
+        }
+      ]
+    }
+  ],
+  "defaults": {
+    "quantity": 1000
+  }
+}
