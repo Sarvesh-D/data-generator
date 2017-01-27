@@ -23,12 +23,13 @@ public class StringGenerator implements Generator<String> {
 	 * unnecessarily. Fix this.
 	 */
 	StringBuilder baseString = new StringBuilder(stringType.getLength());
-	StringJoiner finalString = new StringJoiner(Constants.EMPTY_STRING, stringType.getPrefix(), stringType.getSuffix());
+	StringJoiner finalString = new StringJoiner(Constants.EMPTY_STRING,
+		org.apache.commons.lang3.StringUtils.trimToEmpty(stringType.getPrefix()),
+		org.apache.commons.lang3.StringUtils.trimToEmpty(stringType.getSuffix()));
 	while(StringUtils.canAppend(baseString)) {
 	    stringType.getProperties()
                 	    .stream()
-                	    .map(property -> StringUtils.append(baseString, property.getGenerator().generate()))
-                	    .count(); // TODO fix the way stream is terminating
+                	    .forEach(property -> StringUtils.append(baseString, property.getGenerator().generate()));
 	}
 	finalString.add(baseString);
 	return finalString.toString();

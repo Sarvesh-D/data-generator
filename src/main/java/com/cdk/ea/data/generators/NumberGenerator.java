@@ -23,8 +23,7 @@ public class NumberGenerator implements Generator<Number> {
 	while(StringUtils.canAppend(generatedNumber)) {
 	    numberType.getProperties()
                 	    .stream()
-                	    .map(property -> StringUtils.append(generatedNumber, property.getGenerator().generate()))
-                	    .count(); // TODO fix the way stream is terminating
+                	    .forEach(property -> StringUtils.append(generatedNumber, property.getGenerator().generate()));
 	}
 	return Long.valueOf(generatedNumber.toString());
     }
