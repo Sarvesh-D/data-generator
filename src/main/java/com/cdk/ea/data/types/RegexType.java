@@ -8,12 +8,13 @@ import com.cdk.ea.data.generators.Generator;
 import com.cdk.ea.data.generators.RegexGenerator;
 import com.mifmif.common.regex.Generex;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@ToString
+@Slf4j
 public class RegexType extends Type {
     
     private final DataType dataType;
@@ -24,14 +25,14 @@ public class RegexType extends Type {
 	this.dataType = builder.dataType;
 	this.properties = builder.properties;
 	this.regex = builder.regex;
+	log.debug("Regex type formed as : {}",this);
     }
 
     @Override
-    public Generator<?> generator() {
+    public Generator<String> generator() {
 	return RegexGenerator.from(this);
     }
     
-    @ToString
     public static class RegexTypeBuilder implements TypeBuilder<RegexType, RegexProperties> {
 	
 	private DataType dataType;

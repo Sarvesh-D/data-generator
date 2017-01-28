@@ -7,12 +7,13 @@ import com.cdk.ea.data.core.NumberProperties;
 import com.cdk.ea.data.generators.Generator;
 import com.cdk.ea.data.generators.NumberGenerator;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@ToString
+@Slf4j
 public class NumberType extends Type {
     
     private final DataType dataType;
@@ -23,6 +24,7 @@ public class NumberType extends Type {
 	this.dataType = builder.dataType;
 	this.properties = builder.properties;
 	this.length = builder.length;
+	log.debug("Number type formed as : {}",this);
     }
     
     @Override
@@ -30,7 +32,6 @@ public class NumberType extends Type {
 	return NumberGenerator.of(this);
     }
     
-    @ToString
     public static class NumberTypeBuilder implements TypeBuilder<NumberType,NumberProperties> {
 	
 	private DataType dataType;

@@ -7,12 +7,13 @@ import com.cdk.ea.data.core.StringProperties;
 import com.cdk.ea.data.generators.Generator;
 import com.cdk.ea.data.generators.StringGenerator;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@ToString
+@Slf4j
 public class StringType extends Type {
 
     private final DataType dataType;
@@ -27,6 +28,7 @@ public class StringType extends Type {
 	this.length = builder.length;
 	this.prefix = builder.prefix;
 	this.suffix = builder.suffix;
+	log.debug("String type formed as : {}",this);
     }
     
     @Override
@@ -34,7 +36,6 @@ public class StringType extends Type {
 	return StringGenerator.of(this);
     }
     
-    @ToString
     public static class StringTypeBuilder implements TypeBuilder<StringType,StringProperties> {
 	
 	private DataType dataType;

@@ -3,10 +3,10 @@ package com.cdk.ea.data.generators;
 import com.cdk.ea.data.types.RegexType;
 import com.mifmif.common.regex.Generex;
 
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RegexGenerator implements Generator<String> {
 
     @NonNull

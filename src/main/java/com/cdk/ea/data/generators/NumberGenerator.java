@@ -5,9 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import com.cdk.ea.data.common.StringUtils;
 import com.cdk.ea.data.types.NumberType;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NumberGenerator implements Generator<Number> {
     
     private final NumberType numberType;

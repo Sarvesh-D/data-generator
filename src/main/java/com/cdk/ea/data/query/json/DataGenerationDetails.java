@@ -1,8 +1,12 @@
 package com.cdk.ea.data.query.json;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString(of={"name","quantity"})
 public class DataGenerationDetails {
 
     private String name;

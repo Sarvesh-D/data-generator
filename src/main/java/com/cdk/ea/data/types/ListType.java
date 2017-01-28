@@ -8,12 +8,13 @@ import com.cdk.ea.data.core.ListProperties;
 import com.cdk.ea.data.generators.Generator;
 import com.cdk.ea.data.generators.ListGenerator;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@ToString
+@Slf4j
 public class ListType extends Type {
     
     private final DataType dataType;
@@ -24,6 +25,7 @@ public class ListType extends Type {
 	this.dataType = builder.dataType;
 	this.properties = builder.properties;
 	this.data = builder.data;
+	log.debug("List type formed as : {}",this);
     }
 
     @Override
@@ -31,7 +33,6 @@ public class ListType extends Type {
 	return ListGenerator.of(this);
     }
     
-    @ToString
     public static class ListTypeBuilder implements TypeBuilder<ListType, ListProperties> {
 	
 	private DataType dataType;

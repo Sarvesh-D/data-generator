@@ -6,10 +6,8 @@ import com.cdk.ea.data.generators.DataCollector;
 import com.cdk.ea.data.generators.Generator;
 import com.cdk.ea.data.types.Type;
 
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-@ToString
 @Slf4j
 public class QueryRunner {
     

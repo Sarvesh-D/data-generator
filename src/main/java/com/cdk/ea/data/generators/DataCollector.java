@@ -3,9 +3,17 @@ package com.cdk.ea.data.generators;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@EqualsAndHashCode(of="name")
+@ToString(of="name")
 public class DataCollector implements Comparable<DataCollector> {
 
     private final String name;

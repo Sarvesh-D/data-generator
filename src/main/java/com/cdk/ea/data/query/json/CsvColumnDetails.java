@@ -1,13 +1,17 @@
 package com.cdk.ea.data.query.json;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
-@Data
-@AllArgsConstructor
+@Getter
+@ToString
+@RequiredArgsConstructor
+@EqualsAndHashCode(of="headerName")
 public class CsvColumnDetails {
     
-    private String headerName;
-    private String dataRef;
-
+    private final String headerName;
+    private final String dataRef;
+    
 }

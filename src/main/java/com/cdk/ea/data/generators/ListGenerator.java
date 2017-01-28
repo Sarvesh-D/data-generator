@@ -9,9 +9,9 @@ import org.apache.commons.lang.math.RandomUtils;
 
 import com.cdk.ea.data.types.ListType;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ListGenerator implements Generator<Object> {
     
     private final ListType listType;

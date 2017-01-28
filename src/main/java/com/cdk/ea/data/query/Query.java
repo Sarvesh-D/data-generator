@@ -9,18 +9,19 @@ import com.cdk.ea.data.types.Type;
 import com.cdk.ea.data.types.TypeBuilder;
 import com.cdk.ea.data.types.TypeProperties;
 
-import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+@Getter
 @ToString
 @Slf4j
 public final class Query {
     
-    @Getter private final TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
-    @Getter private final int quantity;
-    @Getter private final DataCollector dataCollector;
+    private final TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
+    private final int quantity;
+    private final DataCollector dataCollector;
     
     private Query(QueryBuilder queryBuilder) {
 	this.typeBuilder = queryBuilder.typeBuilder;
@@ -29,7 +30,7 @@ public final class Query {
 	log.debug("Query formed as => {}",this);
     }
     
-    @Data
+    @Setter
     @Slf4j
     public static class QueryBuilder implements Builder<Query> {
 	
