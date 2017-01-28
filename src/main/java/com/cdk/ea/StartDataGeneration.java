@@ -3,6 +3,7 @@ package com.cdk.ea;
 import java.util.Arrays;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -17,8 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StartDataGeneration {
     
+    private static ConsoleAppender console = new ConsoleAppender();
+    
     static {
-	ConsoleAppender console = new ConsoleAppender();
 	String pattern = "%-5p: %c - %m%n";
 	console.setLayout(new PatternLayout(pattern));
 	console.setThreshold(Level.INFO);
@@ -31,6 +33,9 @@ public class StartDataGeneration {
     }
 
     public static void main(String... args) {
+	if(ArrayUtils.contains(args, Constants.DEBUG_ENABLED))
+	    console.setThreshold(Level.DEBUG);
+	
 	String finalCMDQuery;
 	
 	long start = System.nanoTime();
@@ -48,7 +53,7 @@ public class StartDataGeneration {
 	try {
 	    DataGenerator.from(finalCMDQuery).generate();
 	} catch(Exception e) {
-	    log.error(e.getMessage());
+	    log.error("something went wrong... {}",e.getClass().getName());
 	}
 
 	long end = System.nanoTime();

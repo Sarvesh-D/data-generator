@@ -22,6 +22,9 @@ public enum Constants {;
     public static final String REGEX_EXPR_PREFIX = "{{";
 
     public static final String REGEX_EXPR_SUFFIX = "}}";
+    
+    public static final String DEBUG_ENABLED = "-X";
+    
     public static final String DEFAULT_DATA_COLLECTOR_NAME = "dummyDataCollector";
 
 }
