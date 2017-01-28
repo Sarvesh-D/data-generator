@@ -1,6 +1,6 @@
 package com.cdk.ea.data.query.interpreter;
 
-public enum Interpreters {
+enum Interpreters {
     
     TYPE_INTERPRETER {
 	

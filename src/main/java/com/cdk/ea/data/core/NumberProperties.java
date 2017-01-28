@@ -17,8 +17,6 @@ import lombok.Getter;
 public enum NumberProperties implements Identifier<Character>, TypeProperties {
     
     INTEGER(Properties.INTEGER_NUMBER.getIdentifier(), NumberUtils::randomInteger);
-    //DECIMAL('d'),
-    //PRECISSION('p');
     
     @Getter private final Character identifier;
     

@@ -18,9 +18,11 @@ import com.cdk.ea.data.generators.DataCollector;
 import com.cdk.ea.data.query.json.CsvColumnDetails;
 import com.opencsv.CSVWriter;
 
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@ToString(of="filePath")
 public class CSVFileExporter implements FileExporter {
     
     private String filePath;
@@ -39,9 +41,7 @@ public class CSVFileExporter implements FileExporter {
 
     @Override
     public void export(Collection<DataCollector> dataCollectors) {
-	try {
-	    CSVWriter csvWriter = new CSVWriter(new FileWriter(filePath), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER);
-	    
+	try(CSVWriter csvWriter = new CSVWriter(new FileWriter(filePath), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER);) {
 	    // write header row for header names as requested by client
 	    String[] headers = csvColumnDetails.keySet().toArray(new String[csvColumnDetails.keySet().size()]);
 	    csvWriter.writeNext(headers);
