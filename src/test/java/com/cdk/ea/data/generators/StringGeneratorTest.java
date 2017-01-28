@@ -111,6 +111,7 @@ public class StringGeneratorTest {
 	IntStream.range(0, 50).forEach(i -> assertTrue("String must be of length ["+length+"].", generate().length() == length));
     }
     
+    @Test
     public final void testRandomSpecialCharString() {
 	IntStream.range(0, 50).forEach(i -> {
 	    assertTrue("Five special char must be genrated", com.cdk.ea.data.common.StringUtils.randomSpecialCharString(5).length() == 5);
