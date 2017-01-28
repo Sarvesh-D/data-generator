@@ -1,6 +1,6 @@
 package com.cdk.ea.data.core;
 
-public class Constants {
+public enum Constants {;
 
     public static final String GLOBAL_OVERRIDE = Constants.EMPTY_STRING+Identifiers.PROPERTY.getIdentifier()
     + Identifiers.PROPERTY.getIdentifier() + Identifiers.OVERRIDE.getIdentifier();  // --o
@@ -22,9 +22,5 @@ public class Constants {
     public static final String REGEX_EXPR_PREFIX = "{{";
 
     public static final String REGEX_EXPR_SUFFIX = "}}";
-
-    private Constants() {
-	// suppressing default constructor
-    }
 
 }

@@ -1,18 +1,6 @@
 package com.cdk.ea.data.common;
 
-public class StringUtils {
-    
-    private StringUtils() {
-	// suppressing default constructor 
-    }
-    
-   /* public static String getUniqueString() {
-	
-    }
-    
-    public static String getUniqueString(String str) {
-	
-    }*/
+public enum StringUtils {;
     
     public static String randomSpecialCharString(int length) {
 	StringBuilder specialChars = new  StringBuilder(length);

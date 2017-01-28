@@ -5,11 +5,7 @@ import org.apache.commons.lang.math.RandomUtils;
 
 import com.cdk.ea.data.core.SpecialChar;
 
-public class CharacterUtils {
-    
-    private CharacterUtils() {
-	// suppressing default constructor
-    }
+public enum CharacterUtils {;
     
     public static char randomAlphaCharacter() {
 	return RandomStringUtils.randomAlphabetic(1).charAt(0);
