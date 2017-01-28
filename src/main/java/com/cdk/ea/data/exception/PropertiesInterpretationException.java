@@ -28,7 +28,6 @@ public class PropertiesInterpretationException extends DataGeneratorException {
 	message.append("Usage:- "+Identifiers.PROPERTY.getIdentifier()+"<property>\n");
 	message.append("properties:\n");
 	message.append(Properties.ENUM_MAP);
-	message.append("\n");
 	return message.toString();
     }
 

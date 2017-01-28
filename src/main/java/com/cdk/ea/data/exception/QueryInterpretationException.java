@@ -11,6 +11,7 @@ public class QueryInterpretationException extends DataGeneratorException {
     private static final long serialVersionUID = 1L;
     
     public QueryInterpretationException() {
+	super();
     }
     
     public QueryInterpretationException(String message) {

@@ -2,6 +2,7 @@ package com.cdk.ea.data.query.interpreter;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,29 +23,34 @@ public abstract class AbstractTypeInterpretationStrategy {
     
     public static DataType getDataType(String... queryParams) {
 	try {
-	    return Arrays.stream(queryParams)
-                		    .filter(i -> i.charAt(0) == Identifiers.TYPE.getIdentifier())
-                		    .map(i -> DataType.of(i.charAt(1)))
-                		    .findFirst()
-		    .get();
+	    Optional<DataType> dataType = Arrays.stream(queryParams)
+		    .filter(i -> i.charAt(0) == Identifiers.TYPE.getIdentifier())
+		    .map(i -> DataType.of(i.charAt(1)))
+		    .findFirst();
+	    if(dataType.isPresent()) 
+		return dataType.get();
+	    else throw new TypeInterpretationException("specify a valid type to generate data.");
 	} catch(Exception e) {
-	    throw new TypeInterpretationException();
+	    throw new TypeInterpretationException(e.getMessage());
 	}
     }
     
     public static int getDataLength(String... queryParams) {
-	int length = DEFAULT_LENGTH;
 	try {
-	    length = Arrays.stream(queryParams)
-        		    .filter(i -> i.charAt(0) == Identifiers.LENGTH.getIdentifier())
-        		    .map(i -> Integer.valueOf(i.substring(1)))
-        		    .findFirst()
-        		    .get();
-	    return length > 0 ? length : DEFAULT_LENGTH; 
+	    Optional<Integer> length = Arrays.stream(queryParams)
+                        		    .filter(i -> i.charAt(0) == Identifiers.LENGTH.getIdentifier())
+                        		    .map(i -> Integer.valueOf(i.substring(1)))
+                        		    .findFirst();
+	    if(length.isPresent())
+		return length.get() > 0 ? length.get() : DEFAULT_LENGTH;
+	    else {
+		log.debug("Length not specified. Default length [{}] shall be used",DEFAULT_LENGTH);
+		return DEFAULT_LENGTH;
+	    }
 	} catch(Exception e) {
-	    log.warn("Error occured while interpreting length for data : {}. Default length [{}] shall be used",e.getMessage(), DEFAULT_LENGTH);
+	    log.warn("Error occured while interpreting length : {}. Default length of {} shall be used",e.getMessage(),DEFAULT_LENGTH);
 	    return DEFAULT_LENGTH;
-	} 
+	}
     }
     
     public static Set<Character> getPropertyIdentifiers(String... queryParams) {
@@ -56,7 +62,7 @@ public abstract class AbstractTypeInterpretationStrategy {
                         		    .collect(Collectors.toSet());
 	    return propertyIdentifiers;
 	} catch(Exception e) {
-	    throw new PropertiesInterpretationException();
+	    throw new PropertiesInterpretationException(e.getMessage());
 	}
     }
     

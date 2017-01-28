@@ -10,6 +10,10 @@ public class DataExportException extends DataGeneratorException {
      */
     private static final long serialVersionUID = 1L;
     
+    public DataExportException() {
+	super();
+    }
+    
     public DataExportException(String message) {
 	log.error(message);
     }
