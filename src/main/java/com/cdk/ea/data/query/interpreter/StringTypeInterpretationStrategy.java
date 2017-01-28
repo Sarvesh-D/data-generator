@@ -51,7 +51,6 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 	stringTypeBuilder.setPrefix(prefix);
 	stringTypeBuilder.setSuffix(suffix);
 
-	log.debug("String Type builder set as : ",stringTypeBuilder);
 	queryBuilder.setTypeBuilder(stringTypeBuilder);
     }
     

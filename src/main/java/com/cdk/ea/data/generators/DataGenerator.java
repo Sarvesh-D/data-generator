@@ -39,12 +39,14 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	String[] dataGenQueries = StringUtils.split(completeDataGenQueryString, Identifiers.QUERY_SEPARATOR.getIdentifier());
 	log.debug("Data Generation Queries : {}", Arrays.toString(dataGenQueries));
 	
+	Assert.assertTrue("No Data Generation queries found. Specify data generation queries within (...)", org.apache.commons.lang3.ArrayUtils.isNotEmpty(dataGenQueries));
+	
 	// build query runner for each data generate query and add to queryRunners
 	Arrays.stream(dataGenQueries)
 		.filter(query -> StringUtils.isNotEmpty(StringUtils.trimToEmpty(query)))
 		.map(query -> QueryRunner.from(StringUtils.split(query, Constants.SPACE)))
 		.forEach(queryRunners::add);
-	log.debug("Total Query Runners registered {}. Registered query runners are {}", queryRunners.size(), queryRunners);
+	log.debug("Total Query Runners registered {}.", queryRunners.size());
 	
 	//  check query for any data exporters
 	boolean exportToFile = ArrayUtils.contains(StringUtils.split(cmdLineQuery), Identifiers.FILE.getIdentifier().toString());
@@ -56,6 +58,9 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	    
 	    // gather all CMD queries to export data
 	    String[] dataExportQueries = StringUtils.split(completeDataExportQueryString, Identifiers.QUERY_SEPARATOR.getIdentifier());
+	    
+	    Assert.assertTrue("No Data Export queries found. Specify data export queries within <...>", org.apache.commons.lang3.ArrayUtils.isNotEmpty(dataExportQueries));
+	    
 	    log.debug("Data Export Queries : {}", Arrays.toString(dataExportQueries));
 	    
 	    // build data-exporter for each data export query and add to dataExporters
@@ -65,6 +70,8 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	    	.forEach(queryParams -> {
 	    	    String filePath = queryParams.stream().filter(i -> i.endsWith(".csv")).findFirst().get();
 	    	    List<String> headerNames = queryParams.stream().filter(i -> i.startsWith(Identifiers.CSV_HEADER_PREFIX.getIdentifier().toString())).map(i -> i.substring(1)).collect(Collectors.toList());
+	    	    Assert.assertTrue("At least one header name must be specified for CSV file export", !headerNames.isEmpty());
+
 	    	    List<String> dataRefs = queryParams.stream().filter(i -> i.startsWith(Identifiers.CSV_COL_DATA_REF.getIdentifier().toString())).map(i -> i.substring(1)).collect(Collectors.toList());
 	    	    Assert.assertTrue("Header Names and Header's Data Ref must be of equal number", headerNames.size() == dataRefs.size());
 	    	    

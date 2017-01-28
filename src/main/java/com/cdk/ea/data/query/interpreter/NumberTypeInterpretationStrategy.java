@@ -29,7 +29,6 @@ public class NumberTypeInterpretationStrategy extends AbstractTypeInterpretation
 	numberTypeBuilder.setTypeProperties(numberProps);
 	numberTypeBuilder.setLength(getDataLength(identifiers));
 
-	log.debug("Number Type Builder set as : {}",numberTypeBuilder);
 	queryBuilder.setTypeBuilder(numberTypeBuilder);
     }
 

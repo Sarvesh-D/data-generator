@@ -2,6 +2,7 @@ package com.cdk.ea.data.query.json;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
@@ -11,7 +12,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of="headerName")
 public class CsvColumnDetails {
     
-    private final String headerName;
+    @NonNull private final String headerName;
     private final String dataRef;
     
 }
