@@ -5,22 +5,25 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.cdk.ea.data.common.CMDLineArgHelper;
 import com.cdk.ea.data.common.Identifier;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public enum Properties implements Identifier<Character> {
+public enum Properties implements Identifier<Character>, CMDLineArgHelper {
 
-    ALPHA_STRING('a'),
-    NUMERIC_STRING('n'),
-    SPECIAL_STRING('s'),
-    INTEGER_NUMBER('i'),
-    CUSTOM_LIST('u'),
-    REGEX_EXPR('r');
+    ALPHA_STRING('a', "alpha string"),
+    NUMERIC_STRING('n', "numeric string"),
+    SPECIAL_STRING('s', "special character string"),
+    INTEGER_NUMBER('i', "long number"),
+    CUSTOM_LIST('u', "custom list"),
+    REGEX_EXPR('r', "custom regex");
 
     @Getter private final Character identifier;
+    
+    @Getter private final String help;
 
     public static final Map<Character, Properties> ENUM_MAP;
 

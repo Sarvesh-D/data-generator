@@ -25,6 +25,8 @@ public enum Constants {;
     
     public static final String DEBUG_ENABLED = "-X";
     
+    public static final String DISPLAY_HELP = "--help";
+    
     public static final String DEFAULT_DATA_COLLECTOR_NAME = "dummyDataCollector";
 
 }

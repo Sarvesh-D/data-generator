@@ -1,0 +1,37 @@
+                            ########################
+                            #  Data-Generator Help #
+                            ########################
+Simple usage...
+json path/to/json/file/to/generate/data
+
+see JSON format here... (provide link)
+
+For Advanced Users...
+
+Query Format:
+
+(DataGenQuery_1 | DataGenQuery_2 | ...) f <DataExportQuery_1 | DataExportQuery_2 | ...)
+
+Data Generation Query Format:
+@DataCollectorName :DataType -DataProperty1 -DataProperty2 lDataLength =DataQuantity
+
+Data Generation Query Examples:
+@RandomAlphaStrings :s -a l10 =100
+@RandomAlphaNumericStrings :s -a -n l10 =100
+@RandomStringsWithPrefix :s -a Pbegin l10 =100
+@RandomStringsWithSuffix :s -a Send l10 =100
+@RandomValueFromCustomList :l -u [[Value1,Value2,Value3]] =20
+
+Data Export Query Format:
+PathToCsvFile _headerName1 =dataCollectorName1 _headerName2 =dataCollectorName2
+
+Data Generation Query Examples:
+/Users/any/randomData1.csv _FirstNames =RandomAlphaStrings _ListValues =RandomValueFromCustomList
+/Users/any/randomData2.csv _FirstNames =RandomAlphaStrings _LastNames =RandomAlphaStrings
+
+More Helpful Links:
+1) Tool usage confluence page link
+2) Json format link
+3) GitHub link
+
+#############################################################################################
