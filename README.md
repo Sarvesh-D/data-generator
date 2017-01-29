@@ -1,37 +1,64 @@
-                            ########################
-                            #  Data-Generator Help #
-                            ########################
-Simple usage...
-json path/to/json/file/to/generate/data
+#Data Generation Tool
 
-see JSON format here... (provide link)
+##Synopsis
+### Tool for generating and exporting random data. Mostly used for generating large amount of random data for performing load/regression tests.
 
-For Advanced Users...
+##Features
 
-Query Format:
+ - Generate random Strings, Numbers.
+ - Generate random data from pre-defined list.
+ - Generate random Strings matching given regex pattern.
+ - Generate random Strings with specified prefix/suffix.
+ - Export generated data to CSV file(s).
 
-(DataGenQuery_1 | DataGenQuery_2 | ...) f <DataExportQuery_1 | DataExportQuery_2 | ...)
+##Installation
 
-Data Generation Query Format:
-@DataCollectorName :DataType -DataProperty1 -DataProperty2 lDataLength =DataQuantity
+    Add groupId, artifactId info here for downloading the jar
 
-Data Generation Query Examples:
-@RandomAlphaStrings :s -a l10 =100
-@RandomAlphaNumericStrings :s -a -n l10 =100
-@RandomStringsWithPrefix :s -a Pbegin l10 =100
-@RandomStringsWithSuffix :s -a Send l10 =100
-@RandomValueFromCustomList :l -u [[Value1,Value2,Value3]] =20
+##Usage
+Download the jar and goto the jar directory. Open Terminal/CMD and execute below:
 
-Data Export Query Format:
-PathToCsvFile _headerName1 =dataCollectorName1 _headerName2 =dataCollectorName2
+    java -jar <name of jar file> --help
 
-Data Generation Query Examples:
-/Users/any/randomData1.csv _FirstNames =RandomAlphaStrings _ListValues =RandomValueFromCustomList
-/Users/any/randomData2.csv _FirstNames =RandomAlphaStrings _LastNames =RandomAlphaStrings
+####Using JSON file
+The tool is designed for simple usage via JSON file. The JSON file tells the tool how the data should be generated and exported. See JSON structure [here]().
 
-More Helpful Links:
-1) Tool usage confluence page link
-2) Json format link
-3) GitHub link
+    java -jar <name of jar file> json /path/to/json/file
 
-#############################################################################################
+####Using CMD line Queries
+This option is available for advanced users or for the users who want to quickly see the tool in action. The arguments passed to the tool from CMD line are used to form queries which are then executed to generate and export data. There are two categories of queries viz. DataGenerationQuery and DataExportQuery.
+
+#####Query Format:
+
+    (DataGenQuery_1 | DataGenQuery_2 | ...) f <DataExportQuery_1 | DataExportQuery_2 | ...>
+
+#####Data Generation Query Format
+
+    @DataCollectorName :DataType -DataProperty1 -DataProperty2 lDataLength =DataQuantity
+
+#####Data Generation Query Examples:
+
+    @RandomAlphaStrings :s -a l10 =100
+    @RandomAlphaNumericStrings :s -a -n l10 =100
+    @RandomStringsWithPrefix :s -a Pbegin l10 =100
+    @RandomStringsWithSuffix :s -a Send l10 =100
+    @RandomValueFromCustomList :l -u [[Value1,Value2,Value3]] =20
+
+#####Data Export Query Format:
+
+    PathToCsvFile _headerName1 =dataCollectorName1 _headerName2 =dataCollectorName2
+
+#####Data Generation Query Examples:
+
+    /Users/any/randomData1.csv _FirstNames =RandomAlphaStrings _ListValues =RandomValueFromCustomList
+    
+    /Users/any/randomData2.csv _FirstNames =RandomAlphaStrings _LastNames =RandomAlphaStrings
+
+## Links
+
+ 1. [Tool usage confluence page link]()
+ 2. [JSON format link]()
+ 3. [Code Repository link]()
+ 4. [Reference Documentation link]()
+ 5. [JIRA/Issues link]()
+
