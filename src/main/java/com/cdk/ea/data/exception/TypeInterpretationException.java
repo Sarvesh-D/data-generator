@@ -16,19 +16,23 @@ public class TypeInterpretationException extends DataGeneratorException {
     public TypeInterpretationException() {
 	log.error(typeErrorMessage());
     }
-    
+
     public TypeInterpretationException(String message) {
-	this();
 	log.error(message);
+	log.error(typeErrorMessage());
+    }
+
+    private static String typeErrorMessage() {
+	StringBuilder message = new StringBuilder();
+	message.append("Usage:- "+Identifiers.TYPE.getIdentifier()+"<type>\n");
+	message.append("types:\n");
+	message.append(DataType.ENUM_MAP);
+	return message.toString();
     }
     
-    private static String typeErrorMessage() {
-   	StringBuilder message = new StringBuilder();
-   	message.append("Invalid Type\n");
-   	message.append("Usage:- "+Identifiers.TYPE.getIdentifier()+"<type>\n");
-   	message.append("types:\n");
-   	message.append(DataType.ENUM_MAP);
-   	return message.toString();
-       }
+    @Override
+    public String getMessage() {
+        return "Exception occurred while interpreting Data Type";
+    }
 
 }

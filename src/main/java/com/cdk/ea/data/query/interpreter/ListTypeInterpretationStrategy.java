@@ -30,6 +30,12 @@ public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationSt
 	} catch(Exception e) {
 	    throw new PropertiesInterpretationException("Invalid List Property. Possible Values are : "+ListProperties.ENUM_MAP.keySet());
 	}
+	
+	// default list properties
+	if(listProps.isEmpty()) {
+	    log.info("No List properties specifed. Defaulting to CUSTOM List");
+	    listProps.add(ListProperties.CUSTOM);
+	}
 
 	listTypeBuilder.setDataType(getDataType(identifiers));
 	listTypeBuilder.setTypeProperties(listProps);
@@ -43,7 +49,7 @@ public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationSt
 		listTypeBuilder.setData(Arrays.stream(customListDataArr).filter(StringUtils::isNotBlank).collect(Collectors.toList()));
 		log.debug("List Data set as : {}",Arrays.toString(customListDataArr));
 	    } catch (Exception e) {
-		throw new QueryInterpretationException("Define Elements for custom list between [...]");
+		throw new QueryInterpretationException("Define Elements for custom list between [[...]]");
 	    }
 	}
 

@@ -70,7 +70,7 @@ public class StartDataGeneration {
 	try {
 	    DataGenerator.from(finalCMDQuery).generate();
 	} catch(Exception e) {
-	    log.error("something went wrong... {}",e.getClass().getName());
+	    log.error("something went wrong... {}",e.getMessage());
 	}
 
 	long end = System.nanoTime();

@@ -18,8 +18,8 @@ public class PropertiesInterpretationException extends DataGeneratorException {
     }
     
     public PropertiesInterpretationException(String message) {
-	this();
 	log.error(message);
+	log.error(propertyErrorMessage());
     }
     
     private static String propertyErrorMessage() {
@@ -29,6 +29,11 @@ public class PropertiesInterpretationException extends DataGeneratorException {
 	message.append("properties:\n");
 	message.append(Properties.ENUM_MAP);
 	return message.toString();
+    }
+    
+    @Override
+    public String getMessage() {
+        return "Exception occurred while interpreting properties";
     }
 
 }

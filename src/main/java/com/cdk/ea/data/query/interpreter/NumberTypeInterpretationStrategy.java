@@ -24,6 +24,12 @@ public class NumberTypeInterpretationStrategy extends AbstractTypeInterpretation
 	} catch(Exception e) {
 	    throw new PropertiesInterpretationException("Invalid Number Property. Possible Values are : "+NumberProperties.ENUM_MAP.keySet());
 	}
+	
+	// default number type
+	if(numberProps.isEmpty()) {
+	    log.debug("No Number Properties specified. Defaulting to Integers.");
+	    numberProps.add(NumberProperties.INTEGER);
+	}
 
 	numberTypeBuilder.setDataType(getDataType(identifiers));
 	numberTypeBuilder.setTypeProperties(numberProps);

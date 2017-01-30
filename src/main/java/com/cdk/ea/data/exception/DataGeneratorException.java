@@ -17,5 +17,10 @@ public class DataGeneratorException extends RuntimeException {
     public DataGeneratorException(String message) {
 	log.error(message);
     }
+    
+    @Override
+    public String getMessage() {
+        return "Exception occurred while generating data";
+    }
 
 }

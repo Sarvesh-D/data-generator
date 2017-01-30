@@ -11,11 +11,16 @@ public class QueryInterpretationException extends DataGeneratorException {
     private static final long serialVersionUID = 1L;
     
     public QueryInterpretationException() {
-	super();
+	this("Exception occurred while interpreting query");
     }
     
     public QueryInterpretationException(String message) {
 	log.error(message);
+    }
+    
+    @Override
+    public String getMessage() {
+        return "Exception occurred while interpreting query";
     }
 
 }

@@ -45,7 +45,6 @@ public class NumberGeneratorTest {
 	numberTypeBuilder.setLength(length).setTypeProperties(EnumSet.of(NumberProperties.INTEGER));
 	IntStream.range(0, 50).forEach(i -> {
 	    String generatedNumber = generate().toString();
-	    System.out.println(generatedNumber);
 	    assertTrue("Number must be of length : ["+length+"]", StringUtils.isNumeric(generatedNumber) && generatedNumber.length() == length);
 	});
     }

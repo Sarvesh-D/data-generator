@@ -22,17 +22,19 @@ public abstract class AbstractTypeInterpretationStrategy {
     public abstract void doInterpret(QueryBuilder queryBuilder, String... identifiers);
     
     public static DataType getDataType(String... queryParams) {
+	Optional<DataType> dataType;
 	try {
-	    Optional<DataType> dataType = Arrays.stream(queryParams)
+	    dataType = Arrays.stream(queryParams)
 		    .filter(i -> i.charAt(0) == Identifiers.TYPE.getIdentifier())
 		    .map(i -> DataType.of(i.charAt(1)))
 		    .findFirst();
-	    if(dataType.isPresent()) 
-		return dataType.get();
-	    else throw new TypeInterpretationException("specify a valid type to generate data.");
 	} catch(Exception e) {
-	    throw new TypeInterpretationException(e.getMessage());
+	    throw new TypeInterpretationException("Invalid Data Type Specified");
 	}
+	
+	if(dataType.isPresent()) 
+	    return dataType.get();
+	else throw new TypeInterpretationException("No Data Type Specified.");
     }
     
     public static int getDataLength(String... queryParams) {

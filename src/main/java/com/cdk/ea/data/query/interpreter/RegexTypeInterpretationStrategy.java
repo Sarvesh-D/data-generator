@@ -34,10 +34,10 @@ public class RegexTypeInterpretationStrategy extends AbstractTypeInterpretationS
 	regexTypeBuilder.setTypeProperties(regexProps);
 	try {
 	    String regex = StringUtils.substringBetween(Arrays.toString(identifiers), Constants.REGEX_EXPR_PREFIX, Constants.REGEX_EXPR_SUFFIX);
-	    log.debug("Setting regex as ",regex);
+	    log.debug("Setting regex as {}",regex);
 	    regexTypeBuilder.setRegex(regex);
 	} catch(Exception e) {
-	    throw new QueryInterpretationException("Define regex string between {...}");
+	    throw new QueryInterpretationException("Define regex string between {{...}}");
 	}
 
 	queryBuilder.setTypeBuilder(regexTypeBuilder);
