@@ -85,5 +85,10 @@ public class DataGenerationQueryTest {
 	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings> -X";
 	StartDataGeneration.main(stringQueryWExport);
     }
+    
+    @Test
+    public final void testDisplayHelp() {
+	StartDataGeneration.main("--help");
+    }
 
 }
