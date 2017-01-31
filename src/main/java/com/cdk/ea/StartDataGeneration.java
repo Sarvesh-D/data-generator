@@ -57,17 +57,17 @@ public class StartDataGeneration {
 	
 	long start = System.nanoTime();
 	
-	if(Constants.JSON.equals(args[0])) {
-	    log.debug("JSON format selected to generate data");
-	    String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION)).toArray(size -> new String[size]);
-	    log.debug("JSON files to generate data : {}", Arrays.toString(jsonFiles));
-	    finalCMDQuery = new JsonQueryBuilder().build(jsonFiles);
-	}
-	else
-	    finalCMDQuery = StringUtils.join(args, Constants.SPACE);
-	
-	log.debug("Final query to generate data => {}",finalCMDQuery);
 	try {
+	    if(Constants.JSON.equals(args[0])) {
+		log.debug("JSON format selected to generate data");
+		String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION)).toArray(size -> new String[size]);
+		log.debug("JSON files to generate data : {}", Arrays.toString(jsonFiles));
+		finalCMDQuery = new JsonQueryBuilder().build(jsonFiles);
+	    }
+	    else
+		finalCMDQuery = StringUtils.join(args, Constants.SPACE);
+
+	    log.debug("Final query to generate data => {}",finalCMDQuery);
 	    DataGenerator.from(finalCMDQuery).generate();
 	} catch(Exception e) {
 	    log.error("something went wrong... {}",e.getMessage());
