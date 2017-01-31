@@ -5,12 +5,12 @@ import java.util.EnumSet;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
 
 import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.core.StringProperties;
 import com.cdk.ea.data.exception.PropertiesInterpretationException;
+import com.cdk.ea.data.exception.QueryInterpretationException;
 import com.cdk.ea.data.query.Query.QueryBuilder;
 import com.cdk.ea.data.types.StringType.StringTypeBuilder;
 
@@ -43,10 +43,12 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 	final int dataLength = getDataLength(identifiers);
 
 	final int baseStringLength = prefix.length() + suffix.length();
-	Assert.assertTrue("Total String length [" + dataLength
-		+ "] should be greater or equal to Base String length [" + baseStringLength + "]",
-		dataLength >= baseStringLength);
-
+	if(dataLength < baseStringLength) {
+	    throw new QueryInterpretationException(
+		    String.format("Total String length [%d] should be greater or equal to Base String length [%d]",
+			    dataLength, baseStringLength));
+	}
+	
 	stringTypeBuilder.setDataType(getDataType(identifiers));
 	stringTypeBuilder.setTypeProperties(stringProps);
 	stringTypeBuilder.setLength(dataLength - baseStringLength);

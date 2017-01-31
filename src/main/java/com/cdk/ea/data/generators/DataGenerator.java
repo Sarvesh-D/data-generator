@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.junit.Assert;
 
 import com.cdk.ea.data.core.Constants;
 import com.cdk.ea.data.core.Identifiers;
 import com.cdk.ea.data.exception.DataExportException;
+import com.cdk.ea.data.exception.QueryInterpretationException;
 import com.cdk.ea.data.exporters.CSVFileExporter;
 import com.cdk.ea.data.exporters.DataExporter;
 import com.cdk.ea.data.query.QueryRunner;
@@ -39,7 +40,8 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	String[] dataGenQueries = StringUtils.split(completeDataGenQueryString, Identifiers.QUERY_SEPARATOR.getIdentifier());
 	log.debug("Data Generation Queries : {}", Arrays.toString(dataGenQueries));
 	
-	Assert.assertTrue("No Data Generation queries found. Specify data generation queries within (...)", org.apache.commons.lang3.ArrayUtils.isNotEmpty(dataGenQueries));
+	if(org.apache.commons.lang3.ArrayUtils.isEmpty(dataGenQueries))
+	    throw new QueryInterpretationException("No Data Generation queries found. Specify data generation queries within (...)");
 	
 	// build query runner for each data generate query and add to queryRunners
 	Arrays.stream(dataGenQueries)
@@ -59,7 +61,8 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	    // gather all CMD queries to export data
 	    String[] dataExportQueries = StringUtils.split(completeDataExportQueryString, Identifiers.QUERY_SEPARATOR.getIdentifier());
 	    
-	    Assert.assertTrue("No Data Export queries found. Specify data export queries within <...>", org.apache.commons.lang3.ArrayUtils.isNotEmpty(dataExportQueries));
+	    if(org.apache.commons.lang3.ArrayUtils.isEmpty(dataExportQueries))
+		throw new QueryInterpretationException("No Data Export queries found. Specify data generation queries within <...>");
 	    
 	    log.debug("Data Export Queries : {}", Arrays.toString(dataExportQueries));
 	    
@@ -68,17 +71,26 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	    	.filter(query -> StringUtils.isNotEmpty(StringUtils.trimToEmpty(query)))
 	    	.map(queryStr -> Arrays.asList(StringUtils.split(queryStr)))
 	    	.forEach(queryParams -> {
-	    	    String filePath = queryParams.stream().filter(i -> i.endsWith(".csv")).findFirst().get();
+	    	    Optional<String> filePath = queryParams.stream().filter(i -> i.endsWith(".csv")).findFirst();
+	    	    if(!filePath.isPresent())
+	    		throw new DataExportException("CSV file to export data not specified");
+	    	    
 	    	    List<String> headerNames = queryParams.stream().filter(i -> i.startsWith(Identifiers.CSV_HEADER_PREFIX.getIdentifier().toString())).map(i -> i.substring(1)).collect(Collectors.toList());
-	    	    Assert.assertTrue("At least one header name must be specified for CSV file export", !headerNames.isEmpty());
+	    	    if(headerNames.isEmpty())
+	    		throw new DataExportException("At least one header name must be specified for CSV file export");
 
 	    	    List<String> dataRefs = queryParams.stream().filter(i -> i.startsWith(Identifiers.CSV_COL_DATA_REF.getIdentifier().toString())).map(i -> i.substring(1)).collect(Collectors.toList());
-	    	    Assert.assertTrue("Header Names and Header's Data Ref must be of equal number", headerNames.size() == dataRefs.size());
+	    	    
+	    	    if(headerNames.size() != dataRefs.size()) {
+			    throw new DataExportException(String.format(
+				    "Total Header Names [%d] and Total Header's Data Refernece [%d] must be of equal number",
+				    headerNames.size(), dataRefs.size()));
+	    	    }
 	    	    
 	    	    List<CsvColumnDetails> csvColumnDetails = new ArrayList<>();
 	    	    IntStream.range(0, headerNames.size()).forEach(i -> csvColumnDetails.add(new CsvColumnDetails(headerNames.get(i), dataRefs.get(i))));
 	    	    
-	    	    dataExporters.add(CSVFileExporter.from(filePath, csvColumnDetails));
+	    	    dataExporters.add(CSVFileExporter.from(filePath.get(), csvColumnDetails));
 	    	});
 	    log.debug("Total Data Exporters registered {}. Registered data exporters are {}", dataExporters.size(), dataExporters);
 	    

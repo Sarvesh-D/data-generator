@@ -1,5 +1,7 @@
 package com.cdk.ea.data.generators;
 
+import static org.junit.Assert.assertNotNull;
+
 import com.cdk.ea.data.types.RegexType;
 import com.mifmif.common.regex.Generex;
 
@@ -19,6 +21,7 @@ public class RegexGenerator implements Generator<String> {
 
     // TODO accept length for genrated regex string
     public static RegexGenerator from(RegexType regexType) {
+	assertNotNull("Regex Type cannot be null", regexType);
 	return new RegexGenerator(regexType.getRegex());
     }
 
