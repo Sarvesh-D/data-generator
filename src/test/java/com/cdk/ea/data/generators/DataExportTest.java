@@ -15,7 +15,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.data.query.json.JsonQueryBuilder;
+import com.cdk.ea.tools.data.generation.generators.DataCollector;
+import com.cdk.ea.tools.data.generation.generators.DataGenerator;
+import com.cdk.ea.tools.data.generation.query.json.JsonQueryBuilder;
 import com.opencsv.CSVReader;
 
 @RunWith(JUnit4.class)

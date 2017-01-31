@@ -15,13 +15,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.StartDataGeneration;
-import com.cdk.ea.data.exception.DataExportException;
-import com.cdk.ea.data.exception.PropertiesInterpretationException;
-import com.cdk.ea.data.exception.QueryInterpretationException;
-import com.cdk.ea.data.exception.TypeInterpretationException;
-import com.cdk.ea.data.generators.DataCollector;
-import com.cdk.ea.data.generators.DataGenerator;
+import com.cdk.ea.tools.data.generation.StartDataGeneration;
+import com.cdk.ea.tools.data.generation.exception.DataExportException;
+import com.cdk.ea.tools.data.generation.exception.PropertiesInterpretationException;
+import com.cdk.ea.tools.data.generation.exception.QueryInterpretationException;
+import com.cdk.ea.tools.data.generation.exception.TypeInterpretationException;
+import com.cdk.ea.tools.data.generation.generators.DataCollector;
+import com.cdk.ea.tools.data.generation.generators.DataGenerator;
 
 @RunWith(JUnit4.class)
 public class DataGenerationQueryTest {

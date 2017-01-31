@@ -17,9 +17,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.StartDataGeneration;
-import com.cdk.ea.data.generators.DataCollector;
-import com.cdk.ea.data.generators.DataGenerator;
+import com.cdk.ea.tools.data.generation.StartDataGeneration;
+import com.cdk.ea.tools.data.generation.generators.DataCollector;
+import com.cdk.ea.tools.data.generation.generators.DataGenerator;
+import com.cdk.ea.tools.data.generation.query.json.JsonQueryBuilder;
 
 @RunWith(JUnit4.class)
 public class JsonQueryBuilderTest {

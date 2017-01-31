@@ -12,9 +12,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.data.core.DataType;
-import com.cdk.ea.data.core.NumberProperties;
-import com.cdk.ea.data.types.NumberType.NumberTypeBuilder;
+import com.cdk.ea.tools.data.generation.core.DataType;
+import com.cdk.ea.tools.data.generation.core.NumberProperties;
+import com.cdk.ea.tools.data.generation.types.NumberType.NumberTypeBuilder;
 
 @RunWith(JUnit4.class)
 public class NumberGeneratorTest {
