@@ -2,6 +2,7 @@ package com.cdk.ea.data.generators;
 
 import static org.junit.Assert.assertNotNull;
 
+import com.cdk.ea.data.common.NumberUtils;
 import com.cdk.ea.data.common.StringUtils;
 import com.cdk.ea.data.types.NumberType;
 
@@ -20,6 +21,9 @@ public class NumberGenerator implements Generator<Number> {
 	 * unnecessarily. Fix this.
 	 */
 	StringBuilder generatedNumber = new StringBuilder(numberType.getLength());
+	// add first number as natural to avoid 0 in the beginning. 0 in beginning causes length of generated number to be 1 less than desired
+	// example: Long.valueOf("01") gives 1 instead of 01.
+	generatedNumber.append(NumberUtils.randomNatural()); 
 	while(StringUtils.canAppend(generatedNumber)) {
 	    numberType.getProperties()
                 	    .stream()
