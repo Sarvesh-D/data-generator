@@ -27,7 +27,7 @@ public class NumberTypeInterpretationStrategy extends AbstractTypeInterpretation
 	
 	// default number type
 	if(numberProps.isEmpty()) {
-	    log.debug("No Number Properties specified. Defaulting to Integers.");
+	    log.warn("No Number Properties specified. Defaulting to Integers.");
 	    numberProps.add(NumberProperties.INTEGER);
 	}
 

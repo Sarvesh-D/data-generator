@@ -33,7 +33,7 @@ public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationSt
 	
 	// default list properties
 	if(listProps.isEmpty()) {
-	    log.info("No List properties specifed. Defaulting to CUSTOM List");
+	    log.warn("No List properties specifed. Defaulting to CUSTOM List");
 	    listProps.add(ListProperties.CUSTOM);
 	}
 

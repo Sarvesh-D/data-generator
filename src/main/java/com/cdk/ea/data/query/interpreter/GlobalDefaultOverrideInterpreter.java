@@ -30,7 +30,7 @@ public class GlobalDefaultOverrideInterpreter implements Interpreter {
 		    		.findFirst();
 	if(quantityOverride.isPresent()) {
 	    QuantityInterpreter.setDefaultQuantity(quantityOverride.get());
-	    log.debug("Default quantity overriden to [{}]", quantityOverride.get());
+	    log.warn("Default quantity overriden to [{}]", quantityOverride.get());
 	}
 
     }

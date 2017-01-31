@@ -99,9 +99,9 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 
     @Override
     public Collection<DataCollector> generate() {
-	log.debug("beginning to generate data...");
+	log.info("beginning to generate data...");
 	queryRunners.forEach(queryRunner -> dataCollectors.add(queryRunner.run()));
-	log.debug("data generation completed...");
+	log.info("data generation completed...");
 	log.debug("Data Collected by {} data collectors.", dataCollectors.size());
 	// export data if data exporter is instantiated
 	if(!dataExporters.isEmpty())
@@ -110,7 +110,7 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
     }
     
     private void export() {
-	log.debug("beginning to export data...");
+	log.info("beginning to export data...");
 	dataExporters.stream().forEach(dataExporter -> {
 	    try {
 		dataExporter.export(dataCollectors);
@@ -118,7 +118,7 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 		log.error("Error occured while exporting data : {}",e.getMessage());
 	    }
 	});
-	log.debug("data export completed...");
+	log.info("data export completed...");
     }
 
     public static DataGenerator from(String cmdLineQuery) {

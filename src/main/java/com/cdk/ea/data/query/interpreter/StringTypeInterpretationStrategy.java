@@ -34,7 +34,7 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 	
 	// default string type
 	if(stringProps.isEmpty()) {
-	    log.debug("No String Properties specified. Defaulting to ALPHA String.");
+	    log.warn("No String Properties specified. Defaulting to ALPHA String.");
 	    stringProps.add(StringProperties.ALPHA);
 	}
 	
