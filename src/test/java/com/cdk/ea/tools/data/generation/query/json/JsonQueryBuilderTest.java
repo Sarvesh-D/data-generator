@@ -31,7 +31,7 @@ public class JsonQueryBuilderTest {
     @Before
     public void setUp() throws Exception {
 	jsonFilePaths[0] = "src/test/resources/sample.json";
-	createdFilePaths = Arrays.asList("sample_1.csv","sample_2.csv");
+	createdFilePaths = Arrays.asList("sample_1.csv", "sample_2.csv");
 	createdFilePaths.stream().forEach(filePath -> new File(filePath).deleteOnExit());
     }
 
@@ -42,19 +42,19 @@ public class JsonQueryBuilderTest {
 
     @Test
     public final void testExecutionFromJson() {
-	StartDataGeneration.main("json",jsonFilePaths[0],"-X");
+	StartDataGeneration.main("json", jsonFilePaths[0], "-X");
     }
-    
+
     @Test
     public final void testValidJsonWExport() {
 	String cmdQuery_1 = new JsonQueryBuilder().build(jsonFilePaths[0]);
 	assertTrue("CMD query cannot be null or blank", StringUtils.isNotBlank(cmdQuery_1));
 	Collection<DataCollector> dataCollectedForQuery = DataGenerator.from(cmdQuery_1).generate();
 	assertTrue("Four data collector must be present", dataCollectedForQuery.size() == 4);
-	
+
 	Path exportFile1 = Paths.get("sample_1.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile1);
-	
+
 	Path exportFile2 = Paths.get("sample_2.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile2);
     }

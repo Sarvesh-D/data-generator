@@ -21,7 +21,7 @@ import com.cdk.ea.tools.data.generation.types.StringType.StringTypeBuilder;
 
 @RunWith(JUnit4.class)
 public class StringGeneratorTest {
-    
+
     private StringTypeBuilder stringTypeBuilder;
     private char[] validSpecialChars;
 
@@ -29,8 +29,7 @@ public class StringGeneratorTest {
     public void setUp() throws Exception {
 	stringTypeBuilder = (StringTypeBuilder) new StringTypeBuilder().setDataType(DataType.STRING)
 		.setTypeProperties(EnumSet.of(StringProperties.ALPHA)).setLength(10);
-	Arrays.stream(SpecialChar.values())
-		.map(specialChar -> specialChar.getIdentifier())
+	Arrays.stream(SpecialChar.values()).map(specialChar -> specialChar.getIdentifier())
 		.forEach(c -> validSpecialChars = ArrayUtils.add(validSpecialChars, c));
     }
 
@@ -43,82 +42,83 @@ public class StringGeneratorTest {
     @Test
     public final void testAlphaStringGenerated() {
 	stringTypeBuilder.setTypeProperties(EnumSet.of(StringProperties.ALPHA));
-	IntStream.range(0, 50).forEach(i ->
-	    assertTrue("Alpha String must contain only alpha characters", StringUtils.isAlpha(generate()))
-	);
+	IntStream.range(0, 50).forEach(
+		i -> assertTrue("Alpha String must contain only alpha characters", StringUtils.isAlpha(generate())));
     }
-    
+
     @Test
     public final void testNumericStringGenerated() {
 	stringTypeBuilder.setTypeProperties(EnumSet.of(StringProperties.NUMERIC));
-	IntStream.range(0, 50).forEach(i -> 
-	    assertTrue("Numeric String must contain only number characters", StringUtils.isNumeric(generate()))
-	);
+	IntStream.range(0, 50).forEach(i -> assertTrue("Numeric String must contain only number characters",
+		StringUtils.isNumeric(generate())));
     }
-    
+
     @Test
     public final void testSpecicalCharStringGenerated() {
 	stringTypeBuilder.setTypeProperties(EnumSet.of(StringProperties.SPECIAL_CHARS));
-	IntStream.range(0, 50).forEach(i ->
-	    assertTrue("Special Char String must contain only special characters", StringUtils.containsOnly(generate(), validSpecialChars))
-	);
+	IntStream.range(0, 50).forEach(i -> assertTrue("Special Char String must contain only special characters",
+		StringUtils.containsOnly(generate(), validSpecialChars)));
     }
-    
+
     @Test
     public final void testAlphaNumericSpecialCharStringGenerated() {
-	stringTypeBuilder.setTypeProperties(EnumSet.of(StringProperties.ALPHA, StringProperties.NUMERIC, StringProperties.SPECIAL_CHARS));
+	stringTypeBuilder.setTypeProperties(
+		EnumSet.of(StringProperties.ALPHA, StringProperties.NUMERIC, StringProperties.SPECIAL_CHARS));
 	IntStream.range(0, 50).forEach(i -> {
-	    
-	    
+
 	});
 	String generatedString = generate();
-	Arrays.stream(ArrayUtils.toObject(generatedString.toCharArray()))
-		.map(c -> c.toString())
-		.forEach(c -> {
-		    assertTrue("String must contain alphabet, number and valid special characters",
-			    StringUtils.isAlpha(c) || StringUtils.isNumeric(c)
-				    || StringUtils.containsAny(c, validSpecialChars));
-		});
+	Arrays.stream(ArrayUtils.toObject(generatedString.toCharArray())).map(c -> c.toString()).forEach(c -> {
+	    assertTrue("String must contain alphabet, number and valid special characters", StringUtils.isAlpha(c)
+		    || StringUtils.isNumeric(c) || StringUtils.containsAny(c, validSpecialChars));
+	});
     }
-    
+
     @Test
     public final void testStringPrefixGenerated() {
 	final String prefix = "test";
 	stringTypeBuilder.setPrefix(prefix);
-	IntStream.range(0, 50).forEach(i -> assertTrue("String must have prefix ["+prefix+"]", generate().startsWith(prefix)));
+	IntStream.range(0, 50)
+		.forEach(i -> assertTrue("String must have prefix [" + prefix + "]", generate().startsWith(prefix)));
     }
-    	
+
     @Test
     public final void testStringSuffixGenerated() {
 	final String suffix = "bye";
 	stringTypeBuilder.setSuffix(suffix);
-	IntStream.range(0, 50).forEach(i -> assertTrue("String must have suffix ["+suffix+"]", generate().endsWith(suffix)));
+	IntStream.range(0, 50)
+		.forEach(i -> assertTrue("String must have suffix [" + suffix + "]", generate().endsWith(suffix)));
     }
-    
+
     @Test
     public final void testStringPrefixSuffixGenerated() {
 	final String prefix = "test";
 	final String suffix = "bye";
 	stringTypeBuilder.setPrefix(prefix);
 	stringTypeBuilder.setSuffix(suffix);
-	IntStream.range(0, 50).forEach(i -> assertTrue("String must have prefix ["+prefix+"] and suffix ["+suffix+"]", generate().endsWith(suffix)));
+	IntStream.range(0, 50)
+		.forEach(i -> assertTrue("String must have prefix [" + prefix + "] and suffix [" + suffix + "]",
+			generate().endsWith(suffix)));
     }
-    
+
     @Test
     public final void testStringLengthsGenerated() {
 	final int length = 15;
 	stringTypeBuilder.setLength(length);
-	IntStream.range(0, 50).forEach(i -> assertTrue("String must be of length ["+length+"].", generate().length() == length));
+	IntStream.range(0, 50)
+		.forEach(i -> assertTrue("String must be of length [" + length + "].", generate().length() == length));
     }
-    
+
     @Test
     public final void testRandomSpecialCharString() {
 	IntStream.range(0, 50).forEach(i -> {
-	    assertTrue("Five special char must be genrated", com.cdk.ea.tools.data.generation.common.StringUtils.randomSpecialCharString(5).length() == 5);
-	    assertTrue("All special chars must be from SpecialChars enum", StringUtils.containsOnly(com.cdk.ea.tools.data.generation.common.StringUtils.randomSpecialCharString(5), validSpecialChars));
+	    assertTrue("Five special char must be genrated",
+		    com.cdk.ea.tools.data.generation.common.StringUtils.randomSpecialCharString(5).length() == 5);
+	    assertTrue("All special chars must be from SpecialChars enum", StringUtils.containsOnly(
+		    com.cdk.ea.tools.data.generation.common.StringUtils.randomSpecialCharString(5), validSpecialChars));
 	});
     }
-    
+
     private final String generate() {
 	return stringTypeBuilder.buildType().generator().generate();
     }

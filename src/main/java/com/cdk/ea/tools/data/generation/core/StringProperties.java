@@ -15,24 +15,26 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum StringProperties implements Identifier<Character>, TypeProperties {
-    
+
     ALPHA(Properties.ALPHA_STRING.getIdentifier(), CharacterUtils::randomAlphaCharacter),
     NUMERIC(Properties.NUMERIC_STRING.getIdentifier(), CharacterUtils::randomNumericCharacter),
     SPECIAL_CHARS(Properties.SPECIAL_STRING.getIdentifier(), CharacterUtils::randomSpecialCharacter);
-    
-    @Getter private final Character identifier;
- 
-    @Getter private final Generator<Character> generator;
-    
+
+    @Getter
+    private final Character identifier;
+
+    @Getter
+    private final Generator<Character> generator;
+
     public static final Map<Character, StringProperties> ENUM_MAP;
-    
+
     static {
 	ENUM_MAP = Arrays.stream(StringProperties.values())
-			.collect(Collectors.toMap(StringProperties::getIdentifier, Function.identity()));
+		.collect(Collectors.toMap(StringProperties::getIdentifier, Function.identity()));
     }
-    
+
     public static StringProperties of(char identifier) {
-	return ENUM_MAP.get(identifier); 
+	return ENUM_MAP.get(identifier);
     }
-    
+
 }

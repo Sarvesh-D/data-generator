@@ -11,19 +11,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 public abstract class Type {
-    
-    @Getter @Setter private Collection<Object> data;
-    
+
+    @Getter
+    @Setter
+    private Collection<Object> data;
+
     public abstract DataType getDataType();
-    
+
     public Set<? extends TypeProperties> getProperties() {
 	return Collections.EMPTY_SET;
     }
 
     public abstract Generator<?> generator();
-    
+
     public int getLength() {
 	return 1;
     }
-    
+
 }

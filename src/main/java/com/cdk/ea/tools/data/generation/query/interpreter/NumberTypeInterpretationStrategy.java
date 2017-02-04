@@ -18,15 +18,14 @@ public class NumberTypeInterpretationStrategy extends AbstractTypeInterpretation
 	EnumSet<NumberProperties> numberProps = EnumSet.noneOf(NumberProperties.class);
 
 	try {
-	    getPropertyIdentifiers(identifiers).stream()
-	    .map(NumberProperties::of)
-	    .forEach(numberProps::add);
-	} catch(Exception e) {
-	    throw new PropertiesInterpretationException("Invalid Number Property. Possible Values are : "+NumberProperties.ENUM_MAP.keySet());
+	    getPropertyIdentifiers(identifiers).stream().map(NumberProperties::of).forEach(numberProps::add);
+	} catch (Exception e) {
+	    throw new PropertiesInterpretationException(
+		    "Invalid Number Property. Possible Values are : " + NumberProperties.ENUM_MAP.keySet());
 	}
-	
+
 	// default number type
-	if(numberProps.isEmpty()) {
+	if (numberProps.isEmpty()) {
 	    log.warn("No Number Properties specified. Defaulting to Integers.");
 	    numberProps.add(NumberProperties.INTEGER);
 	}

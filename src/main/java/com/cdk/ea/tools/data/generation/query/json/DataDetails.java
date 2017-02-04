@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DataDetails {
-    
+
     private String type;
     private Set<String> properties = new HashSet<>();
     private int length;

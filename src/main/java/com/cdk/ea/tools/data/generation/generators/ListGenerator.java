@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ListGenerator implements Generator<Object> {
-    
+
     private final ListType listType;
 
     @Override
@@ -21,7 +21,7 @@ public class ListGenerator implements Generator<Object> {
 	List<Object> data = new ArrayList<>(listType.getData());
 	return data.get(RandomUtils.nextInt(data.size()));
     }
-    
+
     public static ListGenerator of(ListType listType) {
 	assertNotNull("List Type cannot be null", listType);
 	return new ListGenerator(listType);

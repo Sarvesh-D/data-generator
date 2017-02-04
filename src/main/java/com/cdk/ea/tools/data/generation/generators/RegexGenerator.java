@@ -13,7 +13,7 @@ public class RegexGenerator implements Generator<String> {
 
     @NonNull
     private final Generex regex;
-    
+
     @Override
     public String generate() {
 	return regex.random();

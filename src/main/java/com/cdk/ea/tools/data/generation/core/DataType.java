@@ -24,11 +24,14 @@ public enum DataType implements Identifier<Character>, CMDLineArgHelper {
     LIST('l', ListTypeInterpretationStrategy.class, "generate random values from pre-defined list"),
     REGEX('r', RegexTypeInterpretationStrategy.class, "generate random strings matching regex");
 
-    @Getter private final Character identifier;
-    
-    @Getter private final Class<? extends AbstractTypeInterpretationStrategy> typeInterpretationStrategy;
-    
-    @Getter private final String help;
+    @Getter
+    private final Character identifier;
+
+    @Getter
+    private final Class<? extends AbstractTypeInterpretationStrategy> typeInterpretationStrategy;
+
+    @Getter
+    private final String help;
 
     public static final Map<Character, DataType> ENUM_MAP;
 
@@ -38,7 +41,7 @@ public enum DataType implements Identifier<Character>, CMDLineArgHelper {
     }
 
     public static DataType of(char identifier) {
-	return ENUM_MAP.get(identifier); 
+	return ENUM_MAP.get(identifier);
     }
-    
+
 }

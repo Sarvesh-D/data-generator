@@ -13,10 +13,11 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum RegexProperties implements Identifier<Character>, TypeProperties {
-    
+
     EXPR(Properties.REGEX_EXPR.getIdentifier());
-    
-    @Getter private final Character identifier;
+
+    @Getter
+    private final Character identifier;
 
     public static final Map<Character, RegexProperties> ENUM_MAP;
 
@@ -26,7 +27,7 @@ public enum RegexProperties implements Identifier<Character>, TypeProperties {
     }
 
     public static RegexProperties of(char identifier) {
-	return ENUM_MAP.get(identifier); 
+	return ENUM_MAP.get(identifier);
     }
 
 }

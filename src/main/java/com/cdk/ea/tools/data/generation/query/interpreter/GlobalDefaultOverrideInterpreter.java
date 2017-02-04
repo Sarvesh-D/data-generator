@@ -15,20 +15,20 @@ public class GlobalDefaultOverrideInterpreter implements Interpreter {
 
     @Override
     public void doInterpret(QueryBuilder queryBuilder, String... overrideIdentifiers) {
-	Assert.assertNull("QueryBuilder supplied to GlobalPropertyOverrideInterpreter should always be null", queryBuilder);
+	Assert.assertNull("QueryBuilder supplied to GlobalPropertyOverrideInterpreter should always be null",
+		queryBuilder);
 	/*
-	This interpreters sole job is to override few of the default
-	settings. These default settings overriden by this interpreter
-	applies to all the queries, hence these should not be set 
-	individually in the queryBuilder. These properties of corresponding
-	interceptor should be set/overriden instead. 
-	*/
-	
+	 * This interpreters sole job is to override few of the default
+	 * settings. These default settings overriden by this interpreter
+	 * applies to all the queries, hence these should not be set
+	 * individually in the queryBuilder. These properties of corresponding
+	 * interceptor should be set/overriden instead.
+	 */
+
 	Optional<Integer> quantityOverride = Arrays.stream(overrideIdentifiers)
-				.filter(i -> i.charAt(0) == Identifiers.QUANTITY.getIdentifier())
-				.map(i -> Integer.valueOf(i.substring(1)))
-		    		.findFirst();
-	if(quantityOverride.isPresent()) {
+		.filter(i -> i.charAt(0) == Identifiers.QUANTITY.getIdentifier())
+		.map(i -> Integer.valueOf(i.substring(1))).findFirst();
+	if (quantityOverride.isPresent()) {
 	    QuantityInterpreter.setDefaultQuantity(quantityOverride.get());
 	    log.warn("Default quantity overriden to [{}]", quantityOverride.get());
 	}

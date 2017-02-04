@@ -24,30 +24,31 @@ public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationSt
 	EnumSet<ListProperties> listProps = EnumSet.noneOf(ListProperties.class);
 
 	try {
-	    getPropertyIdentifiers(identifiers).stream()
-	    .map(ListProperties::of)
-	    .forEach(listProps::add);
-	} catch(Exception e) {
-	    throw new PropertiesInterpretationException("Invalid List Property. Possible Values are : "+ListProperties.ENUM_MAP.keySet());
+	    getPropertyIdentifiers(identifiers).stream().map(ListProperties::of).forEach(listProps::add);
+	} catch (Exception e) {
+	    throw new PropertiesInterpretationException(
+		    "Invalid List Property. Possible Values are : " + ListProperties.ENUM_MAP.keySet());
 	}
-	
+
 	// default list properties
-	if(listProps.isEmpty()) {
+	if (listProps.isEmpty()) {
 	    log.warn("No List properties specifed. Defaulting to CUSTOM List");
 	    listProps.add(ListProperties.CUSTOM);
 	}
 
 	listTypeBuilder.setDataType(getDataType(identifiers));
 	listTypeBuilder.setTypeProperties(listProps);
-	
-	log.debug("List Properties set as : {}",listProps);
 
-	if(listProps.contains(ListProperties.CUSTOM)) {
+	log.debug("List Properties set as : {}", listProps);
+
+	if (listProps.contains(ListProperties.CUSTOM)) {
 	    try {
-		String customListDataIdentifier = StringUtils.substringBetween(Arrays.toString(identifiers), Constants.CUSTOM_LIST_VALS_PREFIX, Constants.CUSTOM_LIST_VALS_SUFFIX);
+		String customListDataIdentifier = StringUtils.substringBetween(Arrays.toString(identifiers),
+			Constants.CUSTOM_LIST_VALS_PREFIX, Constants.CUSTOM_LIST_VALS_SUFFIX);
 		String[] customListDataArr = StringUtils.split(customListDataIdentifier, Constants.COMMA);
-		listTypeBuilder.setData(Arrays.stream(customListDataArr).filter(StringUtils::isNotBlank).collect(Collectors.toList()));
-		log.debug("List Data set as : {}",Arrays.toString(customListDataArr));
+		listTypeBuilder.setData(
+			Arrays.stream(customListDataArr).filter(StringUtils::isNotBlank).collect(Collectors.toList()));
+		log.debug("List Data set as : {}", Arrays.toString(customListDataArr));
 	    } catch (Exception e) {
 		throw new QueryInterpretationException("Define Elements for custom list between [[...]]");
 	    }

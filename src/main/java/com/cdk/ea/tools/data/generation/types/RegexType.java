@@ -16,25 +16,25 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Slf4j
 public class RegexType extends Type {
-    
+
     private final DataType dataType;
     private final Set<RegexProperties> properties;
     private final Generex regex;
-    
+
     private RegexType(RegexTypeBuilder builder) {
 	this.dataType = builder.dataType;
 	this.properties = builder.properties;
 	this.regex = builder.regex;
-	log.debug("Regex type formed as : {}",this);
+	log.debug("Regex type formed as : {}", this);
     }
 
     @Override
     public Generator<String> generator() {
 	return RegexGenerator.from(this);
     }
-    
+
     public static class RegexTypeBuilder implements TypeBuilder<RegexType, RegexProperties> {
-	
+
 	private DataType dataType;
 	private Set<RegexProperties> properties;
 	private Generex regex;
@@ -49,12 +49,12 @@ public class RegexType extends Type {
 	public RegexType buildType() {
 	    return new RegexType(this);
 	}
-	
+
 	public TypeBuilder<RegexType, RegexProperties> setRegex(String regex) {
 	    this.regex = new Generex(regex);
 	    return this;
 	}
-	
+
     }
 
 }

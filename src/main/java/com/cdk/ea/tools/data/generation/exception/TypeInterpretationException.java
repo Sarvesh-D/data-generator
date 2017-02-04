@@ -24,15 +24,15 @@ public class TypeInterpretationException extends DataGeneratorException {
 
     private static String typeErrorMessage() {
 	StringBuilder message = new StringBuilder();
-	message.append("Usage:- "+Identifiers.TYPE.getIdentifier()+"<type>\n");
+	message.append("Usage:- " + Identifiers.TYPE.getIdentifier() + "<type>\n");
 	message.append("types:\n");
 	message.append(DataType.ENUM_MAP);
 	return message.toString();
     }
-    
+
     @Override
     public String getMessage() {
-        return "Exception occurred while interpreting Data Type";
+	return "Exception occurred while interpreting Data Type";
     }
 
 }

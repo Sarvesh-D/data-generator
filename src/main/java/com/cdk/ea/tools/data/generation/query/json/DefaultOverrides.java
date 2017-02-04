@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DefaultOverrides {
-    
+
     private int quantity;
 
 }

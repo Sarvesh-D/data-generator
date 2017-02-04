@@ -12,17 +12,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@EqualsAndHashCode(of="name")
-@ToString(of="name")
+@EqualsAndHashCode(of = "name")
+@ToString(of = "name")
 public class DataCollector implements Comparable<DataCollector> {
 
     private final String name;
     // TODO should we make this a Set to collect only unique data?
     private Collection<Object> data = new ArrayList<>();
-    
+
     @Override
     public int compareTo(DataCollector o) {
 	return this.name.compareTo(o.getName());
     }
-    
+
 }

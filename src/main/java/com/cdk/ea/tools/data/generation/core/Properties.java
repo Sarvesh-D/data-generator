@@ -21,9 +21,11 @@ public enum Properties implements Identifier<Character>, CMDLineArgHelper {
     CUSTOM_LIST('u', "custom list"),
     REGEX_EXPR('r', "custom regex");
 
-    @Getter private final Character identifier;
-    
-    @Getter private final String help;
+    @Getter
+    private final Character identifier;
+
+    @Getter
+    private final String help;
 
     public static final Map<Character, Properties> ENUM_MAP;
 
@@ -33,7 +35,7 @@ public enum Properties implements Identifier<Character>, CMDLineArgHelper {
     }
 
     public static Properties of(char identifier) {
-	return ENUM_MAP.get(identifier); 
+	return ENUM_MAP.get(identifier);
     }
-    
+
 }

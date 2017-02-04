@@ -17,13 +17,12 @@ class DataCollectorInterpreter implements Interpreter {
     public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
 	try {
 	    Optional<String> dataCollectorName = Arrays.stream(identifiers)
-	    		.filter(i -> i.charAt(0) == Identifiers.DATA_COLLECTOR_PREFIX.getIdentifier())
-	    		.map(i -> i.substring(1))
-	    		.findFirst();
+		    .filter(i -> i.charAt(0) == Identifiers.DATA_COLLECTOR_PREFIX.getIdentifier())
+		    .map(i -> i.substring(1)).findFirst();
 	    String collectorName;
-	    if(dataCollectorName.isPresent()) {
+	    if (dataCollectorName.isPresent()) {
 		collectorName = dataCollectorName.get();
-		log.debug("Data Collector with name [{}] shall be regiesterd",collectorName);
+		log.debug("Data Collector with name [{}] shall be regiesterd", collectorName);
 	    } else {
 		collectorName = Constants.DEFAULT_DATA_COLLECTOR_NAME;
 		log.warn(
@@ -31,7 +30,7 @@ class DataCollectorInterpreter implements Interpreter {
 			Constants.DEFAULT_DATA_COLLECTOR_NAME);
 	    }
 	    queryBuilder.setDataCollector(new DataCollector(collectorName));
-	} catch(Exception e) {
+	} catch (Exception e) {
 	    log.error(
 		    "Error occured while interpreting data collector name. Default data collector name [{}] shall be used to register data collector.",
 		    Constants.DEFAULT_DATA_COLLECTOR_NAME);

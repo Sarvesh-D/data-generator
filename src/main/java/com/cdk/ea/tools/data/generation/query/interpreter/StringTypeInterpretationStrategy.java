@@ -25,30 +25,29 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 	EnumSet<StringProperties> stringProps = EnumSet.noneOf(StringProperties.class);
 
 	try {
-	    getPropertyIdentifiers(identifiers).stream()
-	    .map(StringProperties::of)
-	    .forEach(stringProps::add);
-	} catch(Exception e) {
-	    throw new PropertiesInterpretationException("Invalid String Property. Possible Values are : "+StringProperties.ENUM_MAP.keySet());
+	    getPropertyIdentifiers(identifiers).stream().map(StringProperties::of).forEach(stringProps::add);
+	} catch (Exception e) {
+	    throw new PropertiesInterpretationException(
+		    "Invalid String Property. Possible Values are : " + StringProperties.ENUM_MAP.keySet());
 	}
-	
+
 	// default string type
-	if(stringProps.isEmpty()) {
+	if (stringProps.isEmpty()) {
 	    log.warn("No String Properties specified. Defaulting to ALPHA String.");
 	    stringProps.add(StringProperties.ALPHA);
 	}
-	
+
 	final String prefix = getPrefix(identifiers);
 	final String suffix = getSuffix(identifiers);
 	final int dataLength = getDataLength(identifiers);
 
 	final int baseStringLength = prefix.length() + suffix.length();
-	if(dataLength < baseStringLength) {
+	if (dataLength < baseStringLength) {
 	    throw new QueryInterpretationException(
 		    String.format("Total String length [%d] should be greater or equal to Base String length [%d]",
 			    dataLength, baseStringLength));
 	}
-	
+
 	stringTypeBuilder.setDataType(getDataType(identifiers));
 	stringTypeBuilder.setTypeProperties(stringProps);
 	stringTypeBuilder.setLength(dataLength - baseStringLength);
@@ -57,22 +56,18 @@ public class StringTypeInterpretationStrategy extends AbstractTypeInterpretation
 
 	queryBuilder.setTypeBuilder(stringTypeBuilder);
     }
-    
+
     private String getPrefix(String... identifiers) {
 	Optional<String> prefix = Arrays.stream(identifiers)
-		.filter(i -> i.charAt(0) == Identifiers.PREFIX.getIdentifier())
-		.map(i -> i.substring(1))
-		.findFirst();
-	
+		.filter(i -> i.charAt(0) == Identifiers.PREFIX.getIdentifier()).map(i -> i.substring(1)).findFirst();
+
 	return prefix.isPresent() ? StringUtils.trimToEmpty(prefix.get()) : Constants.EMPTY_STRING;
     }
-    
+
     private String getSuffix(String... identifiers) {
 	Optional<String> suffix = Arrays.stream(identifiers)
-		.filter(i -> i.charAt(0) == Identifiers.SUFFIX.getIdentifier())
-		.map(i -> i.substring(1))
-		.findFirst();
-	
+		.filter(i -> i.charAt(0) == Identifiers.SUFFIX.getIdentifier()).map(i -> i.substring(1)).findFirst();
+
 	return suffix.isPresent() ? StringUtils.trimToEmpty(suffix.get()) : Constants.EMPTY_STRING;
     }
 

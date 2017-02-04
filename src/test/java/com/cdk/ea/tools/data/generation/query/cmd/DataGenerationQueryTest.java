@@ -39,7 +39,9 @@ public class DataGenerationQueryTest {
 	final String stringQueryWoExport = "(@RandomStrings :s -a -n -s l10 =100)";
 	Collection<DataCollector> dataCollectedForQuery1 = DataGenerator.from(stringQueryWoExport).generate();
 	assertTrue("One data collector must be present", dataCollectedForQuery1.size() == 1);
-	dataCollectedForQuery1.stream().forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100", collector.getData().size() == 100));
+	dataCollectedForQuery1.stream()
+		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
+			collector.getData().size() == 100));
 
     }
 
@@ -48,8 +50,10 @@ public class DataGenerationQueryTest {
 	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings>";
 	Collection<DataCollector> dataCollectedForQuery = DataGenerator.from(stringQueryWExport).generate();
 	assertTrue("One data collector must be present", dataCollectedForQuery.size() == 1);
-	dataCollectedForQuery.stream().forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100", collector.getData().size() == 100));
-	
+	dataCollectedForQuery.stream()
+		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
+			collector.getData().size() == 100));
+
 	Path exportFile1 = Paths.get("stringQueryWExport.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile1);
     }
@@ -73,19 +77,19 @@ public class DataGenerationQueryTest {
 	final String invalidQuery = "(@RandomStrings :s -a l10 =100) f <_Strings =RandomStrings>";
 	DataGenerator.from(invalidQuery);
     }
-    
+
     @Test(expected = QueryInterpretationException.class)
     public final void testInvalidQuery() {
 	final String invalidQuery = "(@RandomStrings :s -a l10 =100) f <>";
 	DataGenerator.from(invalidQuery);
     }
-    
+
     @Test
     public final void testExecutionFromCmd() {
 	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings> -X";
 	StartDataGeneration.main(stringQueryWExport);
     }
-    
+
     @Test
     public final void testDisplayHelp() {
 	StartDataGeneration.main("--help");

@@ -18,14 +18,14 @@ import com.cdk.ea.tools.data.generation.types.ListType.ListTypeBuilder;
 
 @RunWith(JUnit4.class)
 public class ListGeneratorTest {
-    
+
     private ListTypeBuilder listTypeBuilder;
     private Collection<Object> listData;
 
     @Before
     public void setUp() throws Exception {
 	listTypeBuilder = (ListTypeBuilder) new ListTypeBuilder().setDataType(DataType.LIST);
-	listData = new ArrayList<>(Arrays.asList("Sunday","Monday","Tuesday"));
+	listData = new ArrayList<>(Arrays.asList("Sunday", "Monday", "Tuesday"));
 	listTypeBuilder.setData(listData);
     }
 
@@ -37,9 +37,10 @@ public class ListGeneratorTest {
 
     @Test
     public final void testGeneratedValues() {
-	IntStream.range(0, 50).forEach(i -> assertTrue("Generated value must be from pre-defined list values", listData.contains(generate())));
+	IntStream.range(0, 50).forEach(
+		i -> assertTrue("Generated value must be from pre-defined list values", listData.contains(generate())));
     }
-    
+
     private Object generate() {
 	return listTypeBuilder.buildType().generator().generate();
     }

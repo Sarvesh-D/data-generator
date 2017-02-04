@@ -9,10 +9,11 @@ import lombok.ToString;
 @Getter
 @ToString
 @RequiredArgsConstructor
-@EqualsAndHashCode(of="headerName")
+@EqualsAndHashCode(of = "headerName")
 public class CsvColumnDetails {
-    
-    @NonNull private final String headerName;
+
+    @NonNull
+    private final String headerName;
     private final String dataRef;
-    
+
 }

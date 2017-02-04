@@ -16,7 +16,8 @@ public enum ListProperties implements Identifier<Character>, TypeProperties {
 
     CUSTOM(Properties.CUSTOM_LIST.getIdentifier());
 
-    @Getter private final Character identifier;
+    @Getter
+    private final Character identifier;
 
     public static final Map<Character, ListProperties> ENUM_MAP;
 
@@ -26,7 +27,7 @@ public enum ListProperties implements Identifier<Character>, TypeProperties {
     }
 
     public static ListProperties of(char identifier) {
-	return ENUM_MAP.get(identifier); 
+	return ENUM_MAP.get(identifier);
     }
 
 }

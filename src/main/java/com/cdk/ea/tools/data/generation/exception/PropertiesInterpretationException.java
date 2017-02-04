@@ -16,24 +16,24 @@ public class PropertiesInterpretationException extends DataGeneratorException {
     public PropertiesInterpretationException() {
 	log.error(propertyErrorMessage());
     }
-    
+
     public PropertiesInterpretationException(String message) {
 	log.error(message);
 	log.error(propertyErrorMessage());
     }
-    
+
     private static String propertyErrorMessage() {
 	StringBuilder message = new StringBuilder();
 	message.append("Invalid Property\n");
-	message.append("Usage:- "+Identifiers.PROPERTY.getIdentifier()+"<property>\n");
+	message.append("Usage:- " + Identifiers.PROPERTY.getIdentifier() + "<property>\n");
 	message.append("properties:\n");
 	message.append(Properties.ENUM_MAP);
 	return message.toString();
     }
-    
+
     @Override
     public String getMessage() {
-        return "Exception occurred while interpreting properties";
+	return "Exception occurred while interpreting properties";
     }
 
 }

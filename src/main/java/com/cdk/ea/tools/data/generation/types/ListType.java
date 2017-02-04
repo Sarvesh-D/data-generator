@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Slf4j
 public class ListType extends Type {
-    
+
     private final DataType dataType;
     private final Set<ListProperties> properties;
     private final Collection<Object> data;
@@ -25,16 +25,16 @@ public class ListType extends Type {
 	this.dataType = builder.dataType;
 	this.properties = builder.properties;
 	this.data = builder.data;
-	log.debug("List type formed as : {}",this);
+	log.debug("List type formed as : {}", this);
     }
 
     @Override
     public Generator<?> generator() {
 	return ListGenerator.of(this);
     }
-    
+
     public static class ListTypeBuilder implements TypeBuilder<ListType, ListProperties> {
-	
+
 	private DataType dataType;
 	private Set<ListProperties> properties;
 	private Collection<Object> data;
@@ -61,8 +61,7 @@ public class ListType extends Type {
 	public ListType buildType() {
 	    return new ListType(this);
 	}
-	
+
     }
-    
 
 }

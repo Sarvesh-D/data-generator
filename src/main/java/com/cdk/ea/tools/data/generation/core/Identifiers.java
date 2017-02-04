@@ -25,9 +25,11 @@ public enum Identifiers implements Identifier<Character>, CMDLineArgHelper {
     CSV_COL_DATA_REF('=', "CSV Column Data Reference Identifier"),
     PREFIX('P', "String Prefix Identifier"),
     SUFFIX('S', "String Suffix Identifier");
-    
-    @Getter private final Character identifier;
-    
-    @Getter private final String help;
-    
+
+    @Getter
+    private final Character identifier;
+
+    @Getter
+    private final String help;
+
 }

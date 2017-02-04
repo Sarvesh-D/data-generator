@@ -14,7 +14,7 @@ import com.cdk.ea.tools.data.generation.types.RegexType.RegexTypeBuilder;
 
 @RunWith(JUnit4.class)
 public class RegexGeneratorTest {
-    
+
     private RegexTypeBuilder regexTypeBuilder;
 
     @Before
@@ -31,11 +31,12 @@ public class RegexGeneratorTest {
     public final void testGeneratedStrings() {
 	final String regex = "[a-zA-Z0-9]+[@]";
 	regexTypeBuilder.setRegex(regex);
-	IntStream.range(1, 50).forEach(i -> assertTrue("Generated string must match regex -> "+regex, generate().matches(regex)));
+	IntStream.range(1, 50)
+		.forEach(i -> assertTrue("Generated string must match regex -> " + regex, generate().matches(regex)));
     }
 
     private String generate() {
 	return regexTypeBuilder.buildType().generator().generate();
     }
-    
+
 }

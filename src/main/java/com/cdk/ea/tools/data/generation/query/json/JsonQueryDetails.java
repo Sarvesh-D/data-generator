@@ -11,10 +11,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class JsonQueryDetails {
-    
+
     private List<DataGenerationDetails> dataDetails = new ArrayList<>();
     private boolean exportToCsv;
     private List<DataExportDetails> exportDetails = new ArrayList<>();
     private DefaultOverrides defaults;
-    
+
 }

@@ -9,9 +9,9 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(of="csvFile")
+@ToString(of = "csvFile")
 public class DataExportDetails {
-    
+
     private String csvFile;
     private List<CsvColumnDetails> csvDetails = new ArrayList<>();
 

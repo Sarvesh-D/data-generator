@@ -8,14 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SpecialChar implements Identifier<Character> {
 
-    EXCLAMATION('!'),
-    HASH('#'),
-    PERCENT('%'),
-    AT('@'),
-    CARAT('^'),
-    DOLLAR('$'),
-    AMPERSAND('&');
+    EXCLAMATION('!'), HASH('#'), PERCENT('%'), AT('@'), CARAT('^'), DOLLAR('$'), AMPERSAND('&');
 
-    @Getter private Character identifier;
+    @Getter
+    private Character identifier;
 
 }

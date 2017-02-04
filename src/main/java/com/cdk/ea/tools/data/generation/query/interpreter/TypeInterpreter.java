@@ -12,11 +12,11 @@ class TypeInterpreter implements Interpreter {
     public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
 	try {
 	    DataType dataType = AbstractTypeInterpretationStrategy.getDataType(identifiers);
-	    log.debug("DataType set as : {}",dataType);
+	    log.debug("DataType set as : {}", dataType);
 	    dataType.getTypeInterpretationStrategy().newInstance().doInterpret(queryBuilder, identifiers);
 	} catch (InstantiationException | IllegalAccessException e) {
-	    log.error("Error occurred while interpreting type : {}",e.getMessage());
+	    log.error("Error occurred while interpreting type : {}", e.getMessage());
 	}
-    } 
+    }
 
 }

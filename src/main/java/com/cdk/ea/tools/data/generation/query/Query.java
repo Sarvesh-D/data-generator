@@ -18,35 +18,35 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Slf4j
 public final class Query {
-    
+
     private final TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
     private final int quantity;
     private final DataCollector dataCollector;
-    
+
     private Query(QueryBuilder queryBuilder) {
 	this.typeBuilder = queryBuilder.typeBuilder;
 	this.quantity = queryBuilder.quantity;
 	this.dataCollector = queryBuilder.dataCollector;
-	log.debug("Query formed as => {}",this);
+	log.debug("Query formed as => {}", this);
     }
-    
+
     @Setter
     @Slf4j
     public static class QueryBuilder implements Builder<Query> {
-	
+
 	private TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
 	private int quantity;
 	private DataCollector dataCollector;
 
 	@Override
 	public Query build(String... queryParams) {
-	    log.debug("Building Query Instance from params {}",Arrays.toString(queryParams));
+	    log.debug("Building Query Instance from params {}", Arrays.toString(queryParams));
 	    QueryBuilder queryBuilder = new QueryBuilder();
 	    QueryInterpreter queryInterpreter = new QueryInterpreter();
 	    queryInterpreter.doInterpret(queryBuilder, queryParams);
 	    return new Query(queryBuilder);
 	}
-	
+
     }
-    
+
 }
