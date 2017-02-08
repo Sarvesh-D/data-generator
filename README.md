@@ -21,7 +21,7 @@ Download the jar and goto the jar directory. Open Terminal/CMD and execute below
     java -jar <name of jar file> --help
 
 ####Using JSON file
-The tool is designed for simple usage via JSON file. The JSON file tells the tool how the data should be generated and exported. See JSON structure [here]().
+The tool is designed for simple usage via JSON file. The JSON file tells the tool how the data should be generated and exported. See JSON structure [here](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage:).
 
     java -jar <name of jar file> json /path/to/json/file
 
@@ -56,9 +56,9 @@ This option is available for advanced users or for the users who want to quickly
 
 ## Links
 
- 1. [Tool usage confluence page link]()
- 2. [JSON format link]()
- 3. [Code Repository link]()
- 4. [Reference Documentation link]()
- 5. [JIRA/Issues link]()
+ 1. [Data-Generator Wiki](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki)
+ 2. [JSON Format](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage:)
+ 3. [Examples](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Examples)
+ 4. [Code Repository]()
+ 5. [JIRA/Issues]()
 
