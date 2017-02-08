@@ -3,6 +3,7 @@
 ## Synopsis
 ### Tool for generating and exporting random data. Mostly used for generating large amount of random data for performing load/regression tests.
 
+
 ## Features
 
  - Generate random Strings, Numbers.
@@ -12,15 +13,18 @@
  - Export generated data to CSV file(s).
  
 
+
 ## Installation
 
     Add groupId, artifactId info here for downloading the jar
     
 
+
 ## Usage
 Download the jar and goto the jar directory. Open Terminal/CMD and execute below:
 
     java -jar <name of jar file> --help
+
 
 
 #### Using JSON file
@@ -29,8 +33,10 @@ The tool is designed for simple usage via JSON file. The JSON file tells the too
     java -jar <name of jar file> json /path/to/json/file
 
 
+
 #### Using CMD line Queries
 This option is available for advanced users or for the users who want to quickly see the tool in action. The arguments passed to the tool from CMD line are used to form queries which are then executed to generate and export data. There are two categories of queries viz. DataGenerationQuery and DataExportQuery.
+
 
 
 ##### Query Format:
@@ -38,9 +44,11 @@ This option is available for advanced users or for the users who want to quickly
     (DataGenQuery_1 | DataGenQuery_2 | ...) f <DataExportQuery_1 | DataExportQuery_2 | ...>
 
 
+
 ##### Data Generation Query Format
 
     @DataCollectorName :DataType -DataProperty1 -DataProperty2 lDataLength =DataQuantity
+
 
 
 ##### Data Generation Query Examples:
@@ -52,9 +60,11 @@ This option is available for advanced users or for the users who want to quickly
     @RandomValueFromCustomList :l -u [[Value1,Value2,Value3]] =20
 
 
+
 ##### Data Export Query Format:
 
     PathToCsvFile _headerName1 =dataCollectorName1 _headerName2 =dataCollectorName2
+
 
 
 ##### Data Generation Query Examples:
@@ -62,6 +72,7 @@ This option is available for advanced users or for the users who want to quickly
     /Users/any/randomData1.csv _FirstNames =RandomAlphaStrings _ListValues =RandomValueFromCustomList
     
     /Users/any/randomData2.csv _FirstNames =RandomAlphaStrings _LastNames =RandomAlphaStrings
+
 
 
 ## Links
