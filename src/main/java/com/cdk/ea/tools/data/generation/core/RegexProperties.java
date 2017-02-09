@@ -11,9 +11,19 @@ import com.cdk.ea.tools.data.generation.types.TypeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Container for the Properties supported by {@link DataType#REGEX}.
+ * Each Regex Property is identified <i>Uniquely</i> by its character identifier.
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 07-02-2017
+ * @version 1.0
+ */
 @AllArgsConstructor
 public enum RegexProperties implements Identifier<Character>, TypeProperties {
 
+    /**
+     * Identifier for custom/user-defined regex
+     */
     EXPR(Properties.REGEX_EXPR.getIdentifier());
 
     @Getter

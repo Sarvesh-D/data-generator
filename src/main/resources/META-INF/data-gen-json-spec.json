@@ -1,0 +1,37 @@
+{
+  "dataDetails": [ // Array corresponding to one or more data generation queries
+    {
+      "name": "Strings", // Name of the data collector
+      "details": { // Details of the data this query will generate
+        "type": "STRING", // Type of the data. Accepatable values: "STRING", "NUMBER", "LIST", "REGEX"
+        "properties": [ 
+          // One or more appropriate property for the data type. Acceptable values are: 
+          "ALPHA_STRING", "NUMERIC_STRING", "SPECIAL_STRING", "INTEGER_NUMBER", "CUSTOM_LIST", "REGEX_EXPR"
+        ],
+        "length": 10, // valid positive int number for the length of a single data record generated.
+        "list": [
+          // Array corresponding to one or more values to be picked from when generating data from custom list
+        ],
+        "regex": "[a-zA-Z]+[@][0-9]+", // valid regex to generate random Strings that will match regex pattern
+        "prefix": "pre", // value to be used as prefix with each String type data generated.
+        "suffix": "suf" // value to be used as suffix with each String type data generated.
+      },
+      "quantity": 10 // valid positive int number for the quantity of a data this query should generate.
+    }
+  ],
+  "exportToCsv": true, // boolean. should the generated data be exported to CSV file. false by default.
+  "exportDetails": [ // Array corresponding to one or more data export queries
+    {
+      "csvFile": "sample_1.csv", // path of the CSV file where the data needs to be saved.
+      "csvDetails": [ // Array corresponding to column details for the CSV file.
+        {
+          "headerName": "FunnyStrings", // name for CSV header
+          "dataRef": "Strings" // name of data collector whose collected data should be used to populate this column
+        }
+      ]
+    }
+  ],
+  "defaults": { // some properties whose default nature can be changed
+    "quantity": 1000 // If set, changes the default for quantity of data from 100 to 1000.
+  }
+}

@@ -13,11 +13,29 @@ import com.cdk.ea.tools.data.generation.types.TypeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Container for the Properties supported by {@link DataType#STRING}.
+ * Each String Property is identified <i>Uniquely</i> by its character identifier.
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 07-02-2017
+ * @version 1.0
+ */
 @AllArgsConstructor
 public enum StringProperties implements Identifier<Character>, TypeProperties {
 
+    /**
+     * Identifier for String containing only alpha characters
+     */
     ALPHA(Properties.ALPHA_STRING.getIdentifier(), CharacterUtils::randomAlphaCharacter),
+    
+    /**
+     * Identifier for String containing only numeric characters
+     */
     NUMERIC(Properties.NUMERIC_STRING.getIdentifier(), CharacterUtils::randomNumericCharacter),
+    
+    /**
+     * Identifier for String containing only special characters
+     */
     SPECIAL_CHARS(Properties.SPECIAL_STRING.getIdentifier(), CharacterUtils::randomSpecialCharacter);
 
     @Getter

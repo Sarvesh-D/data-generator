@@ -13,9 +13,19 @@ import com.cdk.ea.tools.data.generation.types.TypeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Container for the Properties supported by {@link DataType#NUMBER}.
+ * Each Number Property is identified <i>Uniquely</i> by its character identifier.
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 07-02-2017
+ * @version 1.0
+ */
 @AllArgsConstructor
 public enum NumberProperties implements Identifier<Character>, TypeProperties {
 
+    /**
+     * Identifier for generating integer numbers
+     */
     INTEGER(Properties.INTEGER_NUMBER.getIdentifier(), NumberUtils::randomInteger);
 
     @Getter

@@ -5,6 +5,13 @@ import com.cdk.ea.tools.data.generation.common.Identifier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Container to hold special characters that will be 
+ * used to generate Strings which must have special characters.
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 09-02-2017
+ * @version 1.0
+ */
 @AllArgsConstructor
 public enum SpecialChar implements Identifier<Character> {
 
