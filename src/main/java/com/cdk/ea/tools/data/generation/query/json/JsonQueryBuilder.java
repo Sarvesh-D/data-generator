@@ -1,6 +1,8 @@
 package com.cdk.ea.tools.data.generation.query.json;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -21,11 +23,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JsonQueryBuilder implements Builder<String> {
 
-    // TODO see about accepting multiple JSON files. Currently only first JSON
-    // file will be used to generate data.
     @Override
     public String build(String... jsonFiles) {
-	String jsonFile = jsonFiles[0]; // convert one JSON file to CMD query.
+	List<String> cliQueries = new ArrayList<>();
+	Arrays.stream(jsonFiles).forEach(jsonFile -> cliQueries.add(buildCLIQueryFrom(jsonFile)));
+	return cliQueries.stream().collect(Collectors.joining(Constants.CLI_QUERY_SEPARATOR));
+    }
+
+    private String buildCLIQueryFrom(String jsonFile) {
 	log.debug("Building query from JSON file {}", jsonFile);
 	ObjectMapper mapper = new ObjectMapper();
 	JsonQueryDetails jsonQueryDetails = null;
@@ -68,6 +73,7 @@ public class JsonQueryBuilder implements Builder<String> {
 	    // overrrides must be at end of the CMD query
 	    if (null != jsonQueryDetails.getDefaults()) {
 		log.debug("Encountered override flag");
+		cmdQueryBuilder.append(Constants.SPACE);
 		cmdQueryBuilder.append(Constants.GLOBAL_OVERRIDE);
 		cmdQueryBuilder.append(Constants.SPACE);
 		appendOverrides(cmdQueryBuilder, jsonQueryDetails.getDefaults());
@@ -77,7 +83,6 @@ public class JsonQueryBuilder implements Builder<String> {
 	    throw new QueryInterpretationException(
 		    "Error while Building CMD query from JSON file [" + jsonFile + "]. Error : " + e.getMessage());
 	}
-
 	return cmdQueryBuilder.toString();
     }
 

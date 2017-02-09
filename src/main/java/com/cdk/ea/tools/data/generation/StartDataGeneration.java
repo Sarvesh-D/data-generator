@@ -17,6 +17,7 @@ import com.cdk.ea.tools.data.generation.core.Constants;
 import com.cdk.ea.tools.data.generation.core.DataType;
 import com.cdk.ea.tools.data.generation.core.Identifiers;
 import com.cdk.ea.tools.data.generation.core.Properties;
+import com.cdk.ea.tools.data.generation.exception.DataGeneratorException;
 import com.cdk.ea.tools.data.generation.generators.DataGenerator;
 import com.cdk.ea.tools.data.generation.query.json.JsonQueryBuilder;
 
@@ -25,9 +26,10 @@ import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 
 /**
- * Main class which starts the execution of data-generator tool.
- * For more information on tool usage see the confluence link.
- * @see TODO add confluence page link
+ * Main class which starts the execution of data-generator tool. For more
+ * information on tool usage see the <a href=
+ * "https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki">confluence
+ * link</a>.
  * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
  * @since 07-02-2017
  * @version 1.0
@@ -55,8 +57,11 @@ public class StartDataGeneration {
      * Starts the execution of data generation and export.
      * Apart from data-generation and data-export queries one can pass flags such as
      * -X (for debug) and --help (for help).
-     * For complete tool usage see visit TODO add link
-     * @param args
+     * For more
+     * information on tool usage see the <a href=
+     * "https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki">confluence
+     * link</a>.
+     * @param args for data generation and/or export
      */
     public static void main(String... args) {
 	if (ArrayUtils.isEmpty(args)) {
@@ -73,7 +78,7 @@ public class StartDataGeneration {
 	    console.setThreshold(Level.DEBUG);
 
 	try {
-	    String finalCMDQuery;
+	    String[] cliQueries;
 	    long start = System.nanoTime();
 
 	    if (Constants.JSON.equals(args[0])) {
@@ -81,13 +86,16 @@ public class StartDataGeneration {
 		String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION))
 			.toArray(size -> new String[size]);
 		log.debug("JSON files to generate data : {}", Arrays.toString(jsonFiles));
-		finalCMDQuery = new JsonQueryBuilder().build(jsonFiles);
+		cliQueries = StringUtils.split(new JsonQueryBuilder().build(jsonFiles), Constants.CLI_QUERY_SEPARATOR) ;
 	    } else
-		finalCMDQuery = StringUtils.join(args, Constants.SPACE);
+		cliQueries = StringUtils.split(StringUtils.join(args, Constants.SPACE), Constants.CLI_QUERY_SEPARATOR);
 
-	    log.debug("Final query to generate data => {}", finalCMDQuery);
+	    if(ArrayUtils.isEmpty(cliQueries))
+		throw new DataGeneratorException("No queries supplied. You must supply atleast one CLI query or single JSON to proceed");
 	    
-	    DataGenerator.from(finalCMDQuery).generate();
+	    log.debug("Total {} Queries passed to data-generator. Queries formed are {}", cliQueries.length, Arrays.toString(cliQueries));
+	    
+	    Arrays.stream(cliQueries).forEach(cliQuery -> DataGenerator.from(cliQuery).generate());
 
 	    long end = System.nanoTime();
 	    double timeTaken = (end - start) / 1000000000.0;
