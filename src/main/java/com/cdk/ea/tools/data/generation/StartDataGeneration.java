@@ -82,10 +82,10 @@ public class StartDataGeneration {
 	    long start = System.nanoTime();
 
 	    if (Constants.JSON.equals(args[0])) {
-		log.debug("JSON format selected to generate data");
+		log.info("JSON format selected to generate data");
 		String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION))
 			.toArray(size -> new String[size]);
-		log.debug("JSON files to generate data : {}", Arrays.toString(jsonFiles));
+		log.info("JSON files to generate data : {}", Arrays.toString(jsonFiles));
 		cliQueries = StringUtils.split(new JsonQueryBuilder().build(jsonFiles), Constants.CLI_QUERY_SEPARATOR) ;
 	    } else
 		cliQueries = StringUtils.split(StringUtils.join(args, Constants.SPACE), Constants.CLI_QUERY_SEPARATOR);
