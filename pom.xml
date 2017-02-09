@@ -3,14 +3,14 @@
 
 	<groupId>com.cdk.ea</groupId>
 	<artifactId>data-generator</artifactId>
-	<version>1.5-SNAPSHOT</version>
+	<version>RC2</version>
 	<packaging>jar</packaging>
 
 	<name>data-generator</name>
 
 	<scm>
 		<connection>scm:git:git://dubeysa@stash.cdk.com/scm/~dubeysa/data-generator.git</connection>
-		<tag>HEAD</tag>
+		<tag>RC2</tag>
 	</scm>
 
 	<properties>
