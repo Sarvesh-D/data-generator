@@ -15,9 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.tools.data.generation.generators.DataCollector;
-import com.cdk.ea.tools.data.generation.generators.DataGenerator;
-import com.cdk.ea.tools.data.generation.query.json.JsonQueryBuilder;
+import com.cdk.ea.tools.data.generation.StartDataGeneration;
 import com.opencsv.CSVReader;
 
 @RunWith(JUnit4.class)
@@ -58,18 +56,18 @@ public class DataExportTest {
 
     @Test
     public final void testDataExportFromJson() {
-	final String jsonUserMgmtQuery = new JsonQueryBuilder().build("src/test/resources/sample.json");
-	Collection<DataCollector> dataCollectedForJsonQuery = DataGenerator.from(jsonUserMgmtQuery).generate();
-	assertTrue("4 data collector must be present", dataCollectedForJsonQuery.size() == 4);
+	StartDataGeneration.main(org.apache.commons.lang3.StringUtils.split("json src/test/resources/sample.json -X"));
 
 	CSVReader reader = null;
 	try {
 	    reader = new CSVReader(new FileReader("sample_1.csv"));
-	    assertTrue("Number of lines in sample_1.csv file should be 1001 including csv header",
-		    reader.readAll().size() == 1001);
+	    int lines = reader.readAll().size();
+	    assertTrue("Number of lines in sample_1.csv file should be 201 including csv header",
+		    lines == 201);
 	    reader = new CSVReader(new FileReader("sample_2.csv"));
+	    lines = reader.readAll().size();
 	    assertTrue("Number of lines in sample_2.csv file should be 11 including csv header",
-		    reader.readAll().size() == 11);
+		    lines == 11);
 	} catch (IOException e) {
 	    fail(e.getMessage());
 	} finally {
