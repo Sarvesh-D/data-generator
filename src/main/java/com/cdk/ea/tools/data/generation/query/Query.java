@@ -14,22 +14,26 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Value class for holding a single DataGeneration Query
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 10-02-2017
+ * @version 1.0
+ * @see QueryBuilder
+ */
 @Getter
 @ToString
 @Slf4j
 public final class Query {
 
-    private final TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
-    private final int quantity;
-    private final DataCollector dataCollector;
-
-    private Query(QueryBuilder queryBuilder) {
-	this.typeBuilder = queryBuilder.typeBuilder;
-	this.quantity = queryBuilder.quantity;
-	this.dataCollector = queryBuilder.dataCollector;
-	log.debug("Query formed as => {}", this);
-    }
-
+    /**
+     * Helper Builder class for building {@link Query} object
+     * 
+     * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+     * @since 10-02-2017
+     * @version 1.0
+     */
     @Setter
     @Slf4j
     public static class QueryBuilder implements Builder<Query> {
@@ -47,6 +51,18 @@ public final class Query {
 	    return new Query(queryBuilder);
 	}
 
+    }
+
+    private final TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
+    private final int quantity;
+
+    private final DataCollector dataCollector;
+
+    private Query(QueryBuilder queryBuilder) {
+	this.typeBuilder = queryBuilder.typeBuilder;
+	this.quantity = queryBuilder.quantity;
+	this.dataCollector = queryBuilder.dataCollector;
+	log.debug("Query formed as => {}", this);
     }
 
 }

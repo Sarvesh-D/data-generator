@@ -23,6 +23,14 @@ import com.cdk.ea.tools.data.generation.query.json.CsvColumnDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Core Class for Data Generator. This class is responsible for executing the
+ * data generation and data export queries.
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 10-02-2017
+ * @version 1.0
+ */
 @Slf4j
 public class DataGenerator implements Generator<Collection<DataCollector>> {
 
@@ -32,6 +40,13 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 
     private List<DataExporter> dataExporters = new ArrayList<>();
 
+    /**
+     * Constructor for registering {@link #dataQueryRunners},
+     * {@link #dataCollectors} and {@link #dataExporters}
+     * 
+     * @param cmdLineQuery
+     *            having the details for the queries
+     */
     private DataGenerator(String cmdLineQuery) {
 	String[] dataGenQueries = buildDataGenQueries(cmdLineQuery);
 	log.debug("Data Generation Queries : {}", Arrays.toString(dataGenQueries));
@@ -43,8 +58,122 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	    log.debug("Data Export Queries : {}", Arrays.toString(dataExportQueries));
 	    registerDataExporters(dataExportQueries);
 	}
+
+	checkAndOverrideQueryDefaults(cmdLineQuery);
     }
 
+    /**
+     * Factory method to get instance of DataGenerator
+     * 
+     * @param cmdLineQuery
+     * @return {@link DataGenerator}
+     */
+    public static DataGenerator from(String cmdLineQuery) {
+	return new DataGenerator(cmdLineQuery);
+    }
+
+    /**
+     * {@inheritDoc}. The data collected by this method will be exported if any
+     * data exporters have been registered.
+     * 
+     * @return This method will return Collection of data as collected by
+     *         various dataCollectors.
+     */
+    @Override
+    public Collection<DataCollector> generate() {
+	log.info("beginning to generate data...");
+	dataQueryRunners.forEach(queryRunner -> dataCollectors.add(queryRunner.run()));
+	log.info("data generation completed...");
+	log.debug("Data Collected by {} data collectors.", dataCollectors.size());
+	// export data at-least one data exporter is registered.
+	if (!dataExporters.isEmpty())
+	    export();
+	return dataCollectors;
+    }
+
+    /**
+     * Extracts one or more dataExportQueries from the complete CLI Query
+     * passed.
+     * 
+     * @param cmdLineQuery
+     *            to extract data export queries from
+     * @return array containing one or more dataExport queries.
+     */
+    private String[] buildDataExportQueries(String cmdLineQuery) {
+	String completeDataExportQueryString = StringUtils.substringBetween(cmdLineQuery,
+		Identifiers.DATA_EXPORT_QUERY_PREFIX.getIdentifier().toString(),
+		Identifiers.DATA_EXPORT_QUERY_SUFFIX.getIdentifier().toString());
+
+	// gather all CMD queries to export data
+	String[] dataExportQueries = StringUtils.split(completeDataExportQueryString,
+		Identifiers.QUERY_SEPARATOR.getIdentifier());
+
+	if (org.apache.commons.lang3.ArrayUtils.isEmpty(dataExportQueries))
+	    throw new QueryInterpretationException(
+		    "No Data Export queries found. Specify data generation queries within <...>");
+	return dataExportQueries;
+    }
+
+    /**
+     * Extracts one or more dataGenerationQueries from the complete CLI Query
+     * passed.
+     * 
+     * @param cmdLineQuery
+     *            to extract data generation queries from
+     * @return array containing one or more dataGeneration queries.
+     */
+    private String[] buildDataGenQueries(String cmdLineQuery) {
+	String completeDataGenQueryString = StringUtils.substringBetween(cmdLineQuery,
+		Identifiers.DATA_GEN_QUERY_PREFIX.getIdentifier().toString(),
+		Identifiers.DATA_GEN_QUERY_SUFFIX.getIdentifier().toString());
+
+	// gather all CMD queries to generate data
+	String[] dataGenQueries = StringUtils.split(completeDataGenQueryString,
+		Identifiers.QUERY_SEPARATOR.getIdentifier());
+
+	if (org.apache.commons.lang3.ArrayUtils.isEmpty(dataGenQueries))
+	    throw new QueryInterpretationException(
+		    "No Data Generation queries found. Specify data generation queries within (...)");
+	return dataGenQueries;
+    }
+
+    /**
+     * Checks and invokes {@link GlobalDefaultOverrideInterpreter} if global
+     * override flag is present
+     * 
+     * @param cmdLineQuery
+     */
+    private void checkAndOverrideQueryDefaults(String cmdLineQuery) {
+	log.debug("checking for global overrides flag if present");
+	// see if there are global overrides
+	if (cmdLineQuery.contains(Constants.GLOBAL_OVERRIDE)) {
+	    log.debug("Query contains global override flag {}.", Constants.GLOBAL_OVERRIDE);
+	    new GlobalDefaultOverrideInterpreter().doInterpret(null,
+		    StringUtils.split(StringUtils.substringAfter(cmdLineQuery, Constants.GLOBAL_OVERRIDE)));
+	}
+    }
+
+    /**
+     * Exports the data using various data exporters registered.
+     */
+    private void export() {
+	log.info("beginning to export data...");
+	dataExporters.stream().forEach(dataExporter -> {
+	    try {
+		dataExporter.export(dataCollectors);
+	    } catch (DataExportException e) {
+		log.error("Error occured while exporting data : {}", e.getMessage());
+	    }
+	});
+	log.info("data export completed...");
+    }
+
+    /**
+     * Registers one or more data exporters as specified by dataExportQueries
+     * 
+     * @param dataExportQueries
+     *            for registering one or more dataExporters
+     */
     private void registerDataExporters(String[] dataExportQueries) {
 	// build data-exporter for each data export query and add to
 	// dataExporters
@@ -81,44 +210,12 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 
     }
 
-    private String[] buildDataExportQueries(String cmdLineQuery) {
-	String completeDataExportQueryString = StringUtils.substringBetween(cmdLineQuery,
-		Identifiers.DATA_EXPORT_QUERY_PREFIX.getIdentifier().toString(),
-		Identifiers.DATA_EXPORT_QUERY_SUFFIX.getIdentifier().toString());
-
-	// gather all CMD queries to export data
-	String[] dataExportQueries = StringUtils.split(completeDataExportQueryString,
-		Identifiers.QUERY_SEPARATOR.getIdentifier());
-
-	if (org.apache.commons.lang3.ArrayUtils.isEmpty(dataExportQueries))
-	    throw new QueryInterpretationException(
-		    "No Data Export queries found. Specify data generation queries within <...>");
-	return dataExportQueries;
-    }
-
-    private boolean shouldExportToFile(String cmdLineQuery) {
-	// check query for any data exporters
-	boolean exportToFile = ArrayUtils.contains(StringUtils.split(cmdLineQuery),
-		Identifiers.FILE.getIdentifier().toString());
-	log.info("Export data to CSV set to {}", exportToFile);
-	return exportToFile;
-    }
-
-    private String[] buildDataGenQueries(String cmdLineQuery) {
-	String completeDataGenQueryString = StringUtils.substringBetween(cmdLineQuery,
-		Identifiers.DATA_GEN_QUERY_PREFIX.getIdentifier().toString(),
-		Identifiers.DATA_GEN_QUERY_SUFFIX.getIdentifier().toString());
-
-	// gather all CMD queries to generate data
-	String[] dataGenQueries = StringUtils.split(completeDataGenQueryString,
-		Identifiers.QUERY_SEPARATOR.getIdentifier());
-
-	if (org.apache.commons.lang3.ArrayUtils.isEmpty(dataGenQueries))
-	    throw new QueryInterpretationException(
-		    "No Data Generation queries found. Specify data generation queries within (...)");
-	return dataGenQueries;
-    }
-
+    /**
+     * Registers the query runners for given dataGeneration queries. These query
+     * runners are then invoked to start data generation process.
+     * 
+     * @param dataGenQueries
+     */
     private void registerDataQueryRunners(String[] dataGenQueries) {
 	// build query runner for each data generate query and add to
 	// dataQueryRunners
@@ -128,38 +225,19 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	log.debug("Total Query Runners registered {}.", dataQueryRunners.size());
     }
 
-    @Override
-    public Collection<DataCollector> generate() {
-	log.info("beginning to generate data...");
-	dataQueryRunners.forEach(queryRunner -> dataCollectors.add(queryRunner.run()));
-	log.info("data generation completed...");
-	log.debug("Data Collected by {} data collectors.", dataCollectors.size());
-	// export data if data exporter is instantiated
-	if (!dataExporters.isEmpty())
-	    export();
-	return dataCollectors;
-    }
-
-    private void export() {
-	log.info("beginning to export data...");
-	dataExporters.stream().forEach(dataExporter -> {
-	    try {
-		dataExporter.export(dataCollectors);
-	    } catch (DataExportException e) {
-		log.error("Error occured while exporting data : {}", e.getMessage());
-	    }
-	});
-	log.info("data export completed...");
-    }
-
-    public static DataGenerator from(String cmdLineQuery) {
-	// see if there are global overrides
-	if (cmdLineQuery.contains(Constants.GLOBAL_OVERRIDE)) {
-	    log.debug("Query contains global override flag {}.", Constants.GLOBAL_OVERRIDE);
-	    new GlobalDefaultOverrideInterpreter().doInterpret(null,
-		    StringUtils.split(StringUtils.substringAfter(cmdLineQuery, Constants.GLOBAL_OVERRIDE)));
-	}
-	return new DataGenerator(cmdLineQuery);
+    /**
+     * Checks the CLI query for data export flag
+     * 
+     * @param cmdLineQuery
+     * @return <code>True</code> if data export flag is present,
+     *         <code>False</code> otherwise.
+     */
+    private boolean shouldExportToFile(String cmdLineQuery) {
+	// check query for any data exporters
+	boolean exportToFile = ArrayUtils.contains(StringUtils.split(cmdLineQuery),
+		Identifiers.FILE.getIdentifier().toString());
+	log.info("Export data to CSV set to {}", exportToFile);
+	return exportToFile;
     }
 
 }

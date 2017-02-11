@@ -10,13 +10,33 @@ import com.cdk.ea.tools.data.generation.core.RegexProperties;
 import com.cdk.ea.tools.data.generation.exception.PropertiesInterpretationException;
 import com.cdk.ea.tools.data.generation.exception.QueryInterpretationException;
 import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
+import com.cdk.ea.tools.data.generation.types.RegexType;
 import com.cdk.ea.tools.data.generation.types.RegexType.RegexTypeBuilder;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Implementation for interpreting details of {@link RegexType} from
+ * identifiers.
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 11-02-2017
+ * @version 1.0
+ * @see RegexType
+ * @see RegexTypeBuilder
+ */
 @Slf4j
 public class RegexTypeInterpretationStrategy extends AbstractTypeInterpretationStrategy {
 
+    /**
+     * Interprets and populates the {@link RegexTypeBuilder} and attaches it to
+     * {@link QueryBuilder}
+     * 
+     * @throws PropertiesInterpretationException
+     *             if invalid {@link RegexProperties} are found
+     * @throws QueryInterpretationException
+     *             if no regex is defined for {@link RegexType}
+     */
     @Override
     public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
 	RegexTypeBuilder regexTypeBuilder = new RegexTypeBuilder();
@@ -26,7 +46,7 @@ public class RegexTypeInterpretationStrategy extends AbstractTypeInterpretationS
 	    getPropertyIdentifiers(identifiers).stream().map(RegexProperties::of).forEach(regexProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
-		    "Invalid Regex Property. Possible Values are : " + RegexProperties.ENUM_MAP.keySet());
+		    "Invalid Regex Property. Possible Values are : " + RegexProperties.getEnumMap().keySet());
 	}
 
 	regexTypeBuilder.setDataType(getDataType(identifiers));

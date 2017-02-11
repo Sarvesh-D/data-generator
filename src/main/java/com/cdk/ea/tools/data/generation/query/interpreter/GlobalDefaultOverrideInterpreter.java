@@ -10,20 +10,30 @@ import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Interpreter to override some of the default values that data-generator uses.
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 10-02-2017
+ * @version 1.0
+ */
 @Slf4j
 public class GlobalDefaultOverrideInterpreter implements Interpreter {
 
+    /**
+     * {@inheritDoc}. This method looks up for any values that must be overriden
+     * and accordingly updates them. Each time this method is invoked the
+     * defaults of data-generator will be overriden accordingly. This
+     * interpreters sole job is to override few of the default settings. These
+     * default settings overriden by this interpreter applies to all the
+     * queries, hence these should not be set individually in the queryBuilder.
+     * These properties of corresponding interpreter should be set/overriden
+     * instead.
+     */
     @Override
     public void doInterpret(QueryBuilder queryBuilder, String... overrideIdentifiers) {
 	Assert.assertNull("QueryBuilder supplied to GlobalPropertyOverrideInterpreter should always be null",
 		queryBuilder);
-	/*
-	 * This interpreters sole job is to override few of the default
-	 * settings. These default settings overriden by this interpreter
-	 * applies to all the queries, hence these should not be set
-	 * individually in the queryBuilder. These properties of corresponding
-	 * interceptor should be set/overriden instead.
-	 */
 
 	Optional<Integer> quantityOverride = Arrays.stream(overrideIdentifiers)
 		.filter(i -> i.charAt(0) == Identifiers.QUANTITY.getIdentifier())

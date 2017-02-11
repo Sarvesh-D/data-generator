@@ -1,6 +1,6 @@
 package com.cdk.ea.tools.data.generation.generators;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +16,14 @@ import org.junit.runners.JUnit4;
 import com.cdk.ea.tools.data.generation.core.DataType;
 import com.cdk.ea.tools.data.generation.types.ListType.ListTypeBuilder;
 
+/**
+ * Test Class for testing the {@link ListGenerator}
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ *
+ * @since 11-02-2017
+ * @version 1.0
+ */
 @RunWith(JUnit4.class)
 public class ListGeneratorTest {
 

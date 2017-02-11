@@ -23,6 +23,14 @@ import com.cdk.ea.tools.data.generation.exception.TypeInterpretationException;
 import com.cdk.ea.tools.data.generation.generators.DataCollector;
 import com.cdk.ea.tools.data.generation.generators.DataGenerator;
 
+/**
+ * Test class for testing data generation queries
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ *
+ * @since 11-02-2017
+ * @version 1.0
+ */
 @RunWith(JUnit4.class)
 public class DataGenerationQueryTest {
 
@@ -35,27 +43,26 @@ public class DataGenerationQueryTest {
     }
 
     @Test
-    public final void testValidQueryWoExport() {
-	final String stringQueryWoExport = "(@RandomStrings :s -a -n -s l10 =100)";
-	Collection<DataCollector> dataCollectedForQuery1 = DataGenerator.from(stringQueryWoExport).generate();
-	assertTrue("One data collector must be present", dataCollectedForQuery1.size() == 1);
-	dataCollectedForQuery1.stream()
-		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
-			collector.getData().size() == 100));
-
+    public final void testDisplayHelp() {
+	StartDataGeneration.main("--help");
     }
 
     @Test
-    public final void testValidQueryWExport() {
-	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings>";
-	Collection<DataCollector> dataCollectedForQuery = DataGenerator.from(stringQueryWExport).generate();
-	assertTrue("One data collector must be present", dataCollectedForQuery.size() == 1);
-	dataCollectedForQuery.stream()
-		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
-			collector.getData().size() == 100));
+    public final void testExecutionFromCmd() {
+	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings> -X";
+	StartDataGeneration.main(stringQueryWExport);
+    }
 
-	Path exportFile1 = Paths.get("stringQueryWExport.csv");
-	assertNotNull("Path to where file was exported does not exists", exportFile1);
+    @Test(expected = QueryInterpretationException.class)
+    public final void testInvalidQuery() {
+	final String invalidQuery = "(@RandomStrings :s -a l10 =100) f <>";
+	DataGenerator.from(invalidQuery);
+    }
+
+    @Test(expected = DataExportException.class)
+    public final void testInvalidQueryForExport() {
+	final String invalidQuery = "(@RandomStrings :s -a l10 =100) f <_Strings =RandomStrings>";
+	DataGenerator.from(invalidQuery);
     }
 
     @Test(expected = PropertiesInterpretationException.class)
@@ -72,27 +79,28 @@ public class DataGenerationQueryTest {
 	DataGenerator.from(invalidQuery);
     }
 
-    @Test(expected = DataExportException.class)
-    public final void testInvalidQueryForExport() {
-	final String invalidQuery = "(@RandomStrings :s -a l10 =100) f <_Strings =RandomStrings>";
-	DataGenerator.from(invalidQuery);
-    }
+    @Test
+    public final void testValidQueryWExport() {
+	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings>";
+	Collection<DataCollector> dataCollectedForQuery = DataGenerator.from(stringQueryWExport).generate();
+	assertTrue("One data collector must be present", dataCollectedForQuery.size() == 1);
+	dataCollectedForQuery.stream()
+		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
+			collector.getData().size() == 100));
 
-    @Test(expected = QueryInterpretationException.class)
-    public final void testInvalidQuery() {
-	final String invalidQuery = "(@RandomStrings :s -a l10 =100) f <>";
-	DataGenerator.from(invalidQuery);
+	Path exportFile1 = Paths.get("stringQueryWExport.csv");
+	assertNotNull("Path to where file was exported does not exists", exportFile1);
     }
 
     @Test
-    public final void testExecutionFromCmd() {
-	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings> -X";
-	StartDataGeneration.main(stringQueryWExport);
-    }
+    public final void testValidQueryWoExport() {
+	final String stringQueryWoExport = "(@RandomStrings :s -a -n -s l10 =100)";
+	Collection<DataCollector> dataCollectedForQuery1 = DataGenerator.from(stringQueryWoExport).generate();
+	assertTrue("One data collector must be present", dataCollectedForQuery1.size() == 1);
+	dataCollectedForQuery1.stream()
+		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
+			collector.getData().size() == 100));
 
-    @Test
-    public final void testDisplayHelp() {
-	StartDataGeneration.main("--help");
     }
 
 }

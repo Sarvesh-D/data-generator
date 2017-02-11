@@ -2,12 +2,16 @@ package com.cdk.ea.tools.data.generation.exception;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Root of Data Generator exceptions hierarchy.
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 09-02-2017
+ * @version 1.0
+ */
 @Slf4j
 public class DataGeneratorException extends RuntimeException {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     public DataGeneratorException() {

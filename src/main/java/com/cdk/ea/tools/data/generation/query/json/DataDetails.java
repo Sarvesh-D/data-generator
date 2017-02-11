@@ -5,10 +5,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.cdk.ea.tools.data.generation.core.DataType;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Value Class for holding details of {@link DataType}
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 11-02-2017
+ * @version 1.0
+ */
 @Getter
 @Setter
 @ToString

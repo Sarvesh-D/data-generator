@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Out of box implementation for exporting data to a CSV file.
+ * 
  * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
  * @since 09-02-2017
  * @version 1.0
@@ -38,6 +39,7 @@ public class CSVFileExporter implements FileExporter {
 
     /**
      * Constructor for {@link CSVFileExporter}
+     * 
      * @param filePath
      * @param columnDetails
      * @see #from(String, List)
@@ -47,10 +49,28 @@ public class CSVFileExporter implements FileExporter {
 	Map<String, String> unsortedCsvColumnDetailsMap = columnDetails.stream()
 		.collect(Collectors.toMap(CsvColumnDetails::getHeaderName, CsvColumnDetails::getDataRef));
 
-	/*ordering by dataCollector name to ensure correct data is written
-	under correct csv header*/
+	/*
+	 * ordering by dataCollector name to ensure correct data is written
+	 * under correct csv header
+	 */
 	unsortedCsvColumnDetailsMap.entrySet().stream().sorted(Map.Entry.comparingByValue())
 		.forEachOrdered(x -> csvColumnDetails.put(x.getKey(), x.getValue()));
+    }
+
+    /**
+     * Factory method to build instance of {@link CSVFileExporter}
+     * 
+     * @param filePath
+     *            path of the CSV file to which this exporter shall write the
+     *            data.
+     * @param columnDetails
+     *            Collection of {@link CsvColumnDetails}
+     * @return new instance of {@link CSVFileExporter} for the desired CSV File.
+     */
+    public static CSVFileExporter from(String filePath, List<CsvColumnDetails> columnDetails) {
+	log.debug("Creating instance of CSVFileExporter for csv file {} with data details as {}", filePath,
+		columnDetails);
+	return new CSVFileExporter(filePath, columnDetails);
     }
 
     @Override
@@ -61,10 +81,10 @@ public class CSVFileExporter implements FileExporter {
 	    String[] headers = csvColumnDetails.keySet().toArray(new String[csvColumnDetails.keySet().size()]);
 	    csvWriter.writeNext(headers);
 
-	    /* 
-	     * get data for relevant data collectors only (which the client has asked for) 
-	     * ordering by dataCollector name to ensure correct data is written 
-	     * under correct csv header
+	    /*
+	     * get data for relevant data collectors only (which the client has
+	     * asked for) ordering by dataCollector name to ensure correct data
+	     * is written under correct csv header
 	     */
 	    Collection<DataCollector> relevantDataCollectors = dataCollectors.stream().sorted()
 		    .filter(collector -> csvColumnDetails.values().contains(collector.getName()))
@@ -76,6 +96,11 @@ public class CSVFileExporter implements FileExporter {
 	} catch (Exception e) {
 	    throw new DataExportException(e.getMessage());
 	}
+    }
+
+    @Override
+    public void setFilePath(String path) {
+	this.filePath = path;
     }
 
     // TODO figure out why this method is getting called twice.
@@ -90,8 +115,8 @@ public class CSVFileExporter implements FileExporter {
 	 * (map key)
 	 */
 	Map<String, DataCollector> csvHeaderToDataMapping = new LinkedHashMap<>();
-	csvColumnDetails.entrySet().stream().forEachOrdered(
-		entry -> csvHeaderToDataMapping.put(entry.getKey(), getDataCollector(entry.getValue(), dataCollectors)));
+	csvColumnDetails.entrySet().stream().forEachOrdered(entry -> csvHeaderToDataMapping.put(entry.getKey(),
+		getDataCollector(entry.getValue(), dataCollectors)));
 
 	// list of list. The inner list is a list of data that each
 	// DataCollector holds
@@ -107,10 +132,10 @@ public class CSVFileExporter implements FileExporter {
 
 	// TODO Re-factor to simplify
 	/**
-	 * Builds the data to be written to CSV file.
-	 * The data is a 2-D array equivalent to CSV row and column space.
-	 * The data build here is of form [row][coulmn]. This 2-D array
-	 * uniquely identifies what data a particular cell in CSV shall hold.
+	 * Builds the data to be written to CSV file. The data is a 2-D array
+	 * equivalent to CSV row and column space. The data build here is of
+	 * form [row][coulmn]. This 2-D array uniquely identifies what data a
+	 * particular cell in CSV shall hold.
 	 */
 	IntStream.range(0, totalLines).forEach(lineNum -> {
 	    IntStream.range(0, totaldataCollectors).forEach(collectorNum -> {
@@ -137,10 +162,15 @@ public class CSVFileExporter implements FileExporter {
 
     /**
      * Gets the {@link DataCollector} based on the name provided
-     * @param collectorName name of dataCollector whose object is required
-     * @param dataCollectors collection of dataCollectors from which the required dataCollector will be fetched
+     * 
+     * @param collectorName
+     *            name of dataCollector whose object is required
+     * @param dataCollectors
+     *            collection of dataCollectors from which the required
+     *            dataCollector will be fetched
      * @return {@link DataCollector} matching the given name
-     * @throws NoSuchElementException if no dataCollector with given name is found.
+     * @throws NoSuchElementException
+     *             if no dataCollector with given name is found.
      */
     private DataCollector getDataCollector(String collectorName, Collection<DataCollector> dataCollectors) {
 	try {
@@ -150,23 +180,6 @@ public class CSVFileExporter implements FileExporter {
 	    throw new NoSuchElementException("No collector found for name [" + collectorName + "]. Please check if ["
 		    + collectorName + "] is associated with any data generation query");
 	}
-    }
-
-    @Override
-    public void setFilePath(String path) {
-	this.filePath = path;
-    }
-
-    /**
-     * Factory method to build instance of {@link CSVFileExporter}
-     * @param filePath path of the CSV file to which this exporter shall write the data.
-     * @param columnDetails Collection of {@link CsvColumnDetails}
-     * @return new instance of {@link CSVFileExporter} for the desired CSV File.
-     */
-    public static CSVFileExporter from(String filePath, List<CsvColumnDetails> columnDetails) {
-	log.debug("Creating instance of CSVFileExporter for csv file {} with data details as {}", filePath,
-		columnDetails);
-	return new CSVFileExporter(filePath, columnDetails);
     }
 
 }

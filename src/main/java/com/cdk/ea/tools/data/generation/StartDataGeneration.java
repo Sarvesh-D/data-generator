@@ -30,6 +30,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
  * information on tool usage see the <a href=
  * "https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki">confluence
  * link</a>.
+ * 
  * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
  * @since 07-02-2017
  * @version 1.0
@@ -38,7 +39,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 public class StartDataGeneration {
 
     private static ConsoleAppender console = new ConsoleAppender();
-    
+
     private static final String WIKI_LINK = "https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki";
 
     static {
@@ -54,14 +55,15 @@ public class StartDataGeneration {
     }
 
     /**
-     * Starts the execution of data generation and export.
-     * Apart from data-generation and data-export queries one can pass flags such as
-     * -X (for debug) and --help (for help).
-     * For more
-     * information on tool usage see the <a href=
+     * Starts the execution of data generation and export. Apart from
+     * data-generation and data-export queries one can pass flags such as -X
+     * (for debug) and --help (for help). For more information on tool usage see
+     * the <a href=
      * "https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki">confluence
      * link</a>.
-     * @param args for data generation and/or export
+     * 
+     * @param args
+     *            for data generation and/or export
      */
     public static void main(String... args) {
 	if (ArrayUtils.isEmpty(args)) {
@@ -86,15 +88,17 @@ public class StartDataGeneration {
 		String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION))
 			.toArray(size -> new String[size]);
 		log.info("JSON files to generate data : {}", Arrays.toString(jsonFiles));
-		cliQueries = StringUtils.split(new JsonQueryBuilder().build(jsonFiles), Constants.CLI_QUERY_SEPARATOR) ;
+		cliQueries = StringUtils.split(new JsonQueryBuilder().build(jsonFiles), Constants.CLI_QUERY_SEPARATOR);
 	    } else
 		cliQueries = StringUtils.split(StringUtils.join(args, Constants.SPACE), Constants.CLI_QUERY_SEPARATOR);
 
-	    if(ArrayUtils.isEmpty(cliQueries))
-		throw new DataGeneratorException("No queries supplied. You must supply atleast one CLI query or single JSON to proceed");
-	    
-	    log.debug("Total {} Queries passed to data-generator. Queries formed are {}", cliQueries.length, Arrays.toString(cliQueries));
-	    
+	    if (ArrayUtils.isEmpty(cliQueries))
+		throw new DataGeneratorException(
+			"No queries supplied. You must supply atleast one CLI query or single JSON to proceed");
+
+	    log.debug("Total {} Queries passed to data-generator. Queries formed are {}", cliQueries.length,
+		    Arrays.toString(cliQueries));
+
 	    Arrays.stream(cliQueries).forEach(cliQuery -> DataGenerator.from(cliQuery).generate());
 
 	    long end = System.nanoTime();
@@ -102,27 +106,10 @@ public class StartDataGeneration {
 
 	    log.info("Time Taken to generate Data : {} seconds", timeTaken);
 	} catch (Exception e) {
-	    log.error("something went wrong... {}. Visit {} for more info. Data-Generator shall now exit", e.getMessage(), WIKI_LINK);
+	    log.error("something went wrong... {}. Visit {} for more info. Data-Generator shall now exit",
+		    e.getMessage(), WIKI_LINK);
 	    System.exit(0);
 	}
-    }
-
-    /**
-     * Builds tool usage String from usage.txt file
-     * @return tool usage string.
-     */
-    private static String getUsage() {
-	StringBuilder usage = new StringBuilder("\n");
-	final String usageFilePath = "/META-INF/usage.txt";
-	try (InputStreamReader input = new InputStreamReader(
-		StartDataGeneration.class.getResourceAsStream(usageFilePath));
-		BufferedReader reader = new BufferedReader(input)) {
-	    usage.append(reader.lines().collect(Collectors.joining("\n")));
-	    usage.append(String.format("%n%nVisit %s for more info", WIKI_LINK));
-	} catch (IOException e) {
-	    log.error("something went wrong while fetching tool usage : visit {} for more info.", WIKI_LINK);
-	}
-	return usage.toString();
     }
 
     /**
@@ -144,6 +131,25 @@ public class StartDataGeneration {
 		.metavar(identifier.getIdentifier().toString()).help(identifier.getHelp()));
 
 	parser.printHelp();
+    }
+
+    /**
+     * Builds tool usage String from usage.txt file
+     * 
+     * @return tool usage string.
+     */
+    private static String getUsage() {
+	StringBuilder usage = new StringBuilder("\n");
+	final String usageFilePath = "/META-INF/usage.txt";
+	try (InputStreamReader input = new InputStreamReader(
+		StartDataGeneration.class.getResourceAsStream(usageFilePath));
+		BufferedReader reader = new BufferedReader(input)) {
+	    usage.append(reader.lines().collect(Collectors.joining("\n")));
+	    usage.append(String.format("%n%nVisit %s for more info", WIKI_LINK));
+	} catch (IOException e) {
+	    log.error("something went wrong while fetching tool usage : visit {} for more info.", WIKI_LINK);
+	}
+	return usage.toString();
     }
 
 }

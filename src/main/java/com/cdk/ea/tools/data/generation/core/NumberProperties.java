@@ -1,6 +1,7 @@
 package com.cdk.ea.tools.data.generation.core;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -14,8 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Container for the Properties supported by {@link DataType#NUMBER}.
- * Each Number Property is identified <i>Uniquely</i> by its character identifier.
+ * Container for the Properties supported by {@link DataType#NUMBER}. Each
+ * Number Property is identified <i>Uniquely</i> by its character identifier.
+ * 
  * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
  * @since 07-02-2017
  * @version 1.0
@@ -28,17 +30,21 @@ public enum NumberProperties implements Identifier<Character>, TypeProperties {
      */
     INTEGER(Properties.INTEGER_NUMBER.getIdentifier(), NumberUtils::randomInteger);
 
+    private static final Map<Character, NumberProperties> ENUM_MAP;
+
+    static {
+	ENUM_MAP = Arrays.stream(NumberProperties.values())
+		.collect(Collectors.toMap(NumberProperties::getIdentifier, Function.identity()));
+    }
+
     @Getter
     private final Character identifier;
 
     @Getter
     private final Generator<Integer> generator;
 
-    public static final Map<Character, NumberProperties> ENUM_MAP;
-
-    static {
-	ENUM_MAP = Arrays.stream(NumberProperties.values())
-		.collect(Collectors.toMap(NumberProperties::getIdentifier, Function.identity()));
+    public static Map<Character, NumberProperties> getEnumMap() {
+	return Collections.unmodifiableMap(ENUM_MAP);
     }
 
     public static NumberProperties of(char identifier) {

@@ -16,6 +16,14 @@ import com.cdk.ea.tools.data.generation.core.DataType;
 import com.cdk.ea.tools.data.generation.core.NumberProperties;
 import com.cdk.ea.tools.data.generation.types.NumberType.NumberTypeBuilder;
 
+/**
+ * Test Class for testing {@link NumberGenerator}
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ *
+ * @since 11-02-2017
+ * @version 1.0
+ */
 @RunWith(JUnit4.class)
 public class NumberGeneratorTest {
 
@@ -32,13 +40,6 @@ public class NumberGeneratorTest {
     }
 
     @Test
-    public final void testGeneratedNumbers() {
-	numberTypeBuilder.setTypeProperties(EnumSet.of(NumberProperties.INTEGER));
-	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("Not a valid number", StringUtils.isNumeric(generate().toString())));
-    }
-
-    @Test
     public final void testGeneratedNumberLength() {
 	final int length = 13;
 	numberTypeBuilder.setLength(length).setTypeProperties(EnumSet.of(NumberProperties.INTEGER));
@@ -47,6 +48,13 @@ public class NumberGeneratorTest {
 	    assertTrue("Number must be of length : [" + length + "]",
 		    StringUtils.isNumeric(generatedNumber) && generatedNumber.length() == length);
 	});
+    }
+
+    @Test
+    public final void testGeneratedNumbers() {
+	numberTypeBuilder.setTypeProperties(EnumSet.of(NumberProperties.INTEGER));
+	IntStream.range(0, 50)
+		.forEach(i -> assertTrue("Not a valid number", StringUtils.isNumeric(generate().toString())));
     }
 
     private Number generate() {

@@ -20,8 +20,15 @@ import org.junit.runners.JUnit4;
 import com.cdk.ea.tools.data.generation.StartDataGeneration;
 import com.cdk.ea.tools.data.generation.generators.DataCollector;
 import com.cdk.ea.tools.data.generation.generators.DataGenerator;
-import com.cdk.ea.tools.data.generation.query.json.JsonQueryBuilder;
 
+/**
+ * Test Class for testing {@link JsonQueryBuilder}
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ *
+ * @since 11-02-2017
+ * @version 1.0
+ */
 @RunWith(JUnit4.class)
 public class JsonQueryBuilderTest {
 

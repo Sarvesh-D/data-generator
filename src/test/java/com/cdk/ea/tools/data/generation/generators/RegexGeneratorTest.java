@@ -1,6 +1,6 @@
 package com.cdk.ea.tools.data.generation.generators;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.stream.IntStream;
 
@@ -12,6 +12,14 @@ import org.junit.runners.JUnit4;
 
 import com.cdk.ea.tools.data.generation.types.RegexType.RegexTypeBuilder;
 
+/**
+ * Test Class for testing {@link RegexGenerator}
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ *
+ * @since 11-02-2017
+ * @version 1.0
+ */
 @RunWith(JUnit4.class)
 public class RegexGeneratorTest {
 

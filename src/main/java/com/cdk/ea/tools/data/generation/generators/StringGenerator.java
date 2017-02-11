@@ -10,11 +10,34 @@ import com.cdk.ea.tools.data.generation.types.StringType;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Generator class for generating random Strings.
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 10-02-2017
+ * @version 1.0
+ * @see StringType
+ */
 @RequiredArgsConstructor
 public class StringGenerator implements Generator<String> {
 
     private final StringType stringType;
 
+    /**
+     * Factory method to instantiate {@link StringGenerator}
+     * 
+     * @param stringType
+     *            from which the generator is to be instantiated.
+     * @return {@link StringGenerator}
+     */
+    public static StringGenerator of(StringType stringType) {
+	assertNotNull("String Type cannot be null", stringType);
+	return new StringGenerator(stringType);
+    }
+
+    /**
+     * {@inheritDoc}. This generator generates a random String.
+     */
     @Override
     public String generate() {
 	/*
@@ -32,11 +55,6 @@ public class StringGenerator implements Generator<String> {
 	}
 	finalString.add(baseString);
 	return finalString.toString();
-    }
-
-    public static StringGenerator of(StringType stringType) {
-	assertNotNull("String Type cannot be null", stringType);
-	return new StringGenerator(stringType);
     }
 
 }

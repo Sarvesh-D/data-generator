@@ -18,6 +18,14 @@ import org.junit.runners.JUnit4;
 import com.cdk.ea.tools.data.generation.StartDataGeneration;
 import com.opencsv.CSVReader;
 
+/**
+ * Test class for testing various Data Export queries
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ *
+ * @since 11-02-2017
+ * @version 1.0
+ */
 @RunWith(JUnit4.class)
 public class DataExportTest {
 
@@ -62,12 +70,10 @@ public class DataExportTest {
 	try {
 	    reader = new CSVReader(new FileReader("sample_1.csv"));
 	    int lines = reader.readAll().size();
-	    assertTrue("Number of lines in sample_1.csv file should be 201 including csv header",
-		    lines == 201);
+	    assertTrue("Number of lines in sample_1.csv file should be 201 including csv header", lines == 201);
 	    reader = new CSVReader(new FileReader("sample_2.csv"));
 	    lines = reader.readAll().size();
-	    assertTrue("Number of lines in sample_2.csv file should be 11 including csv header",
-		    lines == 11);
+	    assertTrue("Number of lines in sample_2.csv file should be 11 including csv header", lines == 11);
 	} catch (IOException e) {
 	    fail(e.getMessage());
 	} finally {

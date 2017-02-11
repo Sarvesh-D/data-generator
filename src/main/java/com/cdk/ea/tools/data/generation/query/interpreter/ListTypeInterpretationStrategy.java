@@ -7,17 +7,37 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cdk.ea.tools.data.generation.core.Constants;
+import com.cdk.ea.tools.data.generation.core.Defaults;
 import com.cdk.ea.tools.data.generation.core.ListProperties;
 import com.cdk.ea.tools.data.generation.exception.PropertiesInterpretationException;
 import com.cdk.ea.tools.data.generation.exception.QueryInterpretationException;
 import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
+import com.cdk.ea.tools.data.generation.types.ListType;
 import com.cdk.ea.tools.data.generation.types.ListType.ListTypeBuilder;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Implementation for interpreting details of {@link ListType} from identifiers.
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 11-02-2017
+ * @version 1.0
+ * @see ListType
+ * @see ListTypeBuilder
+ */
 @Slf4j
 public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationStrategy {
 
+    /**
+     * Interprets and populates the {@link ListTypeBuilder} and attaches it to
+     * {@link QueryBuilder}
+     * 
+     * @throws PropertiesInterpretationException
+     *             if invalid {@link ListProperties} are found
+     * @throws QueryInterpretationException
+     *             if data for {@link ListType} is not present.
+     */
     @Override
     public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
 	ListTypeBuilder listTypeBuilder = new ListTypeBuilder();
@@ -27,13 +47,13 @@ public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationSt
 	    getPropertyIdentifiers(identifiers).stream().map(ListProperties::of).forEach(listProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
-		    "Invalid List Property. Possible Values are : " + ListProperties.ENUM_MAP.keySet());
+		    "Invalid List Property. Possible Values are : " + ListProperties.getEnumMap().keySet());
 	}
 
 	// default list properties
 	if (listProps.isEmpty()) {
 	    log.warn("No List properties specifed. Defaulting to CUSTOM List");
-	    listProps.add(ListProperties.CUSTOM);
+	    listProps.add(Defaults.DEFAULT_LIST_PROP);
 	}
 
 	listTypeBuilder.setDataType(getDataType(identifiers));

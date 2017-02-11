@@ -11,31 +11,26 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Value Class for holding details of {@link DataType#STRING}
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 11-02-2017
+ * @version 1.0
+ * @see StringTypeBuilder
+ */
 @Getter
 @ToString
 @Slf4j
 public class StringType extends Type {
 
-    private final DataType dataType;
-    private final Set<StringProperties> properties;
-    private final int length;
-    private final String prefix;
-    private final String suffix;
-
-    private StringType(StringTypeBuilder builder) {
-	this.dataType = builder.dataType;
-	this.properties = builder.properties;
-	this.length = builder.length;
-	this.prefix = builder.prefix;
-	this.suffix = builder.suffix;
-	log.debug("String type formed as : {}", this);
-    }
-
-    @Override
-    public Generator<String> generator() {
-	return StringGenerator.of(this);
-    }
-
+    /**
+     * Helper Builder Class for building instance of {@link StringType}
+     * 
+     * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+     * @since 11-02-2017
+     * @version 1.0
+     */
     public static class StringTypeBuilder implements TypeBuilder<StringType, StringProperties> {
 
 	private DataType dataType;
@@ -45,14 +40,13 @@ public class StringType extends Type {
 	private String suffix;
 
 	@Override
-	public TypeBuilder<StringType, StringProperties> setDataType(DataType dataType) {
-	    this.dataType = dataType;
-	    return this;
+	public StringType buildType() {
+	    return new StringType(this);
 	}
 
 	@Override
-	public TypeBuilder<StringType, StringProperties> setTypeProperties(Set<StringProperties> properties) {
-	    this.properties = properties;
+	public TypeBuilder<StringType, StringProperties> setDataType(DataType dataType) {
+	    this.dataType = dataType;
 	    return this;
 	}
 
@@ -73,10 +67,32 @@ public class StringType extends Type {
 	}
 
 	@Override
-	public StringType buildType() {
-	    return new StringType(this);
+	public TypeBuilder<StringType, StringProperties> setTypeProperties(Set<StringProperties> properties) {
+	    this.properties = properties;
+	    return this;
 	}
 
+    }
+
+    private final DataType dataType;
+    private final Set<StringProperties> properties;
+    private final int length;
+    private final String prefix;
+
+    private final String suffix;
+
+    private StringType(StringTypeBuilder builder) {
+	this.dataType = builder.dataType;
+	this.properties = builder.properties;
+	this.length = builder.length;
+	this.prefix = builder.prefix;
+	this.suffix = builder.suffix;
+	log.debug("String type formed as : {}", this);
+    }
+
+    @Override
+    public Generator<String> generator() {
+	return StringGenerator.of(this);
     }
 
 }

@@ -7,11 +7,23 @@ import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * First Interpreter of chain of interpreters for interpreting query identifiers
+ * and populating {@link QueryBuilder}.
+ * 
+ * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @since 11-02-2017
+ * @version 1.0
+ */
 @Slf4j
 public class QueryInterpreter implements Interpreter {
 
     private static Set<Interpreters> queryInterpreters = EnumSet.noneOf(Interpreters.class);
 
+    /**
+     * Register all the interpreters in the chain. This will happen once for
+     * each invocation of data-generator.
+     */
     static {
 	log.debug("registering query interpreters");
 	queryInterpreters.add(Interpreters.TYPE_INTERPRETER);
@@ -20,6 +32,10 @@ public class QueryInterpreter implements Interpreter {
 	log.debug("interpreters registered are : {}", queryInterpreters);
     }
 
+    /**
+     * {@inheritDoc}. Iterates over all registered interpreters invoking the
+     * {@link Interpreter#doInterpret(QueryBuilder, String...)} for each.
+     */
     @Override
     public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
 	queryInterpreters.stream().forEach(interpreter -> interpreter.get().doInterpret(queryBuilder, identifiers));
