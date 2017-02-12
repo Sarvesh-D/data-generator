@@ -5,6 +5,9 @@ import java.util.Set;
 
 import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,7 +19,11 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QueryInterpreter implements Interpreter {
+
+    @Getter
+    private static final QueryInterpreter instance = new QueryInterpreter();
 
     private static Set<Interpreters> queryInterpreters = EnumSet.noneOf(Interpreters.class);
 

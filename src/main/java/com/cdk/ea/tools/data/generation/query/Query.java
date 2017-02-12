@@ -46,7 +46,7 @@ public final class Query {
 	public Query build(String... queryParams) {
 	    log.debug("Building Query Instance from params {}", Arrays.toString(queryParams));
 	    QueryBuilder queryBuilder = new QueryBuilder();
-	    QueryInterpreter queryInterpreter = new QueryInterpreter();
+	    QueryInterpreter queryInterpreter = QueryInterpreter.getInstance();
 	    queryInterpreter.doInterpret(queryBuilder, queryParams);
 	    return new Query(queryBuilder);
 	}
