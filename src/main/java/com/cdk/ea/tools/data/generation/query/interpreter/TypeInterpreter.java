@@ -7,6 +7,8 @@ import com.cdk.ea.tools.data.generation.exception.TypeInterpretationException;
 import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 import com.cdk.ea.tools.data.generation.types.TypeBuilder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 class TypeInterpreter implements Interpreter {
 
     /**
@@ -30,13 +33,9 @@ class TypeInterpreter implements Interpreter {
      */
     @Override
     public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
-	try {
-	    DataType dataType = AbstractTypeInterpretationStrategy.getDataType(identifiers);
-	    log.debug("DataType set as : {}", dataType);
-	    dataType.getTypeInterpretationStrategy().newInstance().doInterpret(queryBuilder, identifiers);
-	} catch (InstantiationException | IllegalAccessException e) {
-	    log.error("Error occurred while interpreting type : {}", e.getMessage());
-	}
+	DataType dataType = AbstractTypeInterpreter.getDataType(identifiers);
+	log.debug("DataType set as : {}", dataType);
+	dataType.getInterpreter().get().doInterpret(queryBuilder, identifiers);
     }
 
 }

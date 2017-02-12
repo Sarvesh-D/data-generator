@@ -21,7 +21,6 @@ import org.junit.runners.JUnit4;
 import com.cdk.ea.tools.data.generation.StartDataGeneration;
 import com.cdk.ea.tools.data.generation.core.Constants;
 import com.cdk.ea.tools.data.generation.exception.DataGeneratorException;
-import com.cdk.ea.tools.data.generation.exception.TypeInterpretationException;
 import com.cdk.ea.tools.data.generation.generators.DataCollector;
 import com.cdk.ea.tools.data.generation.generators.DataGenerator;
 
@@ -61,8 +60,31 @@ public class JsonQueryBuilderTest {
     }
 
     @Test
+    public final void testExecutionFromMultipleJson() {
+	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
+	jsonFilePaths.stream().forEach(jsonQuery::add);
+	jsonQuery.add(Constants.DEBUG_ENABLED);
+	StartDataGeneration.main(StringUtils.split(jsonQuery.toString()));
+
+	Path exportFile1 = Paths.get("sample_1.csv");
+	assertNotNull("Path to where file was exported does not exists", exportFile1);
+
+	Path exportFile2 = Paths.get("sample_2.csv");
+	assertNotNull("Path to where file was exported does not exists", exportFile2);
+
+	Path exportFile3 = Paths.get("sample_3.csv");
+	assertNotNull("Path to where file was exported does not exists", exportFile3);
+
+    }
+
+    @Test(expected = DataGeneratorException.class)
+    public final void testInvalidJson() {
+	JsonQueryBuilder.getInstance().build("src/test/resources/invalid.json");
+    }
+
+    @Test
     public final void testValidJsonWExport() {
-	String cmdQuery_1 = new JsonQueryBuilder().build("src/test/resources/sample.json");
+	String cmdQuery_1 = JsonQueryBuilder.getInstance().build("src/test/resources/sample.json");
 	assertTrue("CMD query cannot be null or blank", StringUtils.isNotBlank(cmdQuery_1));
 	Collection<DataCollector> dataCollectedForQuery = DataGenerator.from(cmdQuery_1).generate();
 	assertTrue("Four data collector must be present", dataCollectedForQuery.size() == 4);
@@ -72,29 +94,6 @@ public class JsonQueryBuilderTest {
 
 	Path exportFile2 = Paths.get("sample_2.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile2);
-    }
-    
-    @Test(expected = DataGeneratorException.class)
-    public final void testInvalidJson() {
-	new JsonQueryBuilder().build("src/test/resources/invalid.json");
-    }
-    
-    @Test
-    public final void testExecutionFromMultipleJson() {
-	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
-	jsonFilePaths.stream().forEach(jsonQuery::add);
-	jsonQuery.add(Constants.DEBUG_ENABLED);
-	StartDataGeneration.main(StringUtils.split(jsonQuery.toString()));
-	
-	Path exportFile1 = Paths.get("sample_1.csv");
-	assertNotNull("Path to where file was exported does not exists", exportFile1);
-
-	Path exportFile2 = Paths.get("sample_2.csv");
-	assertNotNull("Path to where file was exported does not exists", exportFile2);
-	
-	Path exportFile3 = Paths.get("sample_3.csv");
-	assertNotNull("Path to where file was exported does not exists", exportFile3);
-
     }
 
 }

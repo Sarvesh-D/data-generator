@@ -18,6 +18,9 @@ import com.cdk.ea.tools.data.generation.core.Properties;
 import com.cdk.ea.tools.data.generation.exception.QueryInterpretationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -28,7 +31,11 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonQueryBuilder implements Builder<String> {
+
+    @Getter
+    private static final JsonQueryBuilder instance = new JsonQueryBuilder();
 
     /**
      * Builds a single CLI query by transforming each JSON file to CLI query and
@@ -228,6 +235,8 @@ public class JsonQueryBuilder implements Builder<String> {
 	    throw new QueryInterpretationException(
 		    "Error while Building CMD query from JSON file [" + jsonFile + "]. Error : " + e.getMessage());
 	}
+
+	log.debug("CLI Query formed for JSON {} is {}", jsonFile, cmdQueryBuilder);
 	return cmdQueryBuilder.toString();
     }
 

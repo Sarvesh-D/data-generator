@@ -7,17 +7,95 @@ package com.cdk.ea.tools.data.generation.query.interpreter;
  * @since 10-02-2017
  * @version 1.0
  */
-enum Interpreters {
+public enum Interpreters {
+
+    /**
+     * Holds singleton instance of {@link DataCollectorInterpreter}
+     */
+    DATA_COLLECTOR {
+
+	private final Interpreter dataCollectorInterpreter = new DataCollectorInterpreter();
+
+	@Override
+	public Interpreter get() {
+	    return dataCollectorInterpreter;
+	}
+    },
+
+    /**
+     * Holds singleton instance of {@link GlobalDefaultOverrideInterpreter}
+     */
+    GLOBAL_DEFAULT_OVERRIDE {
+
+	private final Interpreter globalOverrideInterpreter = new GlobalDefaultOverrideInterpreter();
+
+	@Override
+	public Interpreter get() {
+	    return globalOverrideInterpreter;
+	}
+    },
+
+    /**
+     * Holds singleton instance of {@link ListTypeInterpreter}
+     */
+    LIST_TYPE_INTERPRETER {
+
+	private final Interpreter listTypeInterpreter = new ListTypeInterpreter();
+
+	@Override
+	public Interpreter get() {
+	    return listTypeInterpreter;
+	}
+    },
+
+    /**
+     * Holds singleton instance of {@link NumberTypeInterpreter}
+     */
+    NUMBER_TYPE_INTERPRETER {
+
+	private final Interpreter numberTypeInterpreter = new NumberTypeInterpreter();
+
+	@Override
+	public Interpreter get() {
+	    return numberTypeInterpreter;
+	}
+    },
+
+    /**
+     * Holds singleton instance of {@link RegexTypeInterpreter}
+     */
+    REGEX_TYPE_INTERPRETER {
+
+	private final Interpreter regexTypeInterpreter = new RegexTypeInterpreter();
+
+	@Override
+	public Interpreter get() {
+	    return regexTypeInterpreter;
+	}
+    },
+
+    /**
+     * Holds singleton instance of {@link StringTypeInterpreter}
+     */
+    STRING_TYPE_INTERPRETER {
+
+	private final Interpreter stringTypeInterpreter = new StringTypeInterpreter();
+
+	@Override
+	public Interpreter get() {
+	    return stringTypeInterpreter;
+	}
+    },
 
     /**
      * Holds singleton instance of {@link TypeInterpreter}
      */
     TYPE_INTERPRETER {
 
-	private final transient Interpreter typeInterpreter = new TypeInterpreter();
+	private final Interpreter typeInterpreter = new TypeInterpreter();
 
 	@Override
-	Interpreter get() {
+	public Interpreter get() {
 	    return typeInterpreter;
 	}
     },
@@ -27,10 +105,10 @@ enum Interpreters {
      */
     QUANTITY_INTERPRETER {
 
-	private final transient Interpreter quantityInterpreter = new QuantityInterpreter();
+	private final Interpreter quantityInterpreter = new QuantityInterpreter();
 
 	@Override
-	Interpreter get() {
+	public Interpreter get() {
 	    return quantityInterpreter;
 	}
     },
@@ -40,10 +118,10 @@ enum Interpreters {
      */
     DATA_COLLECTOR_INTERPRETER {
 
-	private final transient Interpreter dataCollectorInterpreter = new DataCollectorInterpreter();
+	private final Interpreter dataCollectorInterpreter = new DataCollectorInterpreter();
 
 	@Override
-	Interpreter get() {
+	public Interpreter get() {
 	    return dataCollectorInterpreter;
 	}
     };
@@ -51,6 +129,6 @@ enum Interpreters {
     /**
      * @return corresponding {@link Interpreter} as backed by its Enum.
      */
-    abstract Interpreter get();
+    public abstract Interpreter get();
 
 }

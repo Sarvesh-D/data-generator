@@ -26,13 +26,13 @@ import lombok.extern.slf4j.Slf4j;
  * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
  * @since 11-02-2017
  * @version 1.0
- * @see ListTypeInterpretationStrategy
- * @see NumberTypeInterpretationStrategy
- * @see RegexTypeInterpretationStrategy
- * @see StringTypeInterpretationStrategy
+ * @see ListTypeInterpreter
+ * @see NumberTypeInterpreter
+ * @see RegexTypeInterpreter
+ * @see StringTypeInterpreter
  */
 @Slf4j
-public abstract class AbstractTypeInterpretationStrategy {
+abstract class AbstractTypeInterpreter implements Interpreter {
 
     private static final int DEFAULT_LENGTH = Defaults.DEFAULT_LENGTH;
 
@@ -110,7 +110,7 @@ public abstract class AbstractTypeInterpretationStrategy {
     /**
      * Abstract method to be called via {@link TypeInterpreter}. Each
      * {@link DataType} has its own implementation for
-     * {@link AbstractTypeInterpretationStrategy} which will be used to populate
+     * {@link AbstractTypeInterpreter} which will be used to populate
      * {@link QueryBuilder} from identifiers.
      * 
      * @param queryBuilder
@@ -123,6 +123,7 @@ public abstract class AbstractTypeInterpretationStrategy {
      * @throws QueryInterpretationException
      *             if required attributes of {@link DataType} are not identified
      */
+    @Override
     public abstract void doInterpret(QueryBuilder queryBuilder, String... identifiers);
 
 }

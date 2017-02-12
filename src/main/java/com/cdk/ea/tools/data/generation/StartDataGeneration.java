@@ -19,6 +19,7 @@ import com.cdk.ea.tools.data.generation.core.Identifiers;
 import com.cdk.ea.tools.data.generation.core.Properties;
 import com.cdk.ea.tools.data.generation.exception.DataGeneratorException;
 import com.cdk.ea.tools.data.generation.generators.DataGenerator;
+import com.cdk.ea.tools.data.generation.query.interpreter.Interpreters;
 import com.cdk.ea.tools.data.generation.query.json.JsonQueryBuilder;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,7 @@ public class StartDataGeneration {
 
     private StartDataGeneration() {
 	// suppressing default constructor
+	Interpreters.values();
     }
 
     /**
@@ -64,6 +66,7 @@ public class StartDataGeneration {
      * 
      * @param args
      *            for data generation and/or export
+     * @throws ClassNotFoundException
      */
     public static void main(String... args) {
 	if (ArrayUtils.isEmpty(args)) {
@@ -88,7 +91,8 @@ public class StartDataGeneration {
 		String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION))
 			.toArray(size -> new String[size]);
 		log.info("JSON files to generate data : {}", Arrays.toString(jsonFiles));
-		cliQueries = StringUtils.split(new JsonQueryBuilder().build(jsonFiles), Constants.CLI_QUERY_SEPARATOR);
+		cliQueries = StringUtils.split(JsonQueryBuilder.getInstance().build(jsonFiles),
+			Constants.CLI_QUERY_SEPARATOR);
 	    } else
 		cliQueries = StringUtils.split(StringUtils.join(args, Constants.SPACE), Constants.CLI_QUERY_SEPARATOR);
 
@@ -109,20 +113,6 @@ public class StartDataGeneration {
 	    log.error("something went wrong... {}. Visit {} for more info. Data-Generator shall now exit",
 		    e.getMessage(), WIKI_LINK);
 	    System.exit(0);
-	}
-    }
-    
-    /**
-     * Invokes {@link DataGenerator} for single CLI query.
-     * @param cliQuery for which data generator should run
-     */
-    private static void invokeDataGeneratorFor(String cliQuery) {
-	try {
-	    log.info("Invoking data generator for CLI query {}", cliQuery);
-	    DataGenerator.from(cliQuery).generate();
-	    log.info("data generator executed sucessfully for CLI query {}", cliQuery);
-	} catch (Exception e) {
-	    log.error("Error Occured while invoking data generator for CLI query {} : {}", cliQuery, e.getMessage());
 	}
     }
 
@@ -164,6 +154,22 @@ public class StartDataGeneration {
 	    log.error("something went wrong while fetching tool usage : visit {} for more info.", WIKI_LINK);
 	}
 	return usage.toString();
+    }
+
+    /**
+     * Invokes {@link DataGenerator} for single CLI query.
+     * 
+     * @param cliQuery
+     *            for which data generator should run
+     */
+    private static void invokeDataGeneratorFor(String cliQuery) {
+	try {
+	    log.info("Invoking data generator for CLI query {}", cliQuery);
+	    DataGenerator.from(cliQuery).generate();
+	    log.info("data generator executed sucessfully for CLI query {}", cliQuery);
+	} catch (Exception e) {
+	    log.error("Error Occured while invoking data generator for CLI query {} : {}", cliQuery, e.getMessage());
+	}
     }
 
 }

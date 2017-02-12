@@ -15,7 +15,7 @@ import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
  * @see QueryInterpreter
  * @see TypeInterpreter
  */
-interface Interpreter {
+public interface Interpreter {
 
     /**
      * Interprets the identifiers and populates the {@link QueryBuilder}

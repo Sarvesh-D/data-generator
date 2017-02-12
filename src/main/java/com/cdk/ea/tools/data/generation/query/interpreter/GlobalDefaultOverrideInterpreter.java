@@ -8,6 +8,8 @@ import org.junit.Assert;
 import com.cdk.ea.tools.data.generation.core.Identifiers;
 import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -18,7 +20,8 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
-public class GlobalDefaultOverrideInterpreter implements Interpreter {
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+class GlobalDefaultOverrideInterpreter implements Interpreter {
 
     /**
      * {@inheritDoc}. This method looks up for any values that must be overriden

@@ -16,6 +16,8 @@ import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 import com.cdk.ea.tools.data.generation.types.StringType;
 import com.cdk.ea.tools.data.generation.types.StringType.StringTypeBuilder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -29,7 +31,8 @@ import lombok.extern.slf4j.Slf4j;
  * @see StringTypeBuilder
  */
 @Slf4j
-public class StringTypeInterpretationStrategy extends AbstractTypeInterpretationStrategy {
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+class StringTypeInterpreter extends AbstractTypeInterpreter {
 
     /**
      * Interprets and populates the {@link StringTypeBuilder} and attaches it to

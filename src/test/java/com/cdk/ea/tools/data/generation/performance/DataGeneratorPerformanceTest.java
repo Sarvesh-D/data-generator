@@ -1,9 +1,6 @@
 package com.cdk.ea.tools.data.generation.performance;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
@@ -19,8 +16,6 @@ import org.junit.runners.JUnit4;
 
 import com.cdk.ea.tools.data.generation.StartDataGeneration;
 import com.cdk.ea.tools.data.generation.core.Constants;
-import com.cdk.ea.tools.data.generation.core.DataType;
-import com.cdk.ea.tools.data.generation.types.ListType.ListTypeBuilder;
 
 import lombok.extern.java.Log;
 
@@ -64,16 +59,16 @@ public class DataGeneratorPerformanceTest {
     }
 
     @Test
+    public final void testDataGeneratorPerformanceCLIWithExport() {
+	final String CLIQuery = "(@Strings :s -a -n -s l10 Ppre Ssuf | @ListVals :l -u l0 [[Mr.,Miss]] | @Numbers :n -i l0 | @customRegex :r -r l6 {{[a-zA-Z]+[@][0-9]+}} | ) f <sample_1.csv _NamePrefixs =ListVals _AnyNumber =Numbers _FunnyTexts =customRegex _FunnyStrings =Strings | > --o =10000 ";
+	StartDataGeneration.main(CLIQuery);
+    }
+
+    @Test
     public final void testDataGeneratorPerformanceJSON() {
 	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
 	jsonQuery.add("src/test/resources/perfWithoutExport.json");
 	StartDataGeneration.main(StringUtils.split(jsonQuery.toString()));
-    }
-
-    @Test
-    public final void testDataGeneratorPerformanceCLIWithExport() {
-	final String CLIQuery = "(@Strings :s -a -n -s l10 Ppre Ssuf | @ListVals :l -u l0 [[Mr.,Miss]] | @Numbers :n -i l0 | @customRegex :r -r l6 {{[a-zA-Z]+[@][0-9]+}} | ) f <sample_1.csv _NamePrefixs =ListVals _AnyNumber =Numbers _FunnyTexts =customRegex _FunnyStrings =Strings | > --o =10000 ";
-	StartDataGeneration.main(CLIQuery);
     }
 
     @Test

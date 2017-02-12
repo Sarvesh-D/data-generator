@@ -41,8 +41,8 @@ public class RegexGeneratorTest {
 	final String regex = "[a-zA-Z0-9]+[@]";
 	regexTypeBuilder.setRegex(regex);
 	RegexGenerator regexGenerator = getRegexGenerator();
-	IntStream.range(1, 50)
-		.forEach(i -> assertTrue("Generated string must match regex -> " + regex, regexGenerator.generate().matches(regex)));
+	IntStream.range(1, 50).forEach(i -> assertTrue("Generated string must match regex -> " + regex,
+		regexGenerator.generate().matches(regex)));
     }
 
     private RegexGenerator getRegexGenerator() {

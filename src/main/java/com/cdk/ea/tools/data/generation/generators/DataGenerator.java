@@ -18,7 +18,7 @@ import com.cdk.ea.tools.data.generation.exception.QueryInterpretationException;
 import com.cdk.ea.tools.data.generation.exporters.CSVFileExporter;
 import com.cdk.ea.tools.data.generation.exporters.DataExporter;
 import com.cdk.ea.tools.data.generation.query.QueryRunner;
-import com.cdk.ea.tools.data.generation.query.interpreter.GlobalDefaultOverrideInterpreter;
+import com.cdk.ea.tools.data.generation.query.interpreter.Interpreters;
 import com.cdk.ea.tools.data.generation.query.json.CsvColumnDetails;
 
 import lombok.extern.slf4j.Slf4j;
@@ -153,7 +153,7 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	// see if there are global overrides
 	if (cmdLineQuery.contains(Constants.GLOBAL_OVERRIDE)) {
 	    log.debug("Query contains global override flag {}.", Constants.GLOBAL_OVERRIDE);
-	    new GlobalDefaultOverrideInterpreter().doInterpret(null,
+	    Interpreters.GLOBAL_DEFAULT_OVERRIDE.get().doInterpret(null,
 		    StringUtils.split(StringUtils.substringAfter(cmdLineQuery, Constants.GLOBAL_OVERRIDE)));
 	}
     }

@@ -9,6 +9,8 @@ import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 import com.cdk.ea.tools.data.generation.types.NumberType;
 import com.cdk.ea.tools.data.generation.types.NumberType.NumberTypeBuilder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,7 +24,8 @@ import lombok.extern.slf4j.Slf4j;
  * @see NumberTypeBuilder
  */
 @Slf4j
-public class NumberTypeInterpretationStrategy extends AbstractTypeInterpretationStrategy {
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+class NumberTypeInterpreter extends AbstractTypeInterpreter {
 
     /**
      * Interprets and populates the {@link NumberTypeBuilder} and attaches it to

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +48,7 @@ public class DataGenerationQueryTest {
 	createdFilePaths = Arrays.asList("stringQueryWExport.csv");
 	createdFilePaths.stream().forEach(filePath -> new File(filePath).deleteOnExit());
     }
-    
+
     @AfterClass
     public static void tearDown() throws Exception {
 	createdFilePaths = null;
@@ -93,6 +92,43 @@ public class DataGenerationQueryTest {
     }
 
     @Test
+    public final void testMultipleInvalidQueries() {
+	final String invalidQuery_1 = "(@RandomStrings :s -a l10 =100) f <>";
+	final String invalidQuery_2 = "(@RandomStrings :x -i l10 =100)";
+	final String multipleInvalidQueris = new StringJoiner(Constants.CLI_QUERY_SEPARATOR).add(invalidQuery_1)
+		.add(invalidQuery_2).toString();
+	StartDataGeneration.main(multipleInvalidQueris);
+    }
+
+    @Test
+    public final void testMultipleQueries() {
+	final String invalidQuery = "(@RandomStrings :x -i l10 =100)";
+	final String validQuery = "(@RandomStrings :s -a -n -s l10) f <stringQueryWExport.csv _firstNames =RandomStrings> --o =999";
+	final String multipleQueris = new StringJoiner(Constants.CLI_QUERY_SEPARATOR).add(invalidQuery).add(validQuery)
+		.toString();
+	StartDataGeneration.main(multipleQueris);
+
+	Path exportFile1 = Paths.get("stringQueryWExport.csv");
+	assertNotNull("Path to where file was exported does not exists", exportFile1);
+
+	CSVReader reader = null;
+	try {
+	    reader = new CSVReader(new FileReader("stringQueryWExport.csv"));
+	    assertTrue("Quantity of data in csv file should be 1000 including csv header",
+		    reader.readAll().size() == 1000);
+	} catch (IOException e) {
+	    fail(e.getMessage());
+	} finally {
+	    try {
+		reader.close();
+	    } catch (IOException e) {
+		fail(e.getMessage());
+	    }
+	}
+
+    }
+
+    @Test
     public final void testValidQueryWExport() {
 	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings>";
 	Collection<DataCollector> dataCollectedForQuery = DataGenerator.from(stringQueryWExport).generate();
@@ -114,43 +150,6 @@ public class DataGenerationQueryTest {
 		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
 			collector.getData().size() == 100));
 
-    }
-    
-    @Test
-    public final void testMultipleInvalidQueries() {
-	final String invalidQuery_1 = "(@RandomStrings :s -a l10 =100) f <>";
-	final String invalidQuery_2 = "(@RandomStrings :x -i l10 =100)";
-	final String multipleInvalidQueris = new StringJoiner(Constants.CLI_QUERY_SEPARATOR).add(invalidQuery_1)
-		.add(invalidQuery_2).toString();
-	StartDataGeneration.main(multipleInvalidQueris);
-    }
-    
-    @Test
-    public final void testMultipleQueries() {
-	final String invalidQuery = "(@RandomStrings :x -i l10 =100)";
-	final String validQuery = "(@RandomStrings :s -a -n -s l10) f <stringQueryWExport.csv _firstNames =RandomStrings> --o =999";
-	final String multipleQueris = new StringJoiner(Constants.CLI_QUERY_SEPARATOR).add(invalidQuery)
-		.add(validQuery).toString();
-	StartDataGeneration.main(multipleQueris);
-	
-	Path exportFile1 = Paths.get("stringQueryWExport.csv");
-	assertNotNull("Path to where file was exported does not exists", exportFile1);
-	
-	CSVReader reader = null;
-	try {
-	    reader = new CSVReader(new FileReader("stringQueryWExport.csv"));
-	    assertTrue("Quantity of data in csv file should be 1000 including csv header",
-		    reader.readAll().size() == 1000);
-	} catch (IOException e) {
-	    fail(e.getMessage());
-	} finally {
-	    try {
-		reader.close();
-	    } catch (IOException e) {
-		fail(e.getMessage());
-	    }
-	}
-	
     }
 
 }

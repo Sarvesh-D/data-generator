@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,10 +39,11 @@ public class DataExportTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-	createdFilePaths = Arrays.asList("stringQueryWExport.csv", "stringQueryWExport_2.csv", "sample_1.csv", "sample_2.csv");
+	createdFilePaths = Arrays.asList("stringQueryWExport.csv", "stringQueryWExport_2.csv", "sample_1.csv",
+		"sample_2.csv");
 	createdFilePaths.stream().forEach(filePath -> new File(filePath).deleteOnExit());
     }
-    
+
     @AfterClass
     public static void tearDown() throws Exception {
 	createdFilePaths = null;
@@ -96,7 +96,7 @@ public class DataExportTest {
 	    }
 	}
     }
-    
+
     @Test
     public final void testMultipleValidQueriesWithExport() {
 	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10) f <stringQueryWExport.csv _firstNames =RandomStrings> --o =1000";
@@ -104,24 +104,22 @@ public class DataExportTest {
 	final String multipleValidQueris = new StringJoiner(Constants.CLI_QUERY_SEPARATOR).add(stringQueryWExport)
 		.add(stringQueryWoExport).toString();
 	StartDataGeneration.main(multipleValidQueris);
-	
+
 	Path exportFile1 = Paths.get("stringQueryWExport.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile1);
-	
+
 	Path exportFile2 = Paths.get("stringQueryWExport_2.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile2);
-	
+
 	CSVReader reader = null;
 	try {
 	    reader = new CSVReader(new FileReader("stringQueryWExport.csv"));
 	    int lines = reader.readAll().size();
-	    assertTrue("Quantity of data in csv file should be 1001 including csv header",
-		    lines == 1001);
-	    
+	    assertTrue("Quantity of data in csv file should be 1001 including csv header", lines == 1001);
+
 	    reader = new CSVReader(new FileReader("stringQueryWExport_2.csv"));
 	    lines = reader.readAll().size();
-	    assertTrue("Quantity of data in csv file should be 501 including csv header",
-		    lines == 501);
+	    assertTrue("Quantity of data in csv file should be 501 including csv header", lines == 501);
 	} catch (IOException e) {
 	    fail(e.getMessage());
 	} finally {

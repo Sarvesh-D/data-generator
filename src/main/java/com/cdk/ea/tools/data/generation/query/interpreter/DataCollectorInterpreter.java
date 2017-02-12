@@ -9,6 +9,8 @@ import com.cdk.ea.tools.data.generation.generators.DataCollector;
 import com.cdk.ea.tools.data.generation.query.Query;
 import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 class DataCollectorInterpreter implements Interpreter {
 
     /**

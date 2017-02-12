@@ -13,6 +13,8 @@ import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 import com.cdk.ea.tools.data.generation.types.RegexType;
 import com.cdk.ea.tools.data.generation.types.RegexType.RegexTypeBuilder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -26,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
  * @see RegexTypeBuilder
  */
 @Slf4j
-public class RegexTypeInterpretationStrategy extends AbstractTypeInterpretationStrategy {
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+class RegexTypeInterpreter extends AbstractTypeInterpreter {
 
     /**
      * Interprets and populates the {@link RegexTypeBuilder} and attaches it to

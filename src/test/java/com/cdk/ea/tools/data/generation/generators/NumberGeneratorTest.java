@@ -55,8 +55,8 @@ public class NumberGeneratorTest {
     public final void testGeneratedNumbers() {
 	numberTypeBuilder.setTypeProperties(EnumSet.of(NumberProperties.INTEGER));
 	NumberGenerator numberGenerator = getNumberGenerator();
-	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("Not a valid number", StringUtils.isNumeric(numberGenerator.generate().toString())));
+	IntStream.range(0, 50).forEach(
+		i -> assertTrue("Not a valid number", StringUtils.isNumeric(numberGenerator.generate().toString())));
     }
 
     private NumberGenerator getNumberGenerator() {

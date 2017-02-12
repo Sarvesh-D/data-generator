@@ -63,8 +63,8 @@ public class StringGeneratorTest {
     public final void testAlphaStringGenerated() {
 	stringTypeBuilder.setTypeProperties(EnumSet.of(StringProperties.ALPHA));
 	StringGenerator stringGenerator = getStringGenerator();
-	IntStream.range(0, 50).forEach(
-		i -> assertTrue("Alpha String must contain only alpha characters", StringUtils.isAlpha(stringGenerator.generate())));
+	IntStream.range(0, 50).forEach(i -> assertTrue("Alpha String must contain only alpha characters",
+		StringUtils.isAlpha(stringGenerator.generate())));
     }
 
     @Test
@@ -98,8 +98,8 @@ public class StringGeneratorTest {
 	final int length = 15;
 	stringTypeBuilder.setLength(length);
 	StringGenerator stringGenerator = getStringGenerator();
-	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("String must be of length [" + length + "].", stringGenerator.generate().length() == length));
+	IntStream.range(0, 50).forEach(i -> assertTrue("String must be of length [" + length + "].",
+		stringGenerator.generate().length() == length));
     }
 
     @Test
@@ -107,8 +107,8 @@ public class StringGeneratorTest {
 	final String prefix = "test";
 	stringTypeBuilder.setPrefix(prefix);
 	StringGenerator stringGenerator = getStringGenerator();
-	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("String must have prefix [" + prefix + "]", stringGenerator.generate().startsWith(prefix)));
+	IntStream.range(0, 50).forEach(i -> assertTrue("String must have prefix [" + prefix + "]",
+		stringGenerator.generate().startsWith(prefix)));
     }
 
     @Test
@@ -128,8 +128,8 @@ public class StringGeneratorTest {
 	final String suffix = "bye";
 	stringTypeBuilder.setSuffix(suffix);
 	StringGenerator stringGenerator = getStringGenerator();
-	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("String must have suffix [" + suffix + "]", stringGenerator.generate().endsWith(suffix)));
+	IntStream.range(0, 50).forEach(i -> assertTrue("String must have suffix [" + suffix + "]",
+		stringGenerator.generate().endsWith(suffix)));
     }
 
     private StringGenerator getStringGenerator() {

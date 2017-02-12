@@ -8,11 +8,7 @@ import java.util.stream.Collectors;
 
 import com.cdk.ea.tools.data.generation.common.CMDLineArgHelper;
 import com.cdk.ea.tools.data.generation.common.Identifier;
-import com.cdk.ea.tools.data.generation.query.interpreter.AbstractTypeInterpretationStrategy;
-import com.cdk.ea.tools.data.generation.query.interpreter.ListTypeInterpretationStrategy;
-import com.cdk.ea.tools.data.generation.query.interpreter.NumberTypeInterpretationStrategy;
-import com.cdk.ea.tools.data.generation.query.interpreter.RegexTypeInterpretationStrategy;
-import com.cdk.ea.tools.data.generation.query.interpreter.StringTypeInterpretationStrategy;
+import com.cdk.ea.tools.data.generation.query.interpreter.Interpreters;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,7 +30,7 @@ public enum DataType implements Identifier<Character>, CMDLineArgHelper {
      * 
      * @see StringProperties
      */
-    STRING('s', StringTypeInterpretationStrategy.class, "generate random Strings"),
+    STRING('s', Interpreters.STRING_TYPE_INTERPRETER, "generate random Strings"),
 
     /**
      * Number Type. The Digits in Number generated will have Properties as
@@ -42,7 +38,7 @@ public enum DataType implements Identifier<Character>, CMDLineArgHelper {
      * 
      * @see NumberProperties
      */
-    NUMBER('n', NumberTypeInterpretationStrategy.class, "generate random Numbers"),
+    NUMBER('n', Interpreters.NUMBER_TYPE_INTERPRETER, "generate random Numbers"),
 
     /**
      * List Type. The Strings generated will have Properties as defined by
@@ -50,7 +46,7 @@ public enum DataType implements Identifier<Character>, CMDLineArgHelper {
      * 
      * @see ListProperties
      */
-    LIST('l', ListTypeInterpretationStrategy.class, "generate random values from pre-defined list"),
+    LIST('l', Interpreters.LIST_TYPE_INTERPRETER, "generate random values from pre-defined list"),
 
     /**
      * Regex Type. The Strings generated will have Properties as defined by
@@ -58,7 +54,7 @@ public enum DataType implements Identifier<Character>, CMDLineArgHelper {
      * 
      * @see RegexProperties
      */
-    REGEX('r', RegexTypeInterpretationStrategy.class, "generate random strings matching regex");
+    REGEX('r', Interpreters.REGEX_TYPE_INTERPRETER, "generate random strings matching regex");
 
     private static final Map<Character, DataType> ENUM_MAP;
 
@@ -71,7 +67,7 @@ public enum DataType implements Identifier<Character>, CMDLineArgHelper {
     private final Character identifier;
 
     @Getter
-    private final Class<? extends AbstractTypeInterpretationStrategy> typeInterpretationStrategy;
+    private final Interpreters interpreter;
 
     @Getter
     private final String help;

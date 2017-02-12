@@ -15,6 +15,8 @@ import com.cdk.ea.tools.data.generation.query.Query.QueryBuilder;
 import com.cdk.ea.tools.data.generation.types.ListType;
 import com.cdk.ea.tools.data.generation.types.ListType.ListTypeBuilder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -27,7 +29,8 @@ import lombok.extern.slf4j.Slf4j;
  * @see ListTypeBuilder
  */
 @Slf4j
-public class ListTypeInterpretationStrategy extends AbstractTypeInterpretationStrategy {
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+class ListTypeInterpreter extends AbstractTypeInterpreter {
 
     /**
      * Interprets and populates the {@link ListTypeBuilder} and attaches it to

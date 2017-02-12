@@ -45,6 +45,7 @@ public class QueryInterpreter implements Interpreter {
      */
     @Override
     public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+	System.out.println(queryInterpreters);
 	queryInterpreters.stream().forEach(interpreter -> interpreter.get().doInterpret(queryBuilder, identifiers));
     }
 
