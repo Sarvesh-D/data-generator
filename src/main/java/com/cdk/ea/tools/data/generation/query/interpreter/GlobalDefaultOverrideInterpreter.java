@@ -39,6 +39,10 @@ public class GlobalDefaultOverrideInterpreter implements Interpreter {
 		.filter(i -> i.charAt(0) == Identifiers.QUANTITY.getIdentifier())
 		.map(i -> Integer.valueOf(i.substring(1))).findFirst();
 	if (quantityOverride.isPresent()) {
+	    /*
+	     * Need to override directly in Interpreters since Interpreters are
+	     * registered as Singletons.
+	     */
 	    QuantityInterpreter.setDefaultQuantity(quantityOverride.get());
 	    log.warn("Default quantity overriden to [{}]", quantityOverride.get());
 	}
