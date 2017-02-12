@@ -1,21 +1,28 @@
 package com.cdk.ea.tools.data.generation.generators;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.StringJoiner;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import com.cdk.ea.tools.data.generation.StartDataGeneration;
+import com.cdk.ea.tools.data.generation.core.Constants;
 import com.opencsv.CSVReader;
 
 /**
@@ -29,12 +36,17 @@ import com.opencsv.CSVReader;
 @RunWith(JUnit4.class)
 public class DataExportTest {
 
-    private List<String> createdFilePaths;
+    private static List<String> createdFilePaths;
 
-    @Before
-    public void setUp() throws Exception {
-	createdFilePaths = Arrays.asList("stringQueryWExport.csv", "sample_1.csv", "sample_2.csv");
+    @BeforeClass
+    public static void setUp() throws Exception {
+	createdFilePaths = Arrays.asList("stringQueryWExport.csv", "stringQueryWExport_2.csv", "sample_1.csv", "sample_2.csv");
 	createdFilePaths.stream().forEach(filePath -> new File(filePath).deleteOnExit());
+    }
+    
+    @AfterClass
+    public static void tearDown() throws Exception {
+	createdFilePaths = null;
     }
 
     @Test
@@ -74,6 +86,42 @@ public class DataExportTest {
 	    reader = new CSVReader(new FileReader("sample_2.csv"));
 	    lines = reader.readAll().size();
 	    assertTrue("Number of lines in sample_2.csv file should be 11 including csv header", lines == 11);
+	} catch (IOException e) {
+	    fail(e.getMessage());
+	} finally {
+	    try {
+		reader.close();
+	    } catch (IOException e) {
+		fail(e.getMessage());
+	    }
+	}
+    }
+    
+    @Test
+    public final void testMultipleValidQueriesWithExport() {
+	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10) f <stringQueryWExport.csv _firstNames =RandomStrings> --o =1000";
+	final String stringQueryWoExport = "(@RandomStrings :s -a -n -s l10) f <stringQueryWExport_2.csv _firstNames =RandomStrings> --o =500";
+	final String multipleValidQueris = new StringJoiner(Constants.CLI_QUERY_SEPARATOR).add(stringQueryWExport)
+		.add(stringQueryWoExport).toString();
+	StartDataGeneration.main(multipleValidQueris);
+	
+	Path exportFile1 = Paths.get("stringQueryWExport.csv");
+	assertNotNull("Path to where file was exported does not exists", exportFile1);
+	
+	Path exportFile2 = Paths.get("stringQueryWExport_2.csv");
+	assertNotNull("Path to where file was exported does not exists", exportFile2);
+	
+	CSVReader reader = null;
+	try {
+	    reader = new CSVReader(new FileReader("stringQueryWExport.csv"));
+	    int lines = reader.readAll().size();
+	    assertTrue("Quantity of data in csv file should be 1001 including csv header",
+		    lines == 1001);
+	    
+	    reader = new CSVReader(new FileReader("stringQueryWExport_2.csv"));
+	    lines = reader.readAll().size();
+	    assertTrue("Quantity of data in csv file should be 501 including csv header",
+		    lines == 501);
 	} catch (IOException e) {
 	    fail(e.getMessage());
 	} finally {

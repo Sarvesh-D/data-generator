@@ -70,7 +70,7 @@ public class RegexType extends Type {
 
     @Override
     public Generator<String> generator() {
-	return RegexGenerator.from(this);
+	return RegexGenerator.of(this);
     }
 
 }

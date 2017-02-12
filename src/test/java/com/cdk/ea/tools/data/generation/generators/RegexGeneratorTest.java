@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import com.cdk.ea.tools.data.generation.core.DataType;
 import com.cdk.ea.tools.data.generation.types.RegexType.RegexTypeBuilder;
 
 /**
@@ -27,7 +28,7 @@ public class RegexGeneratorTest {
 
     @Before
     public void setUp() throws Exception {
-	regexTypeBuilder = (RegexTypeBuilder) new RegexTypeBuilder().setLength(10);
+	regexTypeBuilder = (RegexTypeBuilder) new RegexTypeBuilder().setDataType(DataType.REGEX).setLength(10);
     }
 
     @After
@@ -39,12 +40,13 @@ public class RegexGeneratorTest {
     public final void testGeneratedStrings() {
 	final String regex = "[a-zA-Z0-9]+[@]";
 	regexTypeBuilder.setRegex(regex);
+	RegexGenerator regexGenerator = getRegexGenerator();
 	IntStream.range(1, 50)
-		.forEach(i -> assertTrue("Generated string must match regex -> " + regex, generate().matches(regex)));
+		.forEach(i -> assertTrue("Generated string must match regex -> " + regex, regexGenerator.generate().matches(regex)));
     }
 
-    private String generate() {
-	return regexTypeBuilder.buildType().generator().generate();
+    private RegexGenerator getRegexGenerator() {
+	return RegexGenerator.of(regexTypeBuilder.buildType());
     }
 
 }

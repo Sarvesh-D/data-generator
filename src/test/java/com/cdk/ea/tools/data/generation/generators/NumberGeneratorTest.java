@@ -43,8 +43,9 @@ public class NumberGeneratorTest {
     public final void testGeneratedNumberLength() {
 	final int length = 13;
 	numberTypeBuilder.setLength(length).setTypeProperties(EnumSet.of(NumberProperties.INTEGER));
+	NumberGenerator numberGenerator = getNumberGenerator();
 	IntStream.range(0, 50).forEach(i -> {
-	    String generatedNumber = generate().toString();
+	    String generatedNumber = numberGenerator.generate().toString();
 	    assertTrue("Number must be of length : [" + length + "]",
 		    StringUtils.isNumeric(generatedNumber) && generatedNumber.length() == length);
 	});
@@ -53,12 +54,13 @@ public class NumberGeneratorTest {
     @Test
     public final void testGeneratedNumbers() {
 	numberTypeBuilder.setTypeProperties(EnumSet.of(NumberProperties.INTEGER));
+	NumberGenerator numberGenerator = getNumberGenerator();
 	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("Not a valid number", StringUtils.isNumeric(generate().toString())));
+		.forEach(i -> assertTrue("Not a valid number", StringUtils.isNumeric(numberGenerator.generate().toString())));
     }
 
-    private Number generate() {
-	return numberTypeBuilder.buildType().generator().generate();
+    private NumberGenerator getNumberGenerator() {
+	return NumberGenerator.of(numberTypeBuilder.buildType());
     }
 
 }

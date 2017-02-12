@@ -30,7 +30,7 @@ public class RegexGenerator implements Generator<String> {
      *            from which the generator is to be instantiated.
      * @return {@link RegexGenerator}
      */
-    public static RegexGenerator from(RegexType regexType) {
+    public static RegexGenerator of(RegexType regexType) {
 	assertNotNull("Regex Type cannot be null", regexType);
 	return new RegexGenerator(regexType.getRegex());
     }

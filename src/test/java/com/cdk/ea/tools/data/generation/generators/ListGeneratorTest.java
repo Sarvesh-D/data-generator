@@ -45,12 +45,13 @@ public class ListGeneratorTest {
 
     @Test
     public final void testGeneratedValues() {
+	ListGenerator listGenerator = getListGenerator();
 	IntStream.range(0, 50).forEach(
-		i -> assertTrue("Generated value must be from pre-defined list values", listData.contains(generate())));
+		i -> assertTrue("Generated value must be from pre-defined list values", listData.contains(listGenerator.generate())));
     }
 
-    private Object generate() {
-	return listTypeBuilder.buildType().generator().generate();
+    private ListGenerator getListGenerator() {
+	return ListGenerator.of(listTypeBuilder.buildType());
     }
 
 }

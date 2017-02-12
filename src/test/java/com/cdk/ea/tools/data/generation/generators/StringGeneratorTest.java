@@ -51,10 +51,8 @@ public class StringGeneratorTest {
     public final void testAlphaNumericSpecialCharStringGenerated() {
 	stringTypeBuilder.setTypeProperties(
 		EnumSet.of(StringProperties.ALPHA, StringProperties.NUMERIC, StringProperties.SPECIAL_CHARS));
-	IntStream.range(0, 50).forEach(i -> {
-
-	});
-	String generatedString = generate();
+	StringGenerator stringGenerator = getStringGenerator();
+	String generatedString = stringGenerator.generate();
 	Arrays.stream(ArrayUtils.toObject(generatedString.toCharArray())).map(c -> c.toString()).forEach(c -> {
 	    assertTrue("String must contain alphabet, number and valid special characters", StringUtils.isAlpha(c)
 		    || StringUtils.isNumeric(c) || StringUtils.containsAny(c, validSpecialChars));
@@ -64,15 +62,17 @@ public class StringGeneratorTest {
     @Test
     public final void testAlphaStringGenerated() {
 	stringTypeBuilder.setTypeProperties(EnumSet.of(StringProperties.ALPHA));
+	StringGenerator stringGenerator = getStringGenerator();
 	IntStream.range(0, 50).forEach(
-		i -> assertTrue("Alpha String must contain only alpha characters", StringUtils.isAlpha(generate())));
+		i -> assertTrue("Alpha String must contain only alpha characters", StringUtils.isAlpha(stringGenerator.generate())));
     }
 
     @Test
     public final void testNumericStringGenerated() {
 	stringTypeBuilder.setTypeProperties(EnumSet.of(StringProperties.NUMERIC));
+	StringGenerator stringGenerator = getStringGenerator();
 	IntStream.range(0, 50).forEach(i -> assertTrue("Numeric String must contain only number characters",
-		StringUtils.isNumeric(generate())));
+		StringUtils.isNumeric(stringGenerator.generate())));
     }
 
     @Test
@@ -88,24 +88,27 @@ public class StringGeneratorTest {
     @Test
     public final void testSpecicalCharStringGenerated() {
 	stringTypeBuilder.setTypeProperties(EnumSet.of(StringProperties.SPECIAL_CHARS));
+	StringGenerator stringGenerator = getStringGenerator();
 	IntStream.range(0, 50).forEach(i -> assertTrue("Special Char String must contain only special characters",
-		StringUtils.containsOnly(generate(), validSpecialChars)));
+		StringUtils.containsOnly(stringGenerator.generate(), validSpecialChars)));
     }
 
     @Test
     public final void testStringLengthsGenerated() {
 	final int length = 15;
 	stringTypeBuilder.setLength(length);
+	StringGenerator stringGenerator = getStringGenerator();
 	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("String must be of length [" + length + "].", generate().length() == length));
+		.forEach(i -> assertTrue("String must be of length [" + length + "].", stringGenerator.generate().length() == length));
     }
 
     @Test
     public final void testStringPrefixGenerated() {
 	final String prefix = "test";
 	stringTypeBuilder.setPrefix(prefix);
+	StringGenerator stringGenerator = getStringGenerator();
 	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("String must have prefix [" + prefix + "]", generate().startsWith(prefix)));
+		.forEach(i -> assertTrue("String must have prefix [" + prefix + "]", stringGenerator.generate().startsWith(prefix)));
     }
 
     @Test
@@ -114,21 +117,23 @@ public class StringGeneratorTest {
 	final String suffix = "bye";
 	stringTypeBuilder.setPrefix(prefix);
 	stringTypeBuilder.setSuffix(suffix);
+	StringGenerator stringGenerator = getStringGenerator();
 	IntStream.range(0, 50)
 		.forEach(i -> assertTrue("String must have prefix [" + prefix + "] and suffix [" + suffix + "]",
-			generate().endsWith(suffix)));
+			stringGenerator.generate().endsWith(suffix)));
     }
 
     @Test
     public final void testStringSuffixGenerated() {
 	final String suffix = "bye";
 	stringTypeBuilder.setSuffix(suffix);
+	StringGenerator stringGenerator = getStringGenerator();
 	IntStream.range(0, 50)
-		.forEach(i -> assertTrue("String must have suffix [" + suffix + "]", generate().endsWith(suffix)));
+		.forEach(i -> assertTrue("String must have suffix [" + suffix + "]", stringGenerator.generate().endsWith(suffix)));
     }
 
-    private final String generate() {
-	return stringTypeBuilder.buildType().generator().generate();
+    private StringGenerator getStringGenerator() {
+	return StringGenerator.of(stringTypeBuilder.buildType());
     }
 
 }
