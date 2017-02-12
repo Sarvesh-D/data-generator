@@ -99,7 +99,7 @@ public class StartDataGeneration {
 	    log.debug("Total {} Queries passed to data-generator. Queries formed are {}", cliQueries.length,
 		    Arrays.toString(cliQueries));
 
-	    Arrays.stream(cliQueries).forEach(cliQuery -> DataGenerator.from(cliQuery).generate());
+	    Arrays.stream(cliQueries).forEach(StartDataGeneration::invokeDataGeneratorFor);
 
 	    long end = System.nanoTime();
 	    double timeTaken = (end - start) / 1000000000.0;
@@ -109,6 +109,20 @@ public class StartDataGeneration {
 	    log.error("something went wrong... {}. Visit {} for more info. Data-Generator shall now exit",
 		    e.getMessage(), WIKI_LINK);
 	    System.exit(0);
+	}
+    }
+    
+    /**
+     * Invokes {@link DataGenerator} for single CLI query.
+     * @param cliQuery for which data generator should run
+     */
+    private static void invokeDataGeneratorFor(String cliQuery) {
+	try {
+	    log.info("Invoking data generator for CLI query {}", cliQuery);
+	    DataGenerator.from(cliQuery).generate();
+	    log.info("data generator executed sucessfully for CLI query {}", cliQuery);
+	} catch (Exception e) {
+	    log.error("Error Occured while invoking data generator for CLI query {} : {}", cliQuery, e.getMessage());
 	}
     }
 
