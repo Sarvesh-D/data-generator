@@ -48,6 +48,12 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
      *            having the details for the queries
      */
     private DataGenerator(String cmdLineQuery) {
+	/*
+	 * Default Override must happen before any data generation queries are
+	 * interpreted and registered with query runners.
+	 */
+	checkAndOverrideQueryDefaults(cmdLineQuery);
+
 	String[] dataGenQueries = buildDataGenQueries(cmdLineQuery);
 	log.debug("Data Generation Queries : {}", Arrays.toString(dataGenQueries));
 
@@ -59,7 +65,6 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	    registerDataExporters(dataExportQueries);
 	}
 
-	checkAndOverrideQueryDefaults(cmdLineQuery);
     }
 
     /**
