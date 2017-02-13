@@ -19,7 +19,6 @@ import com.cdk.ea.tools.data.generation.core.Identifiers;
 import com.cdk.ea.tools.data.generation.core.Properties;
 import com.cdk.ea.tools.data.generation.exception.DataGeneratorException;
 import com.cdk.ea.tools.data.generation.generators.DataGenerator;
-import com.cdk.ea.tools.data.generation.query.interpreter.Interpreters;
 import com.cdk.ea.tools.data.generation.query.json.JsonQueryBuilder;
 
 import lombok.extern.slf4j.Slf4j;
