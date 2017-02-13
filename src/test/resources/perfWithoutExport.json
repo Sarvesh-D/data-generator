@@ -10,8 +10,6 @@
           "SPECIAL_STRING"
         ],
         "length": 10,
-        "list": null,
-        "regex": null,
         "prefix": "pre",
         "suffix": "suf"
       }
@@ -27,8 +25,7 @@
         "list": [
           "Mr.",
           "Miss"
-        ],
-        "regex": null
+        ]
       }
     },
     {
@@ -37,10 +34,7 @@
         "type": "NUMBER",
         "properties": [
           "INTEGER_NUMBER"
-        ],
-        "length": null,
-        "list": null,
-        "regex": null
+        ]
       }
     },
     {
@@ -51,7 +45,6 @@
           "REGEX_EXPR"
         ],
         "length": 6,
-        "list": null,
         "regex": "[a-zA-Z]+[@][0-9]+"
       }
     }
