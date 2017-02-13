@@ -46,10 +46,14 @@ public class QueryRunner {
 	Type dataType = query.getTypeBuilder().buildType();
 	Generator<?> generator = dataType.generator();
 	DataCollector dataCollector = query.getDataCollector();
-	log.debug("beginning to run query for type {} with collector name [{}] and data quantity [{}]", dataType,
+	log.debug("beginning to run query for type [{}] with collector name [{}] and data quantity [{}]", dataType,
 		dataCollector.getName(), query.getQuantity());
+	long start = System.nanoTime();
 	IntStream.rangeClosed(1, query.getQuantity()).forEach(i -> dataCollector.getData().add(generator.generate()));
 	log.debug("query executed successfully");
+	final long end = System.nanoTime();
+	final double timeTaken = (end - start) / 1000000000.0;
+	log.debug("Time taken to execute query for data collector {} : {} seconds", dataCollector.getName(), timeTaken);
 	return dataCollector;
     }
 

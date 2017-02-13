@@ -10,6 +10,26 @@ package com.cdk.ea.tools.data.generation.query.interpreter;
 public enum Interpreters {
 
     /**
+     * Holds singleton instance of {@link QueryInterpreter}
+     */
+    QUERY_INTERPRETER {
+
+	private Interpreter queryInterpreter;
+
+	@Override
+	public Interpreter get() {
+	    /**
+	     * Must be initialized lazily since {@link QueryInterpreter} has
+	     * dependency on {@link Interpreters}. So eagerly initializing this
+	     * {@link QueryInterpreter} will cause circular dependency.
+	     */
+	    if (null == queryInterpreter)
+		queryInterpreter = new QueryInterpreter();
+	    return queryInterpreter;
+	}
+    },
+
+    /**
      * Holds singleton instance of {@link DataCollectorInterpreter}
      */
     DATA_COLLECTOR {

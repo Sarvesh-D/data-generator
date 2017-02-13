@@ -19,8 +19,8 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class QueryInterpreter implements Interpreter {
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+class QueryInterpreter implements Interpreter {
 
     @Getter
     private static final QueryInterpreter instance = new QueryInterpreter();

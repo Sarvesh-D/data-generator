@@ -77,6 +77,8 @@ public class CSVFileExporter implements FileExporter {
     public void export(Collection<DataCollector> dataCollectors) {
 	try (CSVWriter csvWriter = new CSVWriter(new FileWriter(filePath), CSVWriter.DEFAULT_SEPARATOR,
 		CSVWriter.NO_QUOTE_CHARACTER);) {
+	    long start = System.nanoTime();
+	    log.debug("Exporting Data to file {} started",filePath);
 	    // write header row for header names as requested by client
 	    String[] headers = csvColumnDetails.keySet().toArray(new String[csvColumnDetails.keySet().size()]);
 	    csvWriter.writeNext(headers);
@@ -93,6 +95,10 @@ public class CSVFileExporter implements FileExporter {
 	    String[][] data = getCSVLinesFrom(relevantDataCollectors);
 	    Arrays.stream(data).forEach(csvWriter::writeNext); // write data
 	    csvWriter.close();
+	    log.debug("Exporting Data to file {} completed",filePath);
+	    final long end = System.nanoTime();
+	    final double timeTaken = (end - start) / 1000000000.0;
+	    log.debug("Time taken to export data to {} : {} seconds", filePath, timeTaken);
 	} catch (Exception e) {
 	    throw new DataExportException(e.getMessage());
 	}

@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 import com.cdk.ea.tools.data.generation.common.Builder;
 import com.cdk.ea.tools.data.generation.generators.DataCollector;
-import com.cdk.ea.tools.data.generation.query.interpreter.QueryInterpreter;
+import com.cdk.ea.tools.data.generation.query.interpreter.Interpreter;
+import com.cdk.ea.tools.data.generation.query.interpreter.Interpreters;
 import com.cdk.ea.tools.data.generation.types.Type;
 import com.cdk.ea.tools.data.generation.types.TypeBuilder;
 import com.cdk.ea.tools.data.generation.types.TypeProperties;
@@ -46,7 +47,7 @@ public final class Query {
 	public Query build(String... queryParams) {
 	    log.debug("Building Query Instance from params {}", Arrays.toString(queryParams));
 	    QueryBuilder queryBuilder = new QueryBuilder();
-	    QueryInterpreter queryInterpreter = QueryInterpreter.getInstance();
+	    Interpreter queryInterpreter = Interpreters.QUERY_INTERPRETER.get();
 	    queryInterpreter.doInterpret(queryBuilder, queryParams);
 	    return new Query(queryBuilder);
 	}

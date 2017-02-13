@@ -53,7 +53,6 @@ public class StartDataGeneration {
 
     private StartDataGeneration() {
 	// suppressing default constructor
-	Interpreters.values();
     }
 
     /**
@@ -108,7 +107,7 @@ public class StartDataGeneration {
 	    long end = System.nanoTime();
 	    double timeTaken = (end - start) / 1000000000.0;
 
-	    log.info("Time Taken to generate Data : {} seconds", timeTaken);
+	    log.info("Total Time Taken by data generator : {} seconds", timeTaken);
 	} catch (Exception e) {
 	    log.error("something went wrong... {}. Visit {} for more info. Data-Generator shall now exit",
 		    e.getMessage(), WIKI_LINK);
@@ -164,9 +163,13 @@ public class StartDataGeneration {
      */
     private static void invokeDataGeneratorFor(String cliQuery) {
 	try {
-	    log.info("Invoking data generator for CLI query {}", cliQuery);
+	    long start = System.nanoTime();
+	    log.debug("Invoking data generator for CLI query {}", cliQuery);
 	    DataGenerator.from(cliQuery).generate();
-	    log.info("data generator executed sucessfully for CLI query {}", cliQuery);
+	    log.debug("data generator executed sucessfully for CLI query {}", cliQuery);
+	    long end = System.nanoTime();
+	    double timeTaken = (end - start) / 1000000000.0;
+	    log.debug("Time Taken to execute CLI query {} : {} seconds", cliQuery, timeTaken);
 	} catch (Exception e) {
 	    log.error("Error Occured while invoking data generator for CLI query {} : {}", cliQuery, e.getMessage());
 	}

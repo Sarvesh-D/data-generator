@@ -48,9 +48,14 @@ public class JsonQueryBuilder implements Builder<String> {
      */
     @Override
     public String build(String... jsonFiles) {
+	final long start = System.nanoTime();
 	List<String> cliQueries = new ArrayList<>();
 	Arrays.stream(jsonFiles).forEach(jsonFile -> cliQueries.add(buildCLIQueryFrom(jsonFile)));
-	return cliQueries.stream().collect(Collectors.joining(Constants.CLI_QUERY_SEPARATOR));
+	String finalCLIQuery = cliQueries.stream().collect(Collectors.joining(Constants.CLI_QUERY_SEPARATOR));
+	final long end = System.nanoTime();
+	final double timeTaken = (end - start) / 1000000000.0;
+	log.info("Time taken to parse all JSONs to CLI Query : {} seconds",timeTaken);
+	return finalCLIQuery;
     }
 
     private void appendCSVColumnDetails(StringBuilder cmdQueryBuilder, List<CsvColumnDetails> csvColumnDetails) {
@@ -183,6 +188,7 @@ public class JsonQueryBuilder implements Builder<String> {
      * @return CLI query for the JSON File.
      */
     private String buildCLIQueryFrom(String jsonFile) {
+	final long start = System.nanoTime();
 	log.debug("Building query from JSON file {}", jsonFile);
 	ObjectMapper mapper = new ObjectMapper();
 	JsonQueryDetails jsonQueryDetails = null;
@@ -237,6 +243,9 @@ public class JsonQueryBuilder implements Builder<String> {
 	}
 
 	log.debug("CLI Query formed for JSON {} is {}", jsonFile, cmdQueryBuilder);
+	final long end = System.nanoTime();
+	final double timeTaken = (end - start) / 1000000000.0;
+	log.info("Time taken to parse JSON {} to CLI Query : {} seconds",jsonFile, timeTaken);
 	return cmdQueryBuilder.toString();
     }
 

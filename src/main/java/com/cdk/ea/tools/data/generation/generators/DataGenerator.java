@@ -86,9 +86,14 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
      */
     @Override
     public Collection<DataCollector> generate() {
+	long start = System.nanoTime();
 	log.info("beginning to generate data...");
 	dataQueryRunners.forEach(queryRunner -> dataCollectors.add(queryRunner.run()));
 	log.info("data generation completed...");
+	final long end = System.nanoTime();
+	final double timeTaken = (end - start) / 1000000000.0;
+	log.info("Time taken to generate data : {} seconds",timeTaken);
+	
 	log.debug("Data Collected by {} data collectors.", dataCollectors.size());
 	// export data at-least one data exporter is registered.
 	if (!dataExporters.isEmpty())
@@ -162,6 +167,7 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
      * Exports the data using various data exporters registered.
      */
     private void export() {
+	long start = System.nanoTime();
 	log.info("beginning to export data...");
 	dataExporters.stream().forEach(dataExporter -> {
 	    try {
@@ -171,6 +177,9 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	    }
 	});
 	log.info("data export completed...");
+	final long end = System.nanoTime();
+	final double timeTaken = (end - start) / 1000000000.0;
+	log.info("Time taken to export data : {} seconds",timeTaken);
     }
 
     /**
