@@ -24,9 +24,24 @@
 		<jackson.databind.version>2.8.5</jackson.databind.version>
 		<slf4j.version>1.7.22</slf4j.version>
 		<junit.version>4.12</junit.version>
+
+		<sonar.language>java</sonar.language>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.java.binaries>${basedir}</sonar.java.binaries>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.jacoco.reportPath>${basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
+
+		<sonar.coverage.exclusions>
+			**/com/quote/BaselineQuoteApplication.java,
+			**/com/quote/model/*.java,
+			**/com/quote/repository/*.java,
+			**/com/quote/permissions/*.java
+		</sonar.coverage.exclusions>
+
 	</properties>
 
 	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -53,7 +68,6 @@
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 					<appendAssemblyId>false</appendAssemblyId>
-					<finalName>${project.artifactId}-${project.version}</finalName>
 				</configuration>
 				<executions>
 					<execution>
