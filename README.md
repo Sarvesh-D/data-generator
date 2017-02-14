@@ -1,3 +1,4 @@
+![Build Status](http://bamboo.cdk.com/plugins/servlet/wittified/build-status/DG-DGB)
 # Data Generation Tool
 
 ## Synopsis
@@ -78,8 +79,8 @@ This option is available for advanced users or for the users who want to quickly
 ## Links
 
  1. [Data-Generator Wiki](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki)
- 2. [JSON Format](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage:)
- 3. [Examples](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Examples)
- 4. [Code Repository]()
- 5. [JIRA/Issues]()
+ 2. [Examples](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Examples)
+ 3. [JSON Format](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage:)
+ 4. [Code Repository](http://stash.cdk.com/projects/CS/repos/data-generator/browse)
+ 5. [JIRA/Issues (TBD)]()
 

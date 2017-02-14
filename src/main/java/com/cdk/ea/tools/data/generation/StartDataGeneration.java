@@ -28,8 +28,7 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 /**
  * Main class which starts the execution of data-generator tool. For more
  * information on tool usage see the <a href=
- * "https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki">confluence
- * link</a>.
+ * "http://stash.cdk.com/projects/CS/repos/data-generator/browse">README</a>.
  * 
  * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
  * @since 07-02-2017
@@ -40,7 +39,7 @@ public class StartDataGeneration {
 
     private static ConsoleAppender console = new ConsoleAppender();
 
-    private static final String WIKI_LINK = "https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki";
+    private static final String README = "http://stash.cdk.com/projects/CS/repos/data-generator/browse";
 
     static {
 	String pattern = "%-5p: %c - %m%n";
@@ -109,7 +108,7 @@ public class StartDataGeneration {
 	    log.info("Total Time Taken by data generator : {} seconds", timeTaken);
 	} catch (Exception e) {
 	    log.error("something went wrong... {}. Visit {} for more info. Data-Generator shall now exit",
-		    e.getMessage(), WIKI_LINK);
+		    e.getMessage(), README);
 	    System.exit(0);
 	}
     }
@@ -147,9 +146,9 @@ public class StartDataGeneration {
 		StartDataGeneration.class.getResourceAsStream(usageFilePath));
 		BufferedReader reader = new BufferedReader(input)) {
 	    usage.append(reader.lines().collect(Collectors.joining("\n")));
-	    usage.append(String.format("%n%nVisit %s for more info", WIKI_LINK));
+	    usage.append(String.format("%n%nVisit %s for more info", README));
 	} catch (IOException e) {
-	    log.error("something went wrong while fetching tool usage : visit {} for more info.", WIKI_LINK);
+	    log.error("something went wrong while fetching tool usage : visit {} for more info.", README);
 	}
 	return usage.toString();
     }
