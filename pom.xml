@@ -165,6 +165,7 @@
 									<include>*:opencsv</include>
 								</includes>
 							</artifactSet>
+							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
 						</configuration>
 					</execution>
 				</executions>
