@@ -51,14 +51,6 @@
 		<sonar.java.binaries>${basedir}</sonar.java.binaries>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.jacoco.reportPath>${basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
-
-		<sonar.coverage.exclusions>
-			**/com/quote/BaselineQuoteApplication.java,
-			**/com/quote/model/*.java,
-			**/com/quote/repository/*.java,
-			**/com/quote/permissions/*.java
-		</sonar.coverage.exclusions>
-
 	</properties>
 
 	<profiles>
