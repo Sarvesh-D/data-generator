@@ -80,7 +80,7 @@ This option is available for advanced users or for the users who want to quickly
 
  1. [Data-Generator Wiki](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki)
  2. [Examples](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Examples)
- 3. [JSON Format](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage:)
+ 3. [JSON Format](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage)
  4. [Code Repository](http://stash.cdk.com/projects/CS/repos/data-generator/browse)
  5. [JIRA/Issues (TBD)]()
 

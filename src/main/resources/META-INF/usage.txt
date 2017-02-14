@@ -4,7 +4,7 @@
 Simple usage...
 json path/to/json/file/to/generate/data
 
-see JSON format here... (https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage:)
+see JSON format here... (https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage)
 
 For Advanced Users...
 
