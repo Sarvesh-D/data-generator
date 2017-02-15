@@ -76,6 +76,7 @@
 											<mainClass>com.cdk.ea.tools.data.generation.StartDataGeneration</mainClass>
 										</transformer>
 									</transformers>
+									<finalName>${project.artifactId}-${project.version}-runnable</finalName>
 								</configuration>
 							</execution>
 						</executions>
