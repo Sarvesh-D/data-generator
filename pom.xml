@@ -46,6 +46,10 @@
 		<sonar.java.binaries>${basedir}</sonar.java.binaries>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.jacoco.reportPath>${basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
+		
+		<sonar.coverage.exclusions>
+			**/StartDataGeneration.java
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<build>
