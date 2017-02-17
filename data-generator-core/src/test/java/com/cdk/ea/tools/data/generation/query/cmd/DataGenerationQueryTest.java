@@ -20,16 +20,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.tools.data.generation.common.DataGeneratorUtils;
-import com.cdk.ea.tools.data.generation.core.Constants;
-import com.cdk.ea.tools.data.generation.core.DataGenerationStarter;
-import com.cdk.ea.tools.data.generation.exception.DataExportException;
-import com.cdk.ea.tools.data.generation.exception.PropertiesInterpretationException;
-import com.cdk.ea.tools.data.generation.exception.QueryInterpretationException;
-import com.cdk.ea.tools.data.generation.exception.TypeInterpretationException;
-import com.cdk.ea.tools.data.generation.exporters.DataExporter;
-import com.cdk.ea.tools.data.generation.generators.DataCollector;
-import com.cdk.ea.tools.data.generation.generators.DataGenerator;
+import com.cdk.ea.tools.data.generator.common.DataGeneratorUtils;
+import com.cdk.ea.tools.data.generator.core.Constants;
+import com.cdk.ea.tools.data.generator.core.DataGenerationStarter;
+import com.cdk.ea.tools.data.generator.exception.DataExportException;
+import com.cdk.ea.tools.data.generator.exception.PropertiesInterpretationException;
+import com.cdk.ea.tools.data.generator.exception.QueryInterpretationException;
+import com.cdk.ea.tools.data.generator.exception.TypeInterpretationException;
+import com.cdk.ea.tools.data.generator.exporters.DataExporter;
+import com.cdk.ea.tools.data.generator.generators.DataCollector;
+import com.cdk.ea.tools.data.generator.generators.DataGenerator;
 import com.opencsv.CSVReader;
 
 /**

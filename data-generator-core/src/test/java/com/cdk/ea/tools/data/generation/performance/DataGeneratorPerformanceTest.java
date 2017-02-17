@@ -14,8 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.tools.data.generation.core.Constants;
-import com.cdk.ea.tools.data.generation.core.DataGenerationStarter;
+import com.cdk.ea.tools.data.generator.core.Constants;
+import com.cdk.ea.tools.data.generator.core.DataGenerationStarter;
 
 import lombok.extern.java.Log;
 

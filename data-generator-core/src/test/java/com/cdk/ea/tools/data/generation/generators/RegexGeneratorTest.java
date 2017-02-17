@@ -10,8 +10,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.tools.data.generation.core.DataType;
-import com.cdk.ea.tools.data.generation.types.RegexType.RegexTypeBuilder;
+import com.cdk.ea.tools.data.generator.core.DataType;
+import com.cdk.ea.tools.data.generator.generators.RegexGenerator;
+import com.cdk.ea.tools.data.generator.types.RegexType.RegexTypeBuilder;
 
 /**
  * Test Class for testing {@link RegexGenerator}

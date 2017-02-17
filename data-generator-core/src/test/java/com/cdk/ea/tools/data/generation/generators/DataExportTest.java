@@ -20,10 +20,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.tools.data.generation.common.DataGeneratorUtils;
-import com.cdk.ea.tools.data.generation.core.Constants;
-import com.cdk.ea.tools.data.generation.core.DataGenerationStarter;
-import com.cdk.ea.tools.data.generation.exporters.DataExporter;
+import com.cdk.ea.tools.data.generator.common.DataGeneratorUtils;
+import com.cdk.ea.tools.data.generator.core.Constants;
+import com.cdk.ea.tools.data.generator.core.DataGenerationStarter;
+import com.cdk.ea.tools.data.generator.exporters.DataExporter;
+import com.cdk.ea.tools.data.generator.generators.DataCollector;
+import com.cdk.ea.tools.data.generator.generators.DataGenerator;
 import com.opencsv.CSVReader;
 
 /**

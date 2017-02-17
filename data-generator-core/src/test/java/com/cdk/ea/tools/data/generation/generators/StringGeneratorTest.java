@@ -14,10 +14,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.tools.data.generation.core.DataType;
-import com.cdk.ea.tools.data.generation.core.SpecialChar;
-import com.cdk.ea.tools.data.generation.core.StringProperties;
-import com.cdk.ea.tools.data.generation.types.StringType.StringTypeBuilder;
+import com.cdk.ea.tools.data.generator.core.DataType;
+import com.cdk.ea.tools.data.generator.core.SpecialChar;
+import com.cdk.ea.tools.data.generator.core.StringProperties;
+import com.cdk.ea.tools.data.generator.generators.StringGenerator;
+import com.cdk.ea.tools.data.generator.types.StringType.StringTypeBuilder;
 
 /**
  * Test Class for testing {@link StringGenerator}
@@ -79,9 +80,9 @@ public class StringGeneratorTest {
     public final void testRandomSpecialCharString() {
 	IntStream.range(0, 50).forEach(i -> {
 	    assertTrue("Five special char must be genrated",
-		    com.cdk.ea.tools.data.generation.common.StringUtils.randomSpecialCharString(5).length() == 5);
+		    com.cdk.ea.tools.data.generator.common.StringUtils.randomSpecialCharString(5).length() == 5);
 	    assertTrue("All special chars must be from SpecialChars enum", StringUtils.containsOnly(
-		    com.cdk.ea.tools.data.generation.common.StringUtils.randomSpecialCharString(5), validSpecialChars));
+		    com.cdk.ea.tools.data.generator.common.StringUtils.randomSpecialCharString(5), validSpecialChars));
 	});
     }
 

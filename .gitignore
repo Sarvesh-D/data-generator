@@ -1,8 +1,9 @@
 # File Patterns #
 *.class
-/.project
+**/.project
 .settings
 *.classpath
+**/dependency-reduced-pom.xml
 
 # Package Files #
 *.jar
@@ -10,7 +11,7 @@
 *.ear
 
 # Folders #
-/target/
+**/target/
 
 pom.xml.next
 pom.xml.releaseBackup

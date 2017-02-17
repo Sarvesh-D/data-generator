@@ -12,9 +12,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.tools.data.generation.core.DataType;
-import com.cdk.ea.tools.data.generation.core.NumberProperties;
-import com.cdk.ea.tools.data.generation.types.NumberType.NumberTypeBuilder;
+import com.cdk.ea.tools.data.generator.core.DataType;
+import com.cdk.ea.tools.data.generator.core.NumberProperties;
+import com.cdk.ea.tools.data.generator.generators.NumberGenerator;
+import com.cdk.ea.tools.data.generator.types.NumberType.NumberTypeBuilder;
 
 /**
  * Test Class for testing {@link NumberGenerator}

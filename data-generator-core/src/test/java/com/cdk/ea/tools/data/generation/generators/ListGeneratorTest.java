@@ -13,8 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.cdk.ea.tools.data.generation.core.DataType;
-import com.cdk.ea.tools.data.generation.types.ListType.ListTypeBuilder;
+import com.cdk.ea.tools.data.generator.core.DataType;
+import com.cdk.ea.tools.data.generator.generators.ListGenerator;
+import com.cdk.ea.tools.data.generator.types.ListType.ListTypeBuilder;
 
 /**
  * Test Class for testing the {@link ListGenerator}
