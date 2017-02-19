@@ -16,8 +16,23 @@
 
 
 ## Installation
+The data-generator has two modules viz. data-generator-core (to be used as dependency) data-generator-runnable (to be used as standalone jar).
 
-    Add groupId, artifactId info here for downloading the jar
+Download the runnable jar and start generating and exporting data (see CLI usage and JSON usage):
+
+
+| data-generator version | download link |
+|------------------------|---------------|
+| 1.0.0-RELEASE          |               |
+
+
+Add data-generator dependency to your existing maven project:
+
+    <dependency>
+        <groupId>com.cdk.ea</groupId>
+        <artifactId>data-generator-core</artifactId>
+        <version>1.0.0-RELEASE</version>
+    </dependency>
     
 
 
