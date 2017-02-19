@@ -23,7 +23,7 @@ Download the runnable jar and start generating and exporting data (see CLI usage
 
 | data-generator version | download link |
 |------------------------|---------------|
-| 1.0.0-RELEASE          |               |
+| 1.0.0-RELEASE          | [Artifactory](http://artifactory.cdk.com/artifactory/libs-release-local/com/cdk/ea/data-generator-runnable/1.0.0-RELEASE/data-generator-runnable-1.0.0-RELEASE.jar)            |
 
 
 Add data-generator dependency to your existing maven project:
