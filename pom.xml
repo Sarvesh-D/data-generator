@@ -16,6 +16,12 @@
 		<url>http://www.cdkglobal.com/</url>
 	</organization>
 
+	<scm>
+		<connection>scm:git:http://stash.ds.adp.com/scm/cs/data-generator.git</connection>
+		<developerConnection>scm:git:http://stash.ds.adp.com/scm/cs/data-generator.git</developerConnection>
+		<url>http://stash.ds.adp.com/scm/cs/data-generator/browse/</url>
+	</scm>
+
 	<ciManagement>
 		<system>Bamboo</system>
 		<url>http://bamboo.cdk.com/browse/DG-DGB</url>
@@ -46,7 +52,7 @@
 		<sonar.java.binaries>${basedir}</sonar.java.binaries>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.jacoco.reportPath>${basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
-		
+
 		<sonar.coverage.exclusions>
 			**/StartDataGeneration.java
 		</sonar.coverage.exclusions>
