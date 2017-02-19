@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.cdk.ea.tools.data.generator.common.DataGeneratorUtils;
 import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.exporters.DataExporter;
 import com.cdk.ea.tools.data.generator.exporters.Exporter;
@@ -49,6 +50,7 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
      * @param dataGenQueries
      *            having the details for the queries
      * @return {@link DataGenerator}
+     * @see DataGeneratorUtils#getDataGenQueries(String)
      */
     public static DataGenerator from(String[] dataGenQueries) {
 	return new DataGenerator(dataGenQueries);

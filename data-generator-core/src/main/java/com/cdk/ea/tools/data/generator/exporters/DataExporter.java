@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.cdk.ea.tools.data.generator.common.DataGeneratorUtils;
 import com.cdk.ea.tools.data.generator.core.Identifiers;
 import com.cdk.ea.tools.data.generator.exception.DataExportException;
 import com.cdk.ea.tools.data.generator.generators.DataCollector;
@@ -45,6 +46,7 @@ public class DataExporter implements Exporter {
      * @param dataExportQueries
      *            for {@link DataExporter}
      * @return {@link DataExporter}
+     * @see DataGeneratorUtils#getDataExportQueries(String)
      */
     public static DataExporter from(String[] dataExportQueries) {
 	return new DataExporter(dataExportQueries);
