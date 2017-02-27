@@ -4,7 +4,7 @@
 
 	<groupId>com.cdk.ea</groupId>
 	<artifactId>data-generator</artifactId>
-	<version>1.8-SNAPSHOT</version>
+	<version>1.0.${bambooBuildNumber}-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>data-generator</name>
