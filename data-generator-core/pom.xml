@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.cdk.ea</groupId>
 		<artifactId>data-generator</artifactId>
-		<version>1.0.${bambooBuildNumber}-SNAPSHOT</version>
+		<version>1.0.9-SNAPSHOT</version>
 	</parent>
 	<artifactId>data-generator-core</artifactId>
 	<packaging>jar</packaging>
