@@ -37,7 +37,7 @@ public final class DataGenerationStarter {
     static {
 	String pattern = "%-5p: %c - %m%n";
 	console.setLayout(new PatternLayout(pattern));
-	console.setThreshold(Level.DEBUG);
+	console.setThreshold(Level.INFO);
 	console.activateOptions();
 	Logger.getLogger("com.cdk.ea.tools.data.generator").addAppender(console);
     }
