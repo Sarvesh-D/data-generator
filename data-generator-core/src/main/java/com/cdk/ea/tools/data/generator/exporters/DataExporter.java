@@ -3,14 +3,17 @@ package com.cdk.ea.tools.data.generator.exporters;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.cdk.ea.tools.data.generator.common.DataGeneratorUtils;
+import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.Identifiers;
 import com.cdk.ea.tools.data.generator.exception.DataExportException;
 import com.cdk.ea.tools.data.generator.generators.DataCollector;
@@ -94,9 +97,11 @@ public class DataExporter implements Exporter {
 		    if (headerNames.isEmpty())
 			throw new DataExportException("At least one header name must be specified for CSV file export");
 
-		    List<String> dataRefs = queryParams.stream()
+		    List<Set<String>> dataRefs = queryParams.stream()
 			    .filter(i -> i.startsWith(Identifiers.CSV_COL_DATA_REF.getIdentifier().toString()))
-			    .map(i -> i.substring(1)).collect(Collectors.toList());
+			    .map(i -> org.apache.commons.lang3.StringUtils.split(i.substring(1), Constants.COMMA))
+			    .map(dataRefsForHeader -> new HashSet<>(Arrays.asList(dataRefsForHeader)))
+			    .collect(Collectors.toList());
 
 		    if (headerNames.size() != dataRefs.size()) {
 			throw new DataExportException(String.format(

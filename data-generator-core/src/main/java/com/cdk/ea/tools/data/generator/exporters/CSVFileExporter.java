@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -34,8 +36,8 @@ public class CSVFileExporter implements FileExporter {
 
     private String filePath;
 
-    // map with csvHeaderName as key and dataRef as value
-    private Map<String, String> csvColumnDetails = new LinkedHashMap<>();
+    // map with csvHeaderName as key and set of one or more dataRef as value
+    private Map<String, Set<String>> csvColumnDetails = new LinkedHashMap<>();
 
     /**
      * Constructor for {@link CSVFileExporter}
@@ -46,14 +48,14 @@ public class CSVFileExporter implements FileExporter {
      */
     private CSVFileExporter(String filePath, List<CsvColumnDetails> columnDetails) {
 	setFilePath(filePath);
-	Map<String, String> unsortedCsvColumnDetailsMap = columnDetails.stream()
+	Map<String, Set<String>> unsortedCsvColumnDetailsMap = columnDetails.stream()
 		.collect(Collectors.toMap(CsvColumnDetails::getHeaderName, CsvColumnDetails::getDataRef));
 
 	/*
-	 * ordering by dataCollector name to ensure correct data is written
-	 * under correct csv header
+	 * ordering by csv header name for easier look at the generated CSV
+	 * file.
 	 */
-	unsortedCsvColumnDetailsMap.entrySet().stream().sorted(Map.Entry.comparingByValue())
+	unsortedCsvColumnDetailsMap.entrySet().stream().sorted(Map.Entry.comparingByKey())
 		.forEachOrdered(x -> csvColumnDetails.put(x.getKey(), x.getValue()));
     }
 
@@ -85,12 +87,12 @@ public class CSVFileExporter implements FileExporter {
 
 	    /*
 	     * get data for relevant data collectors only (which the client has
-	     * asked for) ordering by dataCollector name to ensure correct data
-	     * is written under correct csv header
+	     * asked for). This is to slightly improve performance, since there
+	     * can be 100 data-collectors, but the client may use some of them
+	     * to export data to a particular CSV file.
 	     */
-	    Collection<DataCollector> relevantDataCollectors = dataCollectors.stream().sorted()
-		    .filter(collector -> csvColumnDetails.values().contains(collector.getName()))
-		    .collect(Collectors.toList());
+	    Collection<DataCollector> relevantDataCollectors = dataCollectors.stream()
+		    .filter(collector -> shouldInclude(collector)).collect(Collectors.toList());
 
 	    String[][] data = getCSVLinesFrom(relevantDataCollectors);
 	    Arrays.stream(data).forEach(csvWriter::writeNext); // write data
@@ -109,27 +111,42 @@ public class CSVFileExporter implements FileExporter {
 	this.filePath = path;
     }
 
+    /**
+     * Extracts and returns data from data collectors. This methods flat maps
+     * the result of {@link DataCollector#getData()} for each dataCollector and
+     * forms a consolidated list.
+     * 
+     * @param collectors
+     *            from which the data is to be extracted
+     * @return Flat List of data for each data collector
+     */
+    private List<Object> extractDataFromCollectors(Collection<DataCollector> collectors) {
+	List<Object> data = new ArrayList<>();
+	collectors.stream().map(DataCollector::getData).forEach(data::addAll);
+	return data;
+    }
+
     // TODO figure out why this method is getting called twice.
     private String[][] getCSVLinesFrom(Collection<DataCollector> dataCollectors) {
 
 	/*
-	 * Map whose key is csvHeaderName and value is dataCollector whose data
+	 * Map whose key is csvHeaderName and value is dataCollectors whose data
 	 * the csvColumn will hold. This map is needed since the
 	 * relevantDataCollectors passed to this method might be less in case
 	 * there are different csv columns with same dataCollector. So we need a
 	 * map which will hold dataCollector as value for each CSV column header
 	 * (map key)
 	 */
-	Map<String, DataCollector> csvHeaderToDataMapping = new LinkedHashMap<>();
+	Map<String, Set<DataCollector>> csvHeaderToDataMapping = new LinkedHashMap<>();
 	csvColumnDetails.entrySet().stream().forEachOrdered(entry -> csvHeaderToDataMapping.put(entry.getKey(),
-		getDataCollector(entry.getValue(), dataCollectors)));
+		getDataCollectors(entry.getValue(), dataCollectors)));
 
 	// list of list. The inner list is a list of data that each
-	// DataCollector holds
-	List<List<Object>> dataAsLists = csvHeaderToDataMapping.values().stream().map(collector -> collector.getData())
-		.map(collector -> new ArrayList<>(collector)).collect(Collectors.toList());
+	// DataRef for header holds
+	List<List<Object>> dataAsLists = csvHeaderToDataMapping.values().stream()
+		.map(collectors -> extractDataFromCollectors(collectors)).collect(Collectors.toList());
 
-	List<Integer> dataQuantities = dataCollectors.stream().map(collector -> collector.getData().size())
+	List<Integer> dataQuantities = dataAsLists.stream().map(dataList -> dataList.size())
 		.collect(Collectors.toList());
 	int totalLines = Collections.max(dataQuantities);
 	log.debug("Total {} lines would be written to file {}", totalLines, filePath);
@@ -186,6 +203,36 @@ public class CSVFileExporter implements FileExporter {
 	    throw new NoSuchElementException("No collector found for name [" + collectorName + "]. Please check if ["
 		    + collectorName + "] is associated with any data generation query");
 	}
+    }
+
+    /**
+     * Gets the data collectors for the collector names given
+     * 
+     * @param collectorNames
+     *            whose data collectors are required.
+     * @param dataCollectors
+     *            corresponding to collectorNames
+     * @return Set of DataCollectors
+     */
+    private Set<DataCollector> getDataCollectors(Set<String> collectorNames, Collection<DataCollector> dataCollectors) {
+	Set<DataCollector> matchingDataCollectors = new HashSet<>();
+	collectorNames
+		.forEach(collectorName -> matchingDataCollectors.add(getDataCollector(collectorName, dataCollectors)));
+	return matchingDataCollectors;
+    }
+
+    /**
+     * Determines whether given data collector is necessary for generating CSV
+     * export file
+     * 
+     * @param collector
+     *            under question
+     * @return boolean True if data collector is required, False otherwise
+     */
+    private boolean shouldInclude(DataCollector collector) {
+	Set<String> relevantDataCollectorNames = new HashSet<>();
+	csvColumnDetails.values().stream().forEach(relevantDataCollectorNames::addAll);
+	return relevantDataCollectorNames.contains(collector.getName());
     }
 
 }

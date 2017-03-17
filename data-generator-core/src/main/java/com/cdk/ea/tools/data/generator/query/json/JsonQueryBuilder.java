@@ -64,7 +64,7 @@ public class JsonQueryBuilder implements Builder<String> {
 	    cmdQueryBuilder.append(csvColumnDetail.getHeaderName());
 	    cmdQueryBuilder.append(Constants.SPACE);
 	    cmdQueryBuilder.append(Identifiers.CSV_COL_DATA_REF.getIdentifier());
-	    cmdQueryBuilder.append(csvColumnDetail.getDataRef());
+	    cmdQueryBuilder.append(csvColumnDetail.getDataRef().stream().collect(Collectors.joining(Constants.COMMA)));
 	    cmdQueryBuilder.append(Constants.SPACE);
 	});
     }

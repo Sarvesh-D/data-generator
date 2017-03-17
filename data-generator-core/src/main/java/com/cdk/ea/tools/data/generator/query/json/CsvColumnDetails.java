@@ -1,5 +1,9 @@
 package com.cdk.ea.tools.data.generator.query.json;
 
+import java.util.Set;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -18,10 +22,11 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 @EqualsAndHashCode(of = "headerName")
+@JsonDeserialize(using = CsvColumnDetailsDeserializer.class)
 public class CsvColumnDetails {
 
     @NonNull
     private final String headerName;
-    private final String dataRef;
+    private final Set<String> dataRef;
 
 }
