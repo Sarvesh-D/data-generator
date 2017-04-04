@@ -42,12 +42,12 @@ class ListTypeInterpreter extends AbstractTypeInterpreter {
      *             if data for {@link ListType} is not present.
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
 	ListTypeBuilder listTypeBuilder = new ListTypeBuilder();
 	EnumSet<ListProperties> listProps = EnumSet.noneOf(ListProperties.class);
 
 	try {
-	    getPropertyIdentifiers(identifiers).stream().map(ListProperties::of).forEach(listProps::add);
+	    getPropertyIdentifiers(query).stream().map(ListProperties::of).forEach(listProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid List Property. Possible Values are : " + ListProperties.getEnumMap().keySet());
@@ -59,19 +59,19 @@ class ListTypeInterpreter extends AbstractTypeInterpreter {
 	    listProps.add(Defaults.DEFAULT_LIST_PROP);
 	}
 
-	listTypeBuilder.setDataType(getDataType(identifiers));
+	listTypeBuilder.setDataType(getDataType(query));
 	listTypeBuilder.setTypeProperties(listProps);
 
 	log.debug("List Properties set as : {}", listProps);
 
 	if (listProps.contains(ListProperties.CUSTOM)) {
 	    try {
-		String customListDataIdentifier = StringUtils.substringBetween(Arrays.toString(identifiers),
-			Constants.CUSTOM_LIST_VALS_PREFIX, Constants.CUSTOM_LIST_VALS_SUFFIX);
+		String customListDataIdentifier = StringUtils.substringBetween(query, Constants.CUSTOM_LIST_VALS_PREFIX,
+			Constants.CUSTOM_LIST_VALS_SUFFIX);
 		String[] customListDataArr = StringUtils.split(customListDataIdentifier, Constants.COMMA);
-		listTypeBuilder.setData(
-			Arrays.stream(customListDataArr).filter(StringUtils::isNotBlank).collect(Collectors.toList()));
-		log.debug("List Data set as : {}", Arrays.toString(customListDataArr));
+		listTypeBuilder.setData(Arrays.stream(customListDataArr).map(StringUtils::trim)
+			.filter(StringUtils::isNotBlank).collect(Collectors.toList()));
+		log.debug("List Data set as : {}", listTypeBuilder.getData());
 	    } catch (Exception e) {
 		throw new QueryInterpretationException("Define Elements for custom list between [[...]]");
 	    }

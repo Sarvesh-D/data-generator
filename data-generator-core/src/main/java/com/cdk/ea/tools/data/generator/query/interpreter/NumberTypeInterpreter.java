@@ -35,12 +35,12 @@ class NumberTypeInterpreter extends AbstractTypeInterpreter {
      *             if invalid {@link NumberProperties} are found
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
 	NumberTypeBuilder numberTypeBuilder = new NumberTypeBuilder();
 	EnumSet<NumberProperties> numberProps = EnumSet.noneOf(NumberProperties.class);
 
 	try {
-	    getPropertyIdentifiers(identifiers).stream().map(NumberProperties::of).forEach(numberProps::add);
+	    getPropertyIdentifiers(query).stream().map(NumberProperties::of).forEach(numberProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid Number Property. Possible Values are : " + NumberProperties.getEnumMap().keySet());
@@ -52,9 +52,9 @@ class NumberTypeInterpreter extends AbstractTypeInterpreter {
 	    numberProps.add(Defaults.DEFAULT_NUMBER_PROP);
 	}
 
-	numberTypeBuilder.setDataType(getDataType(identifiers));
+	numberTypeBuilder.setDataType(getDataType(query));
 	numberTypeBuilder.setTypeProperties(numberProps);
-	numberTypeBuilder.setLength(getDataLength(identifiers));
+	numberTypeBuilder.setLength(getDataLength(query));
 
 	queryBuilder.setTypeBuilder(numberTypeBuilder);
     }

@@ -34,7 +34,7 @@ public class ListGeneratorTest {
     @Before
     public void setUp() throws Exception {
 	listTypeBuilder = (ListTypeBuilder) new ListTypeBuilder().setDataType(DataType.LIST);
-	listData = new ArrayList<>(Arrays.asList("Sunday", "Monday", "Tuesday"));
+	listData = new ArrayList<>(Arrays.asList("Sunday 1", "Monday", "Tuesday"));
 	listTypeBuilder.setData(listData);
     }
 

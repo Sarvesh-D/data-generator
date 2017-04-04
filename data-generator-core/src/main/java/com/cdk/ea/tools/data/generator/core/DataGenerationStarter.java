@@ -68,7 +68,7 @@ public final class DataGenerationStarter {
 	    String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION))
 		    .toArray(size -> new String[size]);
 	    log.info("JSON files to generate data : {}", Arrays.toString(jsonFiles));
-	    cliQueries = StringUtils.split(JsonQueryBuilder.getInstance().build(jsonFiles),
+	    cliQueries = StringUtils.split(JsonQueryBuilder.getInstance().build(Arrays.asList(jsonFiles)),
 		    Constants.CLI_QUERY_SEPARATOR);
 	} else
 	    cliQueries = StringUtils.split(StringUtils.join(args, Constants.SPACE), Constants.CLI_QUERY_SEPARATOR);

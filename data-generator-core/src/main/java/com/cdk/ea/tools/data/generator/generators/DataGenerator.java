@@ -8,7 +8,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.cdk.ea.tools.data.generator.common.DataGeneratorUtils;
-import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.exporters.DataExporter;
 import com.cdk.ea.tools.data.generator.exporters.Exporter;
 import com.cdk.ea.tools.data.generator.query.QueryRunner;
@@ -87,8 +86,7 @@ public class DataGenerator implements Generator<Collection<DataCollector>> {
 	// build query runner for each data generate query and add to
 	// dataQueryRunners
 	Arrays.stream(dataGenQueries).filter(query -> StringUtils.isNotEmpty(StringUtils.trimToEmpty(query)))
-		.map(query -> QueryRunner.from(StringUtils.split(query, Constants.SPACE)))
-		.forEach(dataQueryRunners::add);
+		.map(query -> QueryRunner.from(query)).forEach(dataQueryRunners::add);
 	log.debug("Total Query Runners registered {}.", dataQueryRunners.size());
     }
 

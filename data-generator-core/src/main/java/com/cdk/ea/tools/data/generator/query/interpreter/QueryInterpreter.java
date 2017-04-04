@@ -41,11 +41,11 @@ class QueryInterpreter implements Interpreter {
 
     /**
      * {@inheritDoc}. Iterates over all registered interpreters invoking the
-     * {@link Interpreter#doInterpret(QueryBuilder, String...)} for each.
+     * {@link Interpreter#doInterpret(QueryBuilder, String)} for each.
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
-	queryInterpreters.stream().forEach(interpreter -> interpreter.get().doInterpret(queryBuilder, identifiers));
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
+	queryInterpreters.stream().forEach(interpreter -> interpreter.get().doInterpret(queryBuilder, query));
     }
 
 }

@@ -6,6 +6,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.DataType;
 import com.cdk.ea.tools.data.generator.core.Defaults;
 import com.cdk.ea.tools.data.generator.core.Identifiers;
@@ -65,17 +68,18 @@ abstract class AbstractTypeInterpreter implements Interpreter {
     /**
      * Interprets the {@link DataType} from the identifiers.
      * 
-     * @param queryParams
+     * @param query
      *            to identify the {@link DataType}
      * @return {@link DataType}
      * @throws TypeInterpretationException
      *             if no or invalid {@link DataType} is given
      */
-    public static DataType getDataType(String... queryParams) {
+    public static DataType getDataType(String query) {
 	Optional<DataType> dataType;
 	try {
-	    dataType = Arrays.stream(queryParams).filter(i -> i.charAt(0) == Identifiers.TYPE.getIdentifier())
-		    .map(i -> DataType.of(i.charAt(1))).findFirst();
+	    dataType = Arrays.stream(StringUtils.split(query, Constants.SPACE))
+		    .filter(i -> i.charAt(0) == Identifiers.TYPE.getIdentifier()).map(i -> DataType.of(i.charAt(1)))
+		    .findFirst();
 	} catch (Exception e) {
 	    throw new TypeInterpretationException("Invalid Data Type Specified");
 	}
@@ -89,16 +93,16 @@ abstract class AbstractTypeInterpreter implements Interpreter {
     /**
      * Interprets the Property Identifiers from the query params.
      * 
-     * @param queryParams
+     * @param query
      *            to identify {@link Properties} of {@link DataType}
      * @return Set of unique property identifiers.
      * @throws PropertiesInterpretationException
      *             if invalid {@link Properties} are found.
      */
-    public static Set<Character> getPropertyIdentifiers(String... queryParams) {
+    public static Set<Character> getPropertyIdentifiers(String query) {
 	Set<Character> propertyIdentifiers = Collections.EMPTY_SET;
 	try {
-	    propertyIdentifiers = Arrays.stream(queryParams)
+	    propertyIdentifiers = Arrays.stream(StringUtils.split(query, Constants.SPACE))
 		    .filter(i -> i.charAt(0) == Identifiers.PROPERTY.getIdentifier()).map(i -> i.charAt(1))
 		    .collect(Collectors.toSet());
 	    return propertyIdentifiers;
@@ -115,7 +119,7 @@ abstract class AbstractTypeInterpreter implements Interpreter {
      * 
      * @param queryBuilder
      *            To be populated
-     * @param identifiers
+     * @param query
      *            from which the {@link QueryBuilder} will be populated.
      * @throws PropertiesInterpretationException
      *             if invalid property is passed for {@link DataType}
@@ -124,6 +128,6 @@ abstract class AbstractTypeInterpreter implements Interpreter {
      *             if required attributes of {@link DataType} are not identified
      */
     @Override
-    public abstract void doInterpret(QueryBuilder queryBuilder, String... identifiers);
+    public abstract void doInterpret(QueryBuilder queryBuilder, String query);
 
 }

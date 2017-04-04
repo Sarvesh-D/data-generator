@@ -82,9 +82,7 @@ public class DataGenerationQueryTest {
     @Test(expected = PropertiesInterpretationException.class)
     public final void testInvalidQueryForProps() {
 	final String invalidQuery_1 = "(@RandomStrings :s -i l10 =100)";
-	final String invalidQuery_2 = "(@RandomStrings :i -s l10 =100)";
 	DataGenerator.from(DataGeneratorUtils.getDataGenQueries(invalidQuery_1));
-	DataGenerator.from(DataGeneratorUtils.getDataGenQueries(invalidQuery_2));
     }
 
     @Test(expected = TypeInterpretationException.class)

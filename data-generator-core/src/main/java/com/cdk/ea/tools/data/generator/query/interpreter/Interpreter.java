@@ -22,10 +22,10 @@ public interface Interpreter {
      * 
      * @param queryBuilder
      *            to be populated
-     * @param identifiers
+     * @param query
      *            containing {@link Query} details
      */
-    default void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+    default void doInterpret(QueryBuilder queryBuilder, String query) {
 	return;
     }
 

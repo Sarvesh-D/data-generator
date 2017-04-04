@@ -45,12 +45,12 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
      *             case Prefix and/or Suffix are used.
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
 	StringTypeBuilder stringTypeBuilder = new StringTypeBuilder();
 	EnumSet<StringProperties> stringProps = EnumSet.noneOf(StringProperties.class);
 
 	try {
-	    getPropertyIdentifiers(identifiers).stream().map(StringProperties::of).forEach(stringProps::add);
+	    getPropertyIdentifiers(query).stream().map(StringProperties::of).forEach(stringProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid String Property. Possible Values are : " + StringProperties.getEnumMap().keySet());
@@ -62,9 +62,9 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
 	    stringProps.add(Defaults.DEFAULT_STRING_PROP);
 	}
 
-	final String prefix = getPrefix(identifiers);
-	final String suffix = getSuffix(identifiers);
-	final int dataLength = getDataLength(identifiers);
+	final String prefix = getPrefix(query);
+	final String suffix = getSuffix(query);
+	final int dataLength = getDataLength(query);
 
 	final int baseStringLength = prefix.length() + suffix.length();
 	if (dataLength < baseStringLength) {
@@ -73,7 +73,7 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
 			    dataLength, baseStringLength));
 	}
 
-	stringTypeBuilder.setDataType(getDataType(identifiers));
+	stringTypeBuilder.setDataType(getDataType(query));
 	stringTypeBuilder.setTypeProperties(stringProps);
 	stringTypeBuilder.setLength(dataLength - baseStringLength);
 	stringTypeBuilder.setPrefix(prefix);

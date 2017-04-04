@@ -41,22 +41,22 @@ class RegexTypeInterpreter extends AbstractTypeInterpreter {
      *             if no regex is defined for {@link RegexType}
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
 	RegexTypeBuilder regexTypeBuilder = new RegexTypeBuilder();
 	EnumSet<RegexProperties> regexProps = EnumSet.noneOf(RegexProperties.class);
 
 	try {
-	    getPropertyIdentifiers(identifiers).stream().map(RegexProperties::of).forEach(regexProps::add);
+	    getPropertyIdentifiers(query).stream().map(RegexProperties::of).forEach(regexProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid Regex Property. Possible Values are : " + RegexProperties.getEnumMap().keySet());
 	}
 
-	regexTypeBuilder.setDataType(getDataType(identifiers));
+	regexTypeBuilder.setDataType(getDataType(query));
 	regexTypeBuilder.setTypeProperties(regexProps);
 	try {
-	    String regex = StringUtils.substringBetween(Arrays.toString(identifiers), Constants.REGEX_EXPR_PREFIX,
-		    Constants.REGEX_EXPR_SUFFIX);
+	    String regex = StringUtils.substringBetween(Arrays.toString(StringUtils.split(query, Constants.SPACE)),
+		    Constants.REGEX_EXPR_PREFIX, Constants.REGEX_EXPR_SUFFIX);
 	    log.debug("Setting regex as {}", regex);
 	    regexTypeBuilder.setRegex(regex);
 	} catch (Exception e) {

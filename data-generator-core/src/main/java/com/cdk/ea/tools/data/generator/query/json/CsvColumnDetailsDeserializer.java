@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
  * Custom Deserializer to support backward compatibility with multiple dataRefs
  * feature added in release 2.0
  * 
- * @author Sarvesh Dubey <sarvesh.dubey@cdk.com>
+ * @author <a href="mailto:sarvesh.dubey@cdk.com">Sarvesh Dubey</a>
  *
  * @since 17-03-2017
  * @version 2.0

@@ -82,12 +82,12 @@ public class JsonQueryBuilderTest {
 
     @Test(expected = DataGeneratorException.class)
     public final void testInvalidJson() {
-	JsonQueryBuilder.getInstance().build("src/test/resources/invalid.json");
+	JsonQueryBuilder.getInstance().build(Arrays.asList("src/test/resources/invalid.json"));
     }
 
     @Test
     public final void testValidJsonWExport() {
-	String cmdQuery_1 = JsonQueryBuilder.getInstance().build("src/test/resources/sample.json");
+	String cmdQuery_1 = JsonQueryBuilder.getInstance().build(Arrays.asList("src/test/resources/sample.json"));
 	assertTrue("CMD query cannot be null or blank", StringUtils.isNotBlank(cmdQuery_1));
 	Collection<DataCollector> dataCollectedForQuery = DataGenerator
 		.from(DataGeneratorUtils.getDataGenQueries(cmdQuery_1)).generate();

@@ -36,6 +36,7 @@ public class ListType extends Type {
 
 	private DataType dataType;
 	private Set<ListProperties> properties;
+	@Getter
 	private Collection<Object> data;
 
 	@Override

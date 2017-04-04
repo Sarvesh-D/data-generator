@@ -32,10 +32,10 @@ class TypeInterpreter implements Interpreter {
      *             if invalid {@link Properties} identifier are present.
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
-	DataType dataType = AbstractTypeInterpreter.getDataType(identifiers);
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
+	DataType dataType = AbstractTypeInterpreter.getDataType(query);
 	log.debug("DataType set as : {}", dataType);
-	dataType.getInterpreter().get().doInterpret(queryBuilder, identifiers);
+	dataType.getInterpreter().get().doInterpret(queryBuilder, query);
     }
 
 }
