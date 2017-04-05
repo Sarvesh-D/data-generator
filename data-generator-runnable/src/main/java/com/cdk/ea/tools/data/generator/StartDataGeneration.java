@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.DataGenerationStarter;
@@ -56,7 +57,7 @@ public class StartDataGeneration {
 	}
 
 	try {
-	    DataGenerationStarter.start(args[0]);
+	    DataGenerationStarter.start(StringUtils.join(args, Constants.SPACE));
 	} catch (Exception e) {
 	    log.error("something went wrong... {}. Visit {} for more info. Data-Generator shall now exit",
 		    e.getMessage(), README);
