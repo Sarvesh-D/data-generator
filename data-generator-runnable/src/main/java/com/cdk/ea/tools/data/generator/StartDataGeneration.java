@@ -56,7 +56,7 @@ public class StartDataGeneration {
 	}
 
 	try {
-	    DataGenerationStarter.start(args);
+	    DataGenerationStarter.start(args[0]);
 	} catch (Exception e) {
 	    log.error("something went wrong... {}. Visit {} for more info. Data-Generator shall now exit",
 		    e.getMessage(), README);

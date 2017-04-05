@@ -59,7 +59,7 @@ public class JsonQueryBuilderTest {
 	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
 	jsonQuery.add("src/test/resources/sample.json");
 	jsonQuery.add(Constants.DEBUG_ENABLED);
-	DataGenerationStarter.start(StringUtils.split(jsonQuery.toString()));
+	DataGenerationStarter.start(jsonQuery.toString());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class JsonQueryBuilderTest {
 	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
 	jsonFilePaths.stream().forEach(jsonQuery::add);
 	jsonQuery.add(Constants.DEBUG_ENABLED);
-	DataGenerationStarter.start(StringUtils.split(jsonQuery.toString()));
+	DataGenerationStarter.start(jsonQuery.toString());
 
 	Path exportFile1 = Paths.get("sample_1.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile1);

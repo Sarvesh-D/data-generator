@@ -63,7 +63,7 @@ public class DataGenerationQueryTest {
 
     @Test
     public final void testExecutionFromCmd() {
-	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings> -X";
+	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings> --o =10 -X";
 	DataGenerationStarter.start(stringQueryWExport);
     }
 
