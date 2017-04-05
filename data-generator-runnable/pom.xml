@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.cdk.ea</groupId>
 		<artifactId>data-generator</artifactId>
-		<version>${version}</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>data-generator-runnable</artifactId>
 	<packaging>jar</packaging>
