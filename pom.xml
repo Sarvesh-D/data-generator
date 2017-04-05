@@ -4,7 +4,7 @@
 
 	<groupId>com.cdk.ea</groupId>
 	<artifactId>data-generator</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>${version}</version>
 	<packaging>pom</packaging>
 
 	<name>data-generator</name>
@@ -37,6 +37,7 @@
 
 
 	<properties>
+		<version>1.0.2-SNAPSHOT</version>
 		<java.version>1.8</java.version>
 		<commons.lang.version>2.6</commons.lang.version>
 		<args.parser.version>0.7.0</args.parser.version>
