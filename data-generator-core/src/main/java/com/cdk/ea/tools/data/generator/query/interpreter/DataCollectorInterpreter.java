@@ -37,7 +37,7 @@ class DataCollectorInterpreter implements Interpreter {
     @Override
     public void doInterpret(QueryBuilder queryBuilder, String query) {
 	try {
-	    Optional<String> dataCollectorName = Arrays.stream(StringUtils.split(query, Constants.SPACE))
+	    Optional<String> dataCollectorName = Arrays.stream(StringUtils.split(query))
 		    .filter(i -> i.charAt(0) == Identifiers.DATA_COLLECTOR_PREFIX.getIdentifier())
 		    .map(i -> i.substring(1)).findFirst();
 	    String collectorName;

@@ -43,7 +43,7 @@ class QuantityInterpreter implements Interpreter {
     public void doInterpret(QueryBuilder queryBuilder, String query) {
 	try {
 	    // allow local quantity to override the default quantity
-	    Optional<Integer> quantity = Arrays.stream(StringUtils.split(query, Constants.SPACE))
+	    Optional<Integer> quantity = Arrays.stream(StringUtils.split(query))
 		    .filter(i -> i.charAt(0) == Identifiers.QUANTITY.getIdentifier())
 		    .map(i -> Integer.valueOf(i.substring(1))).findFirst();
 	    if (quantity.isPresent())

@@ -55,7 +55,7 @@ class RegexTypeInterpreter extends AbstractTypeInterpreter {
 	regexTypeBuilder.setDataType(getDataType(query));
 	regexTypeBuilder.setTypeProperties(regexProps);
 	try {
-	    String regex = StringUtils.substringBetween(Arrays.toString(StringUtils.split(query, Constants.SPACE)),
+	    String regex = StringUtils.substringBetween(Arrays.toString(StringUtils.split(query)),
 		    Constants.REGEX_EXPR_PREFIX, Constants.REGEX_EXPR_SUFFIX);
 	    log.debug("Setting regex as {}", regex);
 	    regexTypeBuilder.setRegex(regex);

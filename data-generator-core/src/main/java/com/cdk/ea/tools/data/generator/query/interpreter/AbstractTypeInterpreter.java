@@ -77,7 +77,7 @@ abstract class AbstractTypeInterpreter implements Interpreter {
     public static DataType getDataType(String query) {
 	Optional<DataType> dataType;
 	try {
-	    dataType = Arrays.stream(StringUtils.split(query, Constants.SPACE))
+	    dataType = Arrays.stream(StringUtils.split(query))
 		    .filter(i -> i.charAt(0) == Identifiers.TYPE.getIdentifier()).map(i -> DataType.of(i.charAt(1)))
 		    .findFirst();
 	} catch (Exception e) {
@@ -102,7 +102,7 @@ abstract class AbstractTypeInterpreter implements Interpreter {
     public static Set<Character> getPropertyIdentifiers(String query) {
 	Set<Character> propertyIdentifiers = Collections.EMPTY_SET;
 	try {
-	    propertyIdentifiers = Arrays.stream(StringUtils.split(query, Constants.SPACE))
+	    propertyIdentifiers = Arrays.stream(StringUtils.split(query))
 		    .filter(i -> i.charAt(0) == Identifiers.PROPERTY.getIdentifier()).map(i -> i.charAt(1))
 		    .collect(Collectors.toSet());
 	    return propertyIdentifiers;
