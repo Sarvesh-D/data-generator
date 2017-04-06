@@ -85,12 +85,12 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
     /**
      * Identifies the Prefix for the StringType
      * 
-     * @param identifiers
+     * @param query
      *            to identify prefix
      * @return prefix
      */
-    private String getPrefix(String... identifiers) {
-	Optional<String> prefix = Arrays.stream(identifiers)
+    private String getPrefix(String query) {
+	Optional<String> prefix = Arrays.stream(StringUtils.split(query))
 		.filter(i -> i.charAt(0) == Identifiers.PREFIX.getIdentifier()).map(i -> i.substring(1)).findFirst();
 
 	return prefix.isPresent() ? StringUtils.trimToEmpty(prefix.get()) : Constants.EMPTY_STRING;
@@ -99,12 +99,12 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
     /**
      * Identifies the Suffix for the StringType
      * 
-     * @param identifiers
+     * @param query
      *            to identify suffix
      * @return suffix
      */
-    private String getSuffix(String... identifiers) {
-	Optional<String> suffix = Arrays.stream(identifiers)
+    private String getSuffix(String query) {
+	Optional<String> suffix = Arrays.stream(StringUtils.split(query))
 		.filter(i -> i.charAt(0) == Identifiers.SUFFIX.getIdentifier()).map(i -> i.substring(1)).findFirst();
 
 	return suffix.isPresent() ? StringUtils.trimToEmpty(suffix.get()) : Constants.EMPTY_STRING;

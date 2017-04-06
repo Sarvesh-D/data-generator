@@ -43,13 +43,13 @@ abstract class AbstractTypeInterpreter implements Interpreter {
      * Interprets the length of single data record from the identifiers. This
      * method returns {@link Defaults#DEFAULT_LENGTH} if no length is specified.
      * 
-     * @param queryParams
+     * @param query
      *            to identify the length of single data record
      * @return length of single data record.
      */
-    public static int getDataLength(String... queryParams) {
+    public static int getDataLength(String query) {
 	try {
-	    Optional<Integer> length = Arrays.stream(queryParams)
+	    Optional<Integer> length = Arrays.stream(StringUtils.split(query))
 		    .filter(i -> i.charAt(0) == Identifiers.LENGTH.getIdentifier())
 		    .map(i -> Integer.valueOf(i.substring(1))).findFirst();
 	    if (length.isPresent())
@@ -123,7 +123,7 @@ abstract class AbstractTypeInterpreter implements Interpreter {
      *            from which the {@link QueryBuilder} will be populated.
      * @throws PropertiesInterpretationException
      *             if invalid property is passed for {@link DataType}
-     *             interpreted by {@link #getDataType(String...)}
+     *             interpreted by {@link #getDataType(String )}
      * @throws QueryInterpretationException
      *             if required attributes of {@link DataType} are not identified
      */
