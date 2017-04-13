@@ -1,4 +1,4 @@
-package com.cdk.ea.tools.data.generation.generators;
+package com.cdk.ea.tools.data.generator.generators;
 
 import static org.junit.Assert.assertTrue;
 

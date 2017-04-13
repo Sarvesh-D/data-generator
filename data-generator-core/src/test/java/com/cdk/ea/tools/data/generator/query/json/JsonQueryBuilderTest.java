@@ -1,4 +1,4 @@
-package com.cdk.ea.tools.data.generation.query.json;
+package com.cdk.ea.tools.data.generator.query.json;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

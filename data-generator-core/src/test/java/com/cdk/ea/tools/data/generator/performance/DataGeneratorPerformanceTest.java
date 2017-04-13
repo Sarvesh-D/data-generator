@@ -1,4 +1,4 @@
-package com.cdk.ea.tools.data.generation.performance;
+package com.cdk.ea.tools.data.generator.performance;
 
 import java.io.File;
 import java.util.Arrays;
