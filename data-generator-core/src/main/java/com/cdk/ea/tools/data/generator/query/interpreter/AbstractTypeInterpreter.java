@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.DataType;
 import com.cdk.ea.tools.data.generator.core.Defaults;
 import com.cdk.ea.tools.data.generator.core.Identifiers;

@@ -82,8 +82,7 @@ public class DataExportTest {
 
     @Test
     public final void testDataExportFromJson() {
-	DataGenerationStarter
-		.start("json src/test/resources/sample.json -X");
+	DataGenerationStarter.start("json src/test/resources/sample.json -X");
 
 	CSVReader reader = null;
 	try {

@@ -65,8 +65,8 @@ public final class DataGenerationStarter {
 
 	if (StringUtils.startsWith(query, Constants.JSON)) {
 	    log.info("JSON format selected to generate data");
-	    String[] jsonFiles = Arrays.stream(StringUtils.split(query)).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION))
-		    .toArray(size -> new String[size]);
+	    String[] jsonFiles = Arrays.stream(StringUtils.split(query))
+		    .filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION)).toArray(size -> new String[size]);
 	    log.info("JSON files to generate data : {}", Arrays.toString(jsonFiles));
 	    cliQueries = StringUtils.split(JsonQueryBuilder.getInstance().build(Arrays.asList(jsonFiles)),
 		    Constants.CLI_QUERY_SEPARATOR);

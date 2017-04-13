@@ -13,7 +13,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -129,6 +131,32 @@ public class DataGenerationQueryTest {
     }
 
     @Test
+    public final void testValidQueryForStringType() {
+	final String stringQuery = "(@RandomStrings :s -a -n -s Phello Sbye l20 =50)";
+	Collection<DataCollector> dataCollectedForQuery = DataGenerator
+		.from(DataGeneratorUtils.getDataGenQueries(stringQuery)).generate();
+	List<String> generatedStrings = dataCollectedForQuery.stream().map(DataCollector::getData)
+		.flatMap(data -> data.stream()).map(Object::toString).collect(Collectors.toList());
+	assertTrue("50 Strings must be generated", generatedStrings.size() == 50);
+	generatedStrings.forEach(string -> {
+	    assertTrue("Size of String must be 20", string.length() == 20);
+	    assertTrue("Prefix of String must be hello", StringUtils.startsWith(string, "hello"));
+	    assertTrue("Suffix of String must be bye", StringUtils.endsWith(string, "bye"));
+	});
+    }
+
+    @Test
+    public final void testValidQueryWoExport() {
+	final String stringQueryWoExport = "(@RandomStrings :s -a -n -s l10 =100)";
+	Collection<DataCollector> dataCollectedForQuery1 = DataGenerator
+		.from(DataGeneratorUtils.getDataGenQueries(stringQueryWoExport)).generate();
+	assertTrue("One data collector must be present", dataCollectedForQuery1.size() == 1);
+	dataCollectedForQuery1.stream()
+		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
+			collector.getData().size() == 100));
+    }
+    
+    @Test
     public final void testValidQueryWExport() {
 	final String stringQueryWExport = "(@RandomStrings :s -a -n -s l10 =100) f <stringQueryWExport.csv _firstNames =RandomStrings>";
 	Collection<DataCollector> dataCollectedForQuery = DataGenerator
@@ -142,18 +170,6 @@ public class DataGenerationQueryTest {
 
 	Path exportFile1 = Paths.get("stringQueryWExport.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile1);
-    }
-
-    @Test
-    public final void testValidQueryWoExport() {
-	final String stringQueryWoExport = "(@RandomStrings :s -a -n -s l10 =100)";
-	Collection<DataCollector> dataCollectedForQuery1 = DataGenerator
-		.from(DataGeneratorUtils.getDataGenQueries(stringQueryWoExport)).generate();
-	assertTrue("One data collector must be present", dataCollectedForQuery1.size() == 1);
-	dataCollectedForQuery1.stream()
-		.forEach(collector -> assertTrue("Quantity of data inside dataCollector should be 100",
-			collector.getData().size() == 100));
-
     }
 
 }

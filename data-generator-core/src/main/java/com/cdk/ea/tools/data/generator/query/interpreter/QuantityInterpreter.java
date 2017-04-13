@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.Defaults;
 import com.cdk.ea.tools.data.generator.core.Identifiers;
 import com.cdk.ea.tools.data.generator.query.Query;
