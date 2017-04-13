@@ -45,12 +45,12 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
      *             case Prefix and/or Suffix are used.
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
 	StringTypeBuilder stringTypeBuilder = new StringTypeBuilder();
 	EnumSet<StringProperties> stringProps = EnumSet.noneOf(StringProperties.class);
 
 	try {
-	    getPropertyIdentifiers(identifiers).stream().map(StringProperties::of).forEach(stringProps::add);
+	    getPropertyIdentifiers(query).stream().map(StringProperties::of).forEach(stringProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid String Property. Possible Values are : " + StringProperties.getEnumMap().keySet());
@@ -62,9 +62,9 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
 	    stringProps.add(Defaults.DEFAULT_STRING_PROP);
 	}
 
-	final String prefix = getPrefix(identifiers);
-	final String suffix = getSuffix(identifiers);
-	final int dataLength = getDataLength(identifiers);
+	final String prefix = getPrefix(query);
+	final String suffix = getSuffix(query);
+	final int dataLength = getDataLength(query);
 
 	final int baseStringLength = prefix.length() + suffix.length();
 	if (dataLength < baseStringLength) {
@@ -73,7 +73,7 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
 			    dataLength, baseStringLength));
 	}
 
-	stringTypeBuilder.setDataType(getDataType(identifiers));
+	stringTypeBuilder.setDataType(getDataType(query));
 	stringTypeBuilder.setTypeProperties(stringProps);
 	stringTypeBuilder.setLength(dataLength - baseStringLength);
 	stringTypeBuilder.setPrefix(prefix);
@@ -85,12 +85,12 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
     /**
      * Identifies the Prefix for the StringType
      * 
-     * @param identifiers
+     * @param query
      *            to identify prefix
      * @return prefix
      */
-    private String getPrefix(String... identifiers) {
-	Optional<String> prefix = Arrays.stream(identifiers)
+    private String getPrefix(String query) {
+	Optional<String> prefix = Arrays.stream(StringUtils.split(query))
 		.filter(i -> i.charAt(0) == Identifiers.PREFIX.getIdentifier()).map(i -> i.substring(1)).findFirst();
 
 	return prefix.isPresent() ? StringUtils.trimToEmpty(prefix.get()) : Constants.EMPTY_STRING;
@@ -99,12 +99,12 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
     /**
      * Identifies the Suffix for the StringType
      * 
-     * @param identifiers
+     * @param query
      *            to identify suffix
      * @return suffix
      */
-    private String getSuffix(String... identifiers) {
-	Optional<String> suffix = Arrays.stream(identifiers)
+    private String getSuffix(String query) {
+	Optional<String> suffix = Arrays.stream(StringUtils.split(query))
 		.filter(i -> i.charAt(0) == Identifiers.SUFFIX.getIdentifier()).map(i -> i.substring(1)).findFirst();
 
 	return suffix.isPresent() ? StringUtils.trimToEmpty(suffix.get()) : Constants.EMPTY_STRING;

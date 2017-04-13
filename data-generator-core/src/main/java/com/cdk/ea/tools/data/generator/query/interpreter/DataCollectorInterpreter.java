@@ -3,6 +3,9 @@ package com.cdk.ea.tools.data.generator.query.interpreter;
 import java.util.Arrays;
 import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.Defaults;
 import com.cdk.ea.tools.data.generator.core.Identifiers;
 import com.cdk.ea.tools.data.generator.generators.DataCollector;
@@ -32,9 +35,9 @@ class DataCollectorInterpreter implements Interpreter {
      * {@link Defaults#DEFAULT_DATA_COLLECTOR_NAME}
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
 	try {
-	    Optional<String> dataCollectorName = Arrays.stream(identifiers)
+	    Optional<String> dataCollectorName = Arrays.stream(StringUtils.split(query))
 		    .filter(i -> i.charAt(0) == Identifiers.DATA_COLLECTOR_PREFIX.getIdentifier())
 		    .map(i -> i.substring(1)).findFirst();
 	    String collectorName;

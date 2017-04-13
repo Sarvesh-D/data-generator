@@ -3,6 +3,9 @@ package com.cdk.ea.tools.data.generator.query.interpreter;
 import java.util.Arrays;
 import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.Defaults;
 import com.cdk.ea.tools.data.generator.core.Identifiers;
 import com.cdk.ea.tools.data.generator.query.Query;
@@ -37,10 +40,10 @@ class QuantityInterpreter implements Interpreter {
      * data quantity set by {@link GlobalDefaultOverrideInterpreter}
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... identifiers) {
+    public void doInterpret(QueryBuilder queryBuilder, String query) {
 	try {
 	    // allow local quantity to override the default quantity
-	    Optional<Integer> quantity = Arrays.stream(identifiers)
+	    Optional<Integer> quantity = Arrays.stream(StringUtils.split(query))
 		    .filter(i -> i.charAt(0) == Identifiers.QUANTITY.getIdentifier())
 		    .map(i -> Integer.valueOf(i.substring(1))).findFirst();
 	    if (quantity.isPresent())

@@ -2,7 +2,6 @@ package com.cdk.ea.tools.data.generator.query.json;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -32,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class JsonQueryBuilder implements Builder<String> {
+public class JsonQueryBuilder implements Builder<String, List<String>> {
 
     @Getter
     private static final JsonQueryBuilder instance = new JsonQueryBuilder();
@@ -47,10 +46,10 @@ public class JsonQueryBuilder implements Builder<String> {
      *             if problem occurs while building CLI query from JSON.
      */
     @Override
-    public String build(String... jsonFiles) {
+    public String build(List<String> jsonFiles) {
 	final long start = System.nanoTime();
 	List<String> cliQueries = new ArrayList<>();
-	Arrays.stream(jsonFiles).forEach(jsonFile -> cliQueries.add(buildCLIQueryFrom(jsonFile)));
+	jsonFiles.forEach(jsonFile -> cliQueries.add(buildCLIQueryFrom(jsonFile)));
 	String finalCLIQuery = cliQueries.stream().collect(Collectors.joining(Constants.CLI_QUERY_SEPARATOR));
 	final long end = System.nanoTime();
 	final double timeTaken = (end - start) / 1000000000.0;
@@ -64,7 +63,7 @@ public class JsonQueryBuilder implements Builder<String> {
 	    cmdQueryBuilder.append(csvColumnDetail.getHeaderName());
 	    cmdQueryBuilder.append(Constants.SPACE);
 	    cmdQueryBuilder.append(Identifiers.CSV_COL_DATA_REF.getIdentifier());
-	    cmdQueryBuilder.append(csvColumnDetail.getDataRef());
+	    cmdQueryBuilder.append(csvColumnDetail.getDataRef().stream().collect(Collectors.joining(Constants.COMMA)));
 	    cmdQueryBuilder.append(Constants.SPACE);
 	});
     }

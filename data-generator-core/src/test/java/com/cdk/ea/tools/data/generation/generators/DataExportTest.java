@@ -83,7 +83,7 @@ public class DataExportTest {
     @Test
     public final void testDataExportFromJson() {
 	DataGenerationStarter
-		.start(org.apache.commons.lang3.StringUtils.split("json src/test/resources/sample.json -X"));
+		.start("json src/test/resources/sample.json -X");
 
 	CSVReader reader = null;
 	try {

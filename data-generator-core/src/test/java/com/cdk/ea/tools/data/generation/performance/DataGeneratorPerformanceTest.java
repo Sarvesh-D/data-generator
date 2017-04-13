@@ -68,14 +68,14 @@ public class DataGeneratorPerformanceTest {
     public final void testDataGeneratorPerformanceJSON() {
 	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
 	jsonQuery.add("src/test/resources/perfWithoutExport.json");
-	DataGenerationStarter.start(StringUtils.split(jsonQuery.toString()));
+	DataGenerationStarter.start(jsonQuery.toString());
     }
 
     @Test
     public final void testDataGeneratorPerformanceJSONWithExport() {
 	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
 	jsonQuery.add("src/test/resources/perfWithExport.json");
-	DataGenerationStarter.start(StringUtils.split(jsonQuery.toString()));
+	DataGenerationStarter.start(jsonQuery.toString());
     }
 
 }

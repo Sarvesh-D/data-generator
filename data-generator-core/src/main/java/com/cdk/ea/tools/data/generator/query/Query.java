@@ -1,7 +1,5 @@
 package com.cdk.ea.tools.data.generator.query;
 
-import java.util.Arrays;
-
 import com.cdk.ea.tools.data.generator.common.Builder;
 import com.cdk.ea.tools.data.generator.generators.DataCollector;
 import com.cdk.ea.tools.data.generator.query.interpreter.Interpreter;
@@ -37,18 +35,18 @@ public final class Query {
      */
     @Setter
     @Slf4j
-    public static class QueryBuilder implements Builder<Query> {
+    public static class QueryBuilder implements Builder<Query, String> {
 
 	private TypeBuilder<? extends Type, ? extends TypeProperties> typeBuilder;
 	private int quantity;
 	private DataCollector dataCollector;
 
 	@Override
-	public Query build(String... queryParams) {
-	    log.debug("Building Query Instance from params {}", Arrays.toString(queryParams));
+	public Query build(String query) {
+	    log.debug("Building Query Instance from params {}", query);
 	    QueryBuilder queryBuilder = new QueryBuilder();
 	    Interpreter queryInterpreter = Interpreters.QUERY_INTERPRETER.get();
-	    queryInterpreter.doInterpret(queryBuilder, queryParams);
+	    queryInterpreter.doInterpret(queryBuilder, query.toString());
 	    return new Query(queryBuilder);
 	}
 

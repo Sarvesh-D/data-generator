@@ -64,6 +64,10 @@
         },
         {
           "headerName": "FunnyTexts",
+          "dataRef": ["customRegex","Strings","ListVals"]
+        },
+        {
+          "headerName": "Regex",
           "dataRef": "customRegex"
         },
         {

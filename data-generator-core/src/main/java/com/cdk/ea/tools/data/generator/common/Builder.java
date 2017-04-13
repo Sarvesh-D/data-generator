@@ -7,20 +7,22 @@ package com.cdk.ea.tools.data.generator.common;
  * @author <a href="mailto:sarvesh.dubey@cdk.com">Sarvesh Dubey</a>
  * @param <T>
  *            Type of the object to be built.
+ * @param <U>
+ *            helper object to build T
  * @since 07-02-2017
  * @version 1.0
  */
-public interface Builder<T> {
+public interface Builder<T, U extends Object> {
 
     /**
      * Build instance of Type <b>T</b>. Implementations may return singleton or
      * return prototype.
      * 
-     * @param typeParams
+     * @param typeParam
      *            additional parameters required to build the instance of type
      *            <b>T</b>. Can be null.
      * @return An instance of type <b>T</b>
      */
-    T build(String... typeParams);
+    T build(U typeParam);
 
 }

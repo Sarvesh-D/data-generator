@@ -3,8 +3,10 @@ package com.cdk.ea.tools.data.generator.query.interpreter;
 import java.util.Arrays;
 import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 
+import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.Identifiers;
 import com.cdk.ea.tools.data.generator.query.Query.QueryBuilder;
 
@@ -34,11 +36,11 @@ class GlobalDefaultOverrideInterpreter implements Interpreter {
      * instead.
      */
     @Override
-    public void doInterpret(QueryBuilder queryBuilder, String... overrideIdentifiers) {
+    public void doInterpret(QueryBuilder queryBuilder, String overrideIdentifiers) {
 	Assert.assertNull("QueryBuilder supplied to GlobalPropertyOverrideInterpreter should always be null",
 		queryBuilder);
 
-	Optional<Integer> quantityOverride = Arrays.stream(overrideIdentifiers)
+	Optional<Integer> quantityOverride = Arrays.stream(StringUtils.split(overrideIdentifiers, Constants.SPACE))
 		.filter(i -> i.charAt(0) == Identifiers.QUANTITY.getIdentifier())
 		.map(i -> Integer.valueOf(i.substring(1))).findFirst();
 	if (quantityOverride.isPresent()) {

@@ -27,13 +27,13 @@ public class QueryRunner {
     /**
      * Factory method to instantiate {@link QueryRunner}
      * 
-     * @param queryParams
+     * @param query
      *            from which the runner must be instantiated.
      * @return {@link QueryRunner}
      */
     @SuppressWarnings(value = { "all" })
-    public static QueryRunner from(String... queryParams) {
-	return new QueryRunner(new Query.QueryBuilder().build(queryParams));
+    public static QueryRunner from(String query) {
+	return new QueryRunner(new Query.QueryBuilder().build(query));
     }
 
     /**

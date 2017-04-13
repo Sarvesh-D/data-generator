@@ -59,7 +59,7 @@ public class JsonQueryBuilderTest {
 	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
 	jsonQuery.add("src/test/resources/sample.json");
 	jsonQuery.add(Constants.DEBUG_ENABLED);
-	DataGenerationStarter.start(StringUtils.split(jsonQuery.toString()));
+	DataGenerationStarter.start(jsonQuery.toString());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class JsonQueryBuilderTest {
 	StringJoiner jsonQuery = new StringJoiner(Constants.SPACE).add(Constants.JSON);
 	jsonFilePaths.stream().forEach(jsonQuery::add);
 	jsonQuery.add(Constants.DEBUG_ENABLED);
-	DataGenerationStarter.start(StringUtils.split(jsonQuery.toString()));
+	DataGenerationStarter.start(jsonQuery.toString());
 
 	Path exportFile1 = Paths.get("sample_1.csv");
 	assertNotNull("Path to where file was exported does not exists", exportFile1);
@@ -82,12 +82,12 @@ public class JsonQueryBuilderTest {
 
     @Test(expected = DataGeneratorException.class)
     public final void testInvalidJson() {
-	JsonQueryBuilder.getInstance().build("src/test/resources/invalid.json");
+	JsonQueryBuilder.getInstance().build(Arrays.asList("src/test/resources/invalid.json"));
     }
 
     @Test
     public final void testValidJsonWExport() {
-	String cmdQuery_1 = JsonQueryBuilder.getInstance().build("src/test/resources/sample.json");
+	String cmdQuery_1 = JsonQueryBuilder.getInstance().build(Arrays.asList("src/test/resources/sample.json"));
 	assertTrue("CMD query cannot be null or blank", StringUtils.isNotBlank(cmdQuery_1));
 	Collection<DataCollector> dataCollectedForQuery = DataGenerator
 		.from(DataGeneratorUtils.getDataGenQueries(cmdQuery_1)).generate();

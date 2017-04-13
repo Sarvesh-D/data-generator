@@ -37,7 +37,7 @@ public enum DataGeneratorUtils {
 	if (cmdLineQuery.contains(Constants.GLOBAL_OVERRIDE)) {
 	    log.debug("Query contains global override flag {}.", Constants.GLOBAL_OVERRIDE);
 	    Interpreters.GLOBAL_DEFAULT_OVERRIDE.get().doInterpret(null,
-		    StringUtils.split(StringUtils.substringAfter(cmdLineQuery, Constants.GLOBAL_OVERRIDE)));
+		    StringUtils.substringAfter(cmdLineQuery, Constants.GLOBAL_OVERRIDE));
 	}
     }
 

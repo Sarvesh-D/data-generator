@@ -53,25 +53,25 @@ public final class DataGenerationStarter {
      * {@link DataGenerator} using factory method
      * {@link DataGenerator#from(String[])}
      * 
-     * @param args
-     *            one or more CLI Queries
+     * @param query
+     *            Single CLI Query (may contain multiple queries in same String)
      */
-    public static void start(String... args) {
-	if (ArrayUtils.contains(args, Constants.DEBUG_ENABLED))
+    public static void start(String query) {
+	if (StringUtils.contains(query, Constants.DEBUG_ENABLED))
 	    console.setThreshold(Level.DEBUG);
 
 	String[] cliQueries;
 	long start = System.nanoTime();
 
-	if (Constants.JSON.equals(args[0])) {
+	if (StringUtils.startsWith(query, Constants.JSON)) {
 	    log.info("JSON format selected to generate data");
-	    String[] jsonFiles = Arrays.stream(args).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION))
+	    String[] jsonFiles = Arrays.stream(StringUtils.split(query)).filter(arg -> arg.endsWith(Constants.JSON_EXTENSTION))
 		    .toArray(size -> new String[size]);
 	    log.info("JSON files to generate data : {}", Arrays.toString(jsonFiles));
-	    cliQueries = StringUtils.split(JsonQueryBuilder.getInstance().build(jsonFiles),
+	    cliQueries = StringUtils.split(JsonQueryBuilder.getInstance().build(Arrays.asList(jsonFiles)),
 		    Constants.CLI_QUERY_SEPARATOR);
 	} else
-	    cliQueries = StringUtils.split(StringUtils.join(args, Constants.SPACE), Constants.CLI_QUERY_SEPARATOR);
+	    cliQueries = StringUtils.split(StringUtils.join(query, Constants.SPACE), Constants.CLI_QUERY_SEPARATOR);
 
 	if (ArrayUtils.isEmpty(cliQueries))
 	    throw new DataGeneratorException(
