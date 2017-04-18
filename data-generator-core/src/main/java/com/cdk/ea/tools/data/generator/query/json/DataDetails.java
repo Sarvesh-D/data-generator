@@ -30,5 +30,6 @@ public class DataDetails {
     private String regex;
     private String prefix;
     private String suffix;
+    private String locale;
 
 }

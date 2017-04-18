@@ -75,5 +75,14 @@ public interface TypeBuilder<T extends Type, U extends TypeProperties> {
     default TypeBuilder<T, U> setTypeProperties(Set<U> properties) {
 	return this;
     }
+    
+    /**
+     * Sets the locale of data
+     * @param locale to be set
+     * @return this
+     */
+    default TypeBuilder<T, U> setLocale(String locale) {
+	return this;
+    }
 
 }

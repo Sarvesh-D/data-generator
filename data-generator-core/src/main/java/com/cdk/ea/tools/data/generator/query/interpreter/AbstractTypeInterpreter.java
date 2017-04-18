@@ -16,6 +16,7 @@ import com.cdk.ea.tools.data.generator.exception.PropertiesInterpretationExcepti
 import com.cdk.ea.tools.data.generator.exception.QueryInterpretationException;
 import com.cdk.ea.tools.data.generator.exception.TypeInterpretationException;
 import com.cdk.ea.tools.data.generator.query.Query.QueryBuilder;
+import com.cdk.ea.tools.data.generator.types.Type;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -93,7 +94,7 @@ abstract class AbstractTypeInterpreter implements Interpreter {
      * Interprets the Property Identifiers from the query params.
      * 
      * @param query
-     *            to identify {@link Properties} of {@link DataType}
+     *            to identify {@link Properties} of {@link Type} backed by {@link DataType}
      * @return Set of unique property identifiers.
      * @throws PropertiesInterpretationException
      *             if invalid {@link Properties} are found.
@@ -108,6 +109,20 @@ abstract class AbstractTypeInterpreter implements Interpreter {
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(e.getMessage());
 	}
+    }
+    
+    /**
+     * Interprets the Locale from the query params
+     * @param query to identify Locale of {@link Type} backed by {@link DataType}
+     * @return Locale if specified, else {@link StringUtils#EMPTY}
+     */
+    public static String getLocale(String query) {
+	Optional<String> locale = Arrays.stream(StringUtils.split(query))
+		    .filter(i -> i.charAt(0) == Identifiers.LOCALE.getIdentifier()).map(i -> i.substring(1)).findFirst();
+	if(locale.isPresent())
+	    return locale.get();
+	else
+	    return StringUtils.EMPTY;
     }
 
     /**
