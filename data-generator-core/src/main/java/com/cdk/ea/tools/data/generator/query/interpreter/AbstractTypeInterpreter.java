@@ -98,11 +98,11 @@ abstract class AbstractTypeInterpreter implements Interpreter {
      * @throws PropertiesInterpretationException
      *             if invalid {@link Properties} are found.
      */
-    public static Set<Character> getPropertyIdentifiers(String query) {
-	Set<Character> propertyIdentifiers = Collections.EMPTY_SET;
+    public static Set<Object> getPropertyIdentifiers(String query) {
+	Set<Object> propertyIdentifiers = Collections.EMPTY_SET;
 	try {
 	    propertyIdentifiers = Arrays.stream(StringUtils.split(query))
-		    .filter(i -> i.charAt(0) == Identifiers.PROPERTY.getIdentifier()).map(i -> i.charAt(1))
+		    .filter(i -> i.charAt(0) == Identifiers.PROPERTY.getIdentifier()).map(i -> i.substring(1))
 		    .collect(Collectors.toSet());
 	    return propertyIdentifiers;
 	} catch (Exception e) {

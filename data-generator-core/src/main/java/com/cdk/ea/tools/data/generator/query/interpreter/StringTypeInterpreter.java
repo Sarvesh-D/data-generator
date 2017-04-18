@@ -50,7 +50,7 @@ class StringTypeInterpreter extends AbstractTypeInterpreter {
 	EnumSet<StringProperties> stringProps = EnumSet.noneOf(StringProperties.class);
 
 	try {
-	    getPropertyIdentifiers(query).stream().map(StringProperties::of).forEach(stringProps::add);
+	    getPropertyIdentifiers(query).stream().map(com.cdk.ea.tools.data.generator.common.StringUtils::firstCharacterOf).map(StringProperties::of).forEach(stringProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid String Property. Possible Values are : " + StringProperties.getEnumMap().keySet());

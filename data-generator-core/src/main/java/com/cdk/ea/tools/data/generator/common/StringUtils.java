@@ -1,5 +1,7 @@
 package com.cdk.ea.tools.data.generator.common;
 
+import org.junit.Assert;
+
 import com.cdk.ea.tools.data.generator.core.SpecialChar;
 
 /**
@@ -61,6 +63,11 @@ public enum StringUtils {
 	    specialChars.append(CharacterUtils.randomSpecialCharacter());
 	}
 	return specialChars.toString();
+    }
+    
+    public static char firstCharacterOf(Object o) {
+	Assert.assertNotNull("Target Object Cannot be null", o);
+	return o.toString().charAt(0);
     }
 
 }

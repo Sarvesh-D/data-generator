@@ -40,7 +40,7 @@ class NumberTypeInterpreter extends AbstractTypeInterpreter {
 	EnumSet<NumberProperties> numberProps = EnumSet.noneOf(NumberProperties.class);
 
 	try {
-	    getPropertyIdentifiers(query).stream().map(NumberProperties::of).forEach(numberProps::add);
+	    getPropertyIdentifiers(query).stream().map(com.cdk.ea.tools.data.generator.common.StringUtils::firstCharacterOf).map(NumberProperties::of).forEach(numberProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid Number Property. Possible Values are : " + NumberProperties.getEnumMap().keySet());
