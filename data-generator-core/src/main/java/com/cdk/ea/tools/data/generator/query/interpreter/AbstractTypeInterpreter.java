@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.cdk.ea.tools.data.generator.core.DataType;
 import com.cdk.ea.tools.data.generator.core.Defaults;

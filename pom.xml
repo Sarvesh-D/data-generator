@@ -38,7 +38,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<commons.lang.version>2.6</commons.lang.version>
+		<commons.lang.version>3.5</commons.lang.version>
 		<args.parser.version>0.7.0</args.parser.version>
 		<generex.version>1.0.2</generex.version>
 		<lombok.version>1.16.6</lombok.version>
@@ -150,8 +150,8 @@
 				<version>${args.parser.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
 				<version>${commons.lang.version}</version>
 			</dependency>
 			<dependency>

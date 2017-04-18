@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.cdk.ea.tools.data.generator.common.DataGeneratorUtils;
 import com.cdk.ea.tools.data.generator.core.Constants;

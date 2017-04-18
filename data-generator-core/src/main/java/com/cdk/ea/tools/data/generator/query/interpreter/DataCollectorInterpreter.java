@@ -3,7 +3,7 @@ package com.cdk.ea.tools.data.generator.query.interpreter;
 import java.util.Arrays;
 import java.util.Optional;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.cdk.ea.tools.data.generator.core.Defaults;
 import com.cdk.ea.tools.data.generator.core.Identifiers;

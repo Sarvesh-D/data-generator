@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.math.RandomUtils;
+import org.apache.commons.lang3.RandomUtils;
 
 import com.cdk.ea.tools.data.generator.types.ListType;
 
@@ -45,7 +45,7 @@ public class ListGenerator implements Generator<Object> {
     @Override
     public Object generate() {
 	List<Object> data = new ArrayList<>(listType.getData());
-	return data.get(RandomUtils.nextInt(data.size()));
+	return data.get(RandomUtils.nextInt(0, data.size()));
     }
 
 }

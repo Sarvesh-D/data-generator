@@ -1,7 +1,7 @@
 package com.cdk.ea.tools.data.generator.common;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.math.RandomUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 
 import com.cdk.ea.tools.data.generator.core.SpecialChar;
 
@@ -44,7 +44,7 @@ public enum CharacterUtils {
      * @see SpecialChar
      */
     public static char randomSpecialCharacter() {
-	return SpecialChar.values()[RandomUtils.nextInt(SpecialChar.values().length)].getIdentifier();
+	return SpecialChar.values()[RandomUtils.nextInt(0, SpecialChar.values().length)].getIdentifier();
     }
 
 }

@@ -1,6 +1,6 @@
 package com.cdk.ea.tools.data.generator.common;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.cdk.ea.tools.data.generator.core.Constants;
