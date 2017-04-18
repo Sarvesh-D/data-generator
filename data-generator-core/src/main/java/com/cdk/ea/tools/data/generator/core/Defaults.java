@@ -22,5 +22,7 @@ public enum Defaults {
     public static final ListProperties DEFAULT_LIST_PROP = ListProperties.CUSTOM;
 
     public static final String DEFAULT_DATA_COLLECTOR_NAME = "dummyDataCollector";
+    
+    public static final String DEFAULT_FAKER_LOCALE = "en";
 
 }

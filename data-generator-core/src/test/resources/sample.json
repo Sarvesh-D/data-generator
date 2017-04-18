@@ -10,8 +10,6 @@
           "SPECIAL_STRING"
         ],
         "length": 10,
-        "list": null,
-        "regex": null,
         "prefix": "pre",
         "suffix": "suf"
       },
@@ -24,12 +22,10 @@
         "properties": [
           "CUSTOM_LIST"
         ],
-        "length": null,
         "list": [
           "Mr.",
           "Miss"
-        ],
-        "regex": null
+        ]
       },
       "quantity": 100
     },
@@ -39,10 +35,7 @@
         "type": "NUMBER",
         "properties": [
           "INTEGER_NUMBER"
-        ],
-        "length": null,
-        "list": null,
-        "regex": null
+        ]
       },
       "quantity": 200
     },
@@ -54,8 +47,18 @@
           "REGEX_EXPR"
         ],
         "length": 6,
-        "list": null,
         "regex": "[a-zA-Z]+[@][0-9]+"
+      },
+      "quantity": 10
+    },
+    {
+      "name": "IndianNames",
+      "details": {
+        "type": "FAKER",
+        "properties": [
+          "name.first_name"
+        ],
+        "locale":"en-IND"
       },
       "quantity": 10
     }
@@ -89,6 +92,10 @@
         {
           "headerName": "FunnyTexts",
           "dataRef": "customRegex"
+        },
+        {
+          "headerName": "IndianNames",
+          "dataRef": "IndianNames"
         }
       ]
     }

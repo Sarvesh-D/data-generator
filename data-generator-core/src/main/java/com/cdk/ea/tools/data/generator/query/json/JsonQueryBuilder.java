@@ -97,7 +97,7 @@ public class JsonQueryBuilder implements Builder<String, List<String>> {
 	appendDataLength(cmdQueryBuilder, dataDetails.getLength());
 
 	// get custom list values if present
-	if (null != dataDetails.getList()) {
+	if (null != dataDetails.getList() && !dataDetails.getList().isEmpty()) {
 	    appendCustomListVals(cmdQueryBuilder, dataDetails.getList());
 	}
 
@@ -130,9 +130,19 @@ public class JsonQueryBuilder implements Builder<String, List<String>> {
 
     private void appendDataProperties(StringBuilder cmdQueryBuilder, Set<String> properties) {
 	properties.stream().forEach(property -> {
-	    cmdQueryBuilder.append(Identifiers.PROPERTY.getIdentifier());
-	    cmdQueryBuilder.append(Properties.valueOf(property).getIdentifier());
-	    cmdQueryBuilder.append(Constants.SPACE);
+	    Object propertyIdentifier = null;
+	    try {
+		propertyIdentifier = Properties.valueOf(property).getIdentifier();
+	    } catch (Exception e) {
+		log.warn(
+			"Unable to get property identifier of property [{}] from ENUM Properties. Possible cause: Property [{}] belongs to Faker Properties",
+			property, property);
+		propertyIdentifier = property;
+	    } finally {
+		cmdQueryBuilder.append(Identifiers.PROPERTY.getIdentifier());
+		cmdQueryBuilder.append(propertyIdentifier);
+		cmdQueryBuilder.append(Constants.SPACE);
+	    }
 	});
     }
 

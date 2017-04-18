@@ -91,7 +91,7 @@ public class JsonQueryBuilderTest {
 	assertTrue("CMD query cannot be null or blank", StringUtils.isNotBlank(cmdQuery_1));
 	Collection<DataCollector> dataCollectedForQuery = DataGenerator
 		.from(DataGeneratorUtils.getDataGenQueries(cmdQuery_1)).generate();
-	assertTrue("Four data collector must be present", dataCollectedForQuery.size() == 4);
+	assertTrue("Four data collector must be present", dataCollectedForQuery.size() == 5);
 
 	DataExporter.from(DataGeneratorUtils.getDataExportQueries(cmdQuery_1)).export(dataCollectedForQuery);
 	Path exportFile1 = Paths.get("sample_1.csv");

@@ -54,7 +54,9 @@ public enum DataType implements Identifier<Character>, CMDLineArgHelper {
      * 
      * @see RegexProperties
      */
-    REGEX('r', Interpreters.REGEX_TYPE_INTERPRETER, "generate random strings matching regex");
+    REGEX('r', Interpreters.REGEX_TYPE_INTERPRETER, "generate random strings matching regex"),
+    
+    FAKER('f', Interpreters.FAKER_TYPE_INTERPRETER, "generates sensible strings for given faker key");
 
     private static final Map<Character, DataType> ENUM_MAP;
 
