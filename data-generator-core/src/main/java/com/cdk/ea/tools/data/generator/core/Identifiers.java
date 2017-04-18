@@ -1,5 +1,7 @@
 package com.cdk.ea.tools.data.generator.core;
 
+import java.util.Locale;
+
 import com.cdk.ea.tools.data.generator.common.CMDLineArgHelper;
 import com.cdk.ea.tools.data.generator.common.Identifier;
 
@@ -116,7 +118,13 @@ public enum Identifiers implements Identifier<Character>, CMDLineArgHelper {
      * Suffix identifier for String type. Must be immediately followed by
      * suffix.
      */
-    SUFFIX('S', "String Suffix Identifier");
+    SUFFIX('S', "String Suffix Identifier"),
+    
+    /**
+     * Locale identifier for data type. Must be immediately followed by
+     * Language String for Locale as specified in {@link Locale#getLanguage()} 
+     */
+    LOCALE('L', "Locale Identifier");
 
     @Getter
     private final Character identifier;
