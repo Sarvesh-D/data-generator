@@ -119,10 +119,10 @@ public enum Identifiers implements Identifier<Character>, CMDLineArgHelper {
      * suffix.
      */
     SUFFIX('S', "String Suffix Identifier"),
-    
+
     /**
-     * Locale identifier for data type. Must be immediately followed by
-     * Language String for Locale as specified in {@link Locale#getLanguage()} 
+     * Locale identifier for data type. Must be immediately followed by Language
+     * String for Locale as specified in {@link Locale#getLanguage()}
      */
     LOCALE('L', "Locale Identifier");
 

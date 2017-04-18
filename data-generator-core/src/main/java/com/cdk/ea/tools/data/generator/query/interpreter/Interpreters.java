@@ -145,14 +145,14 @@ public enum Interpreters {
 	    return dataCollectorInterpreter;
 	}
     },
-    
+
     /**
      * Holds singleton instance of {@link FakerTypeInterpreter}
      */
     FAKER_TYPE_INTERPRETER {
-	
+
 	private final transient Interpreter fakerTypeInterpreter = new FakerTypeInterpreter();
-	
+
 	@Override
 	public Interpreter get() {
 	    return fakerTypeInterpreter;

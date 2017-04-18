@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import com.cdk.ea.tools.data.generator.core.DataType;
-import com.cdk.ea.tools.data.generator.generators.ListGenerator;
 import com.cdk.ea.tools.data.generator.types.ListType.ListTypeBuilder;
 
 /**

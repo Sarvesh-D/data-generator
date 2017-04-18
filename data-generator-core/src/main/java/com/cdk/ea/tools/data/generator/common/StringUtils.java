@@ -47,6 +47,11 @@ public enum StringUtils {
 	return target.length() < target.capacity();
     }
 
+    public static char firstCharacterOf(Object o) {
+	Assert.assertNotNull("Target Object Cannot be null", o);
+	return o.toString().charAt(0);
+    }
+
     /**
      * Generates a String of length specified. The generated String is
      * guaranteed to contain only special chars as defined by
@@ -63,11 +68,6 @@ public enum StringUtils {
 	    specialChars.append(CharacterUtils.randomSpecialCharacter());
 	}
 	return specialChars.toString();
-    }
-    
-    public static char firstCharacterOf(Object o) {
-	Assert.assertNotNull("Target Object Cannot be null", o);
-	return o.toString().charAt(0);
     }
 
 }

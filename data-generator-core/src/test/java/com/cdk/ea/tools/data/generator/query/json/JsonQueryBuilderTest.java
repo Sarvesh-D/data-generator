@@ -25,7 +25,6 @@ import com.cdk.ea.tools.data.generator.exception.DataGeneratorException;
 import com.cdk.ea.tools.data.generator.exporters.DataExporter;
 import com.cdk.ea.tools.data.generator.generators.DataCollector;
 import com.cdk.ea.tools.data.generator.generators.DataGenerator;
-import com.cdk.ea.tools.data.generator.query.json.JsonQueryBuilder;
 
 /**
  * Test Class for testing {@link JsonQueryBuilder}

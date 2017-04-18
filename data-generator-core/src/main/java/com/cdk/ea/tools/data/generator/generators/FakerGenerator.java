@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Locale;
 
 import com.cdk.ea.tools.data.generator.types.FakerType;
-import com.cdk.ea.tools.data.generator.types.StringType;
 import com.github.javafaker.Faker;
 
 import lombok.RequiredArgsConstructor;
@@ -20,18 +19,10 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 public class FakerGenerator implements Generator<String> {
-    
+
     private final Faker faker;
     private final FakerType fakerType;
 
-    /**
-     * {@inheritDoc}. This generator generates a sensible String.
-     */
-    @Override
-    public String generate() {
-	return faker.resolve(fakerType.getFakerProperties().getFakerKey());
-    }
-    
     /**
      * Factory method to instantiate {@link FakerGenerator}
      * 
@@ -42,6 +33,14 @@ public class FakerGenerator implements Generator<String> {
     public static FakerGenerator of(FakerType fakerType) {
 	assertNotNull("String Type cannot be null", fakerType);
 	return new FakerGenerator(new Faker(new Locale(fakerType.getLocale())), fakerType);
+    }
+
+    /**
+     * {@inheritDoc}. This generator generates a sensible String.
+     */
+    @Override
+    public String generate() {
+	return faker.resolve(fakerType.getFakerProperties().getFakerKey());
     }
 
 }

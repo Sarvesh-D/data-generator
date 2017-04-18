@@ -14,7 +14,6 @@ import org.junit.runners.JUnit4;
 
 import com.cdk.ea.tools.data.generator.core.DataType;
 import com.cdk.ea.tools.data.generator.core.NumberProperties;
-import com.cdk.ea.tools.data.generator.generators.NumberGenerator;
 import com.cdk.ea.tools.data.generator.types.NumberType.NumberTypeBuilder;
 
 /**

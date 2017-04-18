@@ -4,7 +4,6 @@ import com.cdk.ea.tools.data.generator.core.DataType;
 import com.cdk.ea.tools.data.generator.core.FakerProperties;
 import com.cdk.ea.tools.data.generator.generators.FakerGenerator;
 import com.cdk.ea.tools.data.generator.generators.Generator;
-import com.cdk.ea.tools.data.generator.types.ListType.ListTypeBuilder;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -22,22 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @Slf4j
 public class FakerType extends Type {
-    
-    private final DataType dataType;
-    private final FakerProperties fakerProperties;
-    private final String locale;
-    
-    public FakerType(FakerTypeBuilder fakerTypeBuilder) {
-	this.dataType = fakerTypeBuilder.dataType;
-	this.fakerProperties = fakerTypeBuilder.fakerProperties;
-	this.locale = fakerTypeBuilder.locale;
-	log.debug("Faker Type formed as {}", this);
-    }
-    
-    @Override
-    public Generator<String> generator() {
-	return FakerGenerator.of(this);
-    }
 
     /**
      * Helper Builder Class for building instance of {@link FakerType}
@@ -47,11 +30,11 @@ public class FakerType extends Type {
      * @version 1.5
      */
     public static final class FakerTypeBuilder implements TypeBuilder<FakerType, FakerProperties> {
-	
+
 	private DataType dataType;
 	private FakerProperties fakerProperties;
 	private String locale;
-	
+
 	@Override
 	public FakerType buildType() {
 	    return new FakerType(this);
@@ -62,18 +45,34 @@ public class FakerType extends Type {
 	    this.dataType = dataType;
 	    return this;
 	}
-	
+
 	public TypeBuilder<FakerType, FakerProperties> setFakerProperties(FakerProperties fakerProperties) {
 	    this.fakerProperties = fakerProperties;
 	    return this;
 	}
-	
+
 	@Override
 	public TypeBuilder<FakerType, FakerProperties> setLocale(String locale) {
 	    this.locale = locale;
 	    return this;
 	}
-	
+
+    }
+    private final DataType dataType;
+    private final FakerProperties fakerProperties;
+
+    private final String locale;
+
+    public FakerType(FakerTypeBuilder fakerTypeBuilder) {
+	this.dataType = fakerTypeBuilder.dataType;
+	this.fakerProperties = fakerTypeBuilder.fakerProperties;
+	this.locale = fakerTypeBuilder.locale;
+	log.debug("Faker Type formed as {}", this);
+    }
+
+    @Override
+    public Generator<String> generator() {
+	return FakerGenerator.of(this);
     }
 
 }

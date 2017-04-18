@@ -17,7 +17,6 @@ import org.junit.runners.JUnit4;
 import com.cdk.ea.tools.data.generator.core.DataType;
 import com.cdk.ea.tools.data.generator.core.SpecialChar;
 import com.cdk.ea.tools.data.generator.core.StringProperties;
-import com.cdk.ea.tools.data.generator.generators.StringGenerator;
 import com.cdk.ea.tools.data.generator.types.StringType.StringTypeBuilder;
 
 /**

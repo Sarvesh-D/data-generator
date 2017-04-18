@@ -46,7 +46,9 @@ class RegexTypeInterpreter extends AbstractTypeInterpreter {
 	EnumSet<RegexProperties> regexProps = EnumSet.noneOf(RegexProperties.class);
 
 	try {
-	    getPropertyIdentifiers(query).stream().map(com.cdk.ea.tools.data.generator.common.StringUtils::firstCharacterOf).map(RegexProperties::of).forEach(regexProps::add);
+	    getPropertyIdentifiers(query).stream()
+		    .map(com.cdk.ea.tools.data.generator.common.StringUtils::firstCharacterOf).map(RegexProperties::of)
+		    .forEach(regexProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid Regex Property. Possible Values are : " + RegexProperties.getEnumMap().keySet());

@@ -24,8 +24,6 @@ import com.cdk.ea.tools.data.generator.common.DataGeneratorUtils;
 import com.cdk.ea.tools.data.generator.core.Constants;
 import com.cdk.ea.tools.data.generator.core.DataGenerationStarter;
 import com.cdk.ea.tools.data.generator.exporters.DataExporter;
-import com.cdk.ea.tools.data.generator.generators.DataCollector;
-import com.cdk.ea.tools.data.generator.generators.DataGenerator;
 import com.opencsv.CSVReader;
 
 /**

@@ -47,7 +47,9 @@ class ListTypeInterpreter extends AbstractTypeInterpreter {
 	EnumSet<ListProperties> listProps = EnumSet.noneOf(ListProperties.class);
 
 	try {
-	    getPropertyIdentifiers(query).stream().map(com.cdk.ea.tools.data.generator.common.StringUtils::firstCharacterOf).map(ListProperties::of).forEach(listProps::add);
+	    getPropertyIdentifiers(query).stream()
+		    .map(com.cdk.ea.tools.data.generator.common.StringUtils::firstCharacterOf).map(ListProperties::of)
+		    .forEach(listProps::add);
 	} catch (Exception e) {
 	    throw new PropertiesInterpretationException(
 		    "Invalid List Property. Possible Values are : " + ListProperties.getEnumMap().keySet());

@@ -115,9 +115,9 @@ public class JsonQueryBuilder implements Builder<String, List<String>> {
 	if (StringUtils.isNotBlank(dataDetails.getSuffix())) {
 	    appendSuffix(cmdQueryBuilder, dataDetails.getSuffix());
 	}
-	
+
 	// get Locale if present
-	if(StringUtils.isNotBlank(dataDetails.getLocale())) {
+	if (StringUtils.isNotBlank(dataDetails.getLocale())) {
 	    appendLocale(cmdQueryBuilder, dataDetails.getLocale());
 	}
     }
@@ -149,6 +149,12 @@ public class JsonQueryBuilder implements Builder<String, List<String>> {
     private void appendDataType(StringBuilder cmdQueryBuilder, String type) {
 	cmdQueryBuilder.append(Identifiers.TYPE.getIdentifier());
 	cmdQueryBuilder.append(DataType.valueOf(type).getIdentifier());
+	cmdQueryBuilder.append(Constants.SPACE);
+    }
+
+    private void appendLocale(StringBuilder cmdQueryBuilder, String locale) {
+	cmdQueryBuilder.append(Identifiers.LOCALE.getIdentifier());
+	cmdQueryBuilder.append(locale);
 	cmdQueryBuilder.append(Constants.SPACE);
     }
 
@@ -192,12 +198,6 @@ public class JsonQueryBuilder implements Builder<String, List<String>> {
 	cmdQueryBuilder.append(suffix);
 	cmdQueryBuilder.append(Constants.SPACE);
 
-    }
-    
-    private void appendLocale(StringBuilder cmdQueryBuilder, String locale) {
-	cmdQueryBuilder.append(Identifiers.LOCALE.getIdentifier());
-	cmdQueryBuilder.append(locale);
-	cmdQueryBuilder.append(Constants.SPACE);
     }
 
     /**
