@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: data-generator 
+    
+server:
+  servlet:
+    context-path: /${spring.application.name}
+  port: 8080
+  
+logging:
+  file: ${spring.application.name}.log
+  level:
+    com.ds.tools: DEBUG

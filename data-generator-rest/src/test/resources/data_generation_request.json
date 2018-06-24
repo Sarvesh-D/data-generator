@@ -1,0 +1,64 @@
+[
+    {
+      "name": "Strings",
+      "details": {
+        "type": "STRING",
+        "properties": [
+          "ALPHA_STRING",
+          "NUMERIC_STRING",
+          "SPECIAL_STRING"
+        ],
+        "length": 10,
+        "prefix": "pre",
+        "suffix": "suf"
+      },
+      "quantity": 10
+    },
+    {
+      "name": "ListVals",
+      "details": {
+        "type": "LIST",
+        "properties": [
+          "CUSTOM_LIST"
+        ],
+        "list": [
+          "Mr.",
+          "Miss"
+        ]
+      },
+      "quantity": 100
+    },
+    {
+      "name": "Numbers",
+      "details": {
+        "type": "NUMBER",
+        "properties": [
+          "INTEGER_NUMBER"
+        ]
+      },
+      "quantity": 200
+    },
+    {
+      "name": "customRegex",
+      "details": {
+        "type": "REGEX",
+        "properties": [
+          "REGEX_EXPR"
+        ],
+        "length": 6,
+        "regex": "[a-zA-Z]+[@][0-9]+"
+      },
+      "quantity": 10
+    },
+    {
+      "name": "IndianNames",
+      "details": {
+        "type": "FAKER",
+        "properties": [
+          "name.first_name"
+        ],
+        "locale": "en-IND"
+      },
+      "quantity": 10
+    }
+  ]
