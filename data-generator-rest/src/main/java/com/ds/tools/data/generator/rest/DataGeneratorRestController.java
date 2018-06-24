@@ -40,6 +40,10 @@ import com.ds.tools.data.generator.query.json.JsonQueryDetails;
 import com.ds.tools.data.generator.rest.exception.BadRequestException;
 import com.ds.tools.data.generator.types.TypeProperties;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -50,10 +54,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping("/data")
+@Api("Data Generation/Export Controller")
 @Slf4j
 public class DataGeneratorRestController {
 
     @GetMapping("/types")
+    @ApiOperation(value = "Get All Data Types supported by Data Generator")
+    @ApiResponse(code = 200, message = "Successfully fetched all data types")
     public Set<String> getDataTypes() {
         return Arrays.stream(DataType.values())
                      .map(DataType::name)
@@ -61,6 +68,8 @@ public class DataGeneratorRestController {
     }
 
     @GetMapping("/properties")
+    @ApiOperation(value = "Get All Data Properties supported by Data Generator")
+    @ApiResponse(code = 200, message = "Successfully fetched all data properties")
     public Set<String> getDataProperties() {
         return Arrays.stream(Properties.values())
                      .map(Properties::name)
@@ -68,6 +77,8 @@ public class DataGeneratorRestController {
     }
 
     @GetMapping("/types/{type}/properties")
+    @ApiOperation(value = "Get All Data Properties supported by given Data Type")
+    @ApiResponses({ @ApiResponse(code = 200, message = "Successfully fetched properties for given data type"), @ApiResponse(code = 400, message = "Given Data Type is not supported") })
     public Set<String> getDataPropertiesByType(@PathVariable final String type) {
         try {
             final DataType dataType = DataType.valueOf(type);
@@ -81,11 +92,15 @@ public class DataGeneratorRestController {
     }
 
     @GetMapping("/types/export")
+    @ApiOperation(value = "Get All data export formats supported by Data Generator")
+    @ApiResponse(code = 200, message = "Successfully fetched all data export formats")
     public Set<String> getDataExportTypes() {
         return new HashSet<>(Arrays.asList("CSV"));
     }
 
     @PostMapping("/generate")
+    @ApiOperation(value = "Generates data")
+    @ApiResponse(code = 200, message = "Successfully Generated Data")
     public Collection<DataCollector> generateData(@RequestBody final List<DataGenerationDetails> dataGenerationDetails) {
         final long invalidQueries = dataGenerationDetails.stream()
                                                          .filter(dataGenerationDetail -> dataGenerationDetail.getQuantity() > Defaults.DEFAULT_SAMPLE_DATA_QTY)
@@ -103,6 +118,8 @@ public class DataGeneratorRestController {
     }
 
     @PostMapping("/export")
+    @ApiOperation(value = "Exports data")
+    @ApiResponse(code = 200, message = "Successfully Exported Data")
     public HttpEntity<FileLocations> exportData(@RequestBody final JsonQueryDetails jsonQueryDetails) {
         final long defaultQty = jsonQueryDetails.getDefaults()
                                                 .getQuantity();
@@ -136,6 +153,8 @@ public class DataGeneratorRestController {
     }
 
     @GetMapping("/export")
+    @ApiOperation(value = "Download Data File")
+    @ApiResponse(code = 200, message = "Successfully Downloaded Data File")
     public ResponseEntity<Resource> getExportedData(@RequestParam final String fileName) {
         log.info("Starting to download file [{}]", fileName);
         final Resource resource = new FileSystemResource(fileName);
