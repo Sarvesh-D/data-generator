@@ -2,4 +2,4 @@
 
 ## Epic
 
-*   [[EADATAGEN-12](https://projects.cdk.com/browse/EADATAGEN-12)] - Integrate with famous java-faker library to generate meaningful data.
+*   Integrate with famous java-faker library to generate meaningful data.
