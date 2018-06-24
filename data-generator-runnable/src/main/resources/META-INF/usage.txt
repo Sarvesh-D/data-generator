@@ -4,7 +4,7 @@
 Simple usage...
 json path/to/json/file/to/generate/data
 
-see JSON format here... (https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage)
+see JSON format here... (https://github.com/Sarvesh-D/data-generator)
 
 For Advanced Users...
 
@@ -29,6 +29,6 @@ Data Generation Query Examples:
 /Users/any/randomData1.csv _FirstNames =RandomAlphaStrings _ListValues =RandomValueFromCustomList
 /Users/any/randomData2.csv _FirstNames =RandomAlphaStrings _LastNames =RandomAlphaStrings
 
-Visit http://stash.cdk.com/projects/CS/repos/data-generator/browse for more info.
+Visit https://github.com/Sarvesh-D/data-generator for more info.
 
 #############################################################################################

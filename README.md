@@ -1,4 +1,4 @@
-![Build Status](http://bamboo.cdk.com/plugins/servlet/wittified/build-status/DG-DGB)
+![Build Status]()
 # Data Generation Tool
 
 ## Synopsis
@@ -12,7 +12,7 @@
  - Generate random Strings matching given regex pattern.
  - Generate random Strings with specified prefix/suffix.
  - Export generated data to CSV file(s).
- 
+
 
 
 ## Installation
@@ -23,17 +23,17 @@ Download the runnable jar and start generating and exporting data (see CLI usage
 
 | data-generator version | download link |
 |------------------------|---------------|
-| 1.0.0-RELEASE          | [Artifactory](http://artifactory.cdk.com/artifactory/libs-release-local/com/cdk/ea/data-generator-runnable/1.0.0-RELEASE/data-generator-runnable-1.0.0-RELEASE.jar)            |
+| 1.0.0-RELEASE          | [jar]()            |
 
 
 Add data-generator dependency to your existing maven project:
 
     <dependency>
-        <groupId>com.cdk.ea</groupId>
+        <groupId>com.ds.tools</groupId>
         <artifactId>data-generator-core</artifactId>
         <version>1.0.0-RELEASE</version>
     </dependency>
-    
+
 
 
 ## Usage
@@ -44,7 +44,7 @@ Download the jar and goto the jar directory. Open Terminal/CMD and execute below
 
 
 #### Using JSON file
-The tool is designed for simple usage via JSON file. The JSON file tells the tool how the data should be generated and exported. See JSON structure [here](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage:).
+The tool is designed for simple usage via JSON file. The JSON file tells the tool how the data should be generated and exported. See JSON structure [here]().
 
     java -jar <name of jar file> json /path/to/json/file
 
@@ -86,16 +86,15 @@ This option is available for advanced users or for the users who want to quickly
 ##### Data Generation Query Examples:
 
     /Users/any/randomData1.csv _FirstNames =RandomAlphaStrings _ListValues =RandomValueFromCustomList
-    
+
     /Users/any/randomData2.csv _FirstNames =RandomAlphaStrings _LastNames =RandomAlphaStrings
 
 
 
 ## Links
 
- 1. [Data-Generator Wiki](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki)
- 2. [Examples](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Examples)
- 3. [JSON Format](https://confluence.cdk.com/display/EA/Data-Generator+Tool+Wiki#Data-GeneratorToolWiki-JSONUsage)
- 4. [Code Repository](http://stash.cdk.com/projects/CS/repos/data-generator/browse)
- 5. [JIRA/Issues](https://projects.cdk.com/projects/EADATAGEN/summary)
-
+ 1. [Data-Generator Wiki]()
+ 2. [Examples]()
+ 3. [JSON Format]()
+ 4. [Code Repository]()
+ 5. [JIRA/Issues]()

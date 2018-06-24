@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.cdk.ea</groupId>
+	<groupId>com.ds.tools</groupId>
 	<artifactId>data-generator</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>data-generator</name>
 	<description>Java Tool for generating and exporting random data.</description>
-	<url>http://stash.cdk.com/projects/CS/repos/data-generator</url>
+	<url>https://github.com/Sarvesh-D/data-generator</url>
 
 	<organization>
-		<name>CDK</name>
-		<url>http://www.cdkglobal.com/</url>
+		<name>Self</name>
+		<url>https://github.com/Sarvesh-D/</url>
 	</organization>
 
-	<scm>
-		<connection>scm:git:http://stash.ds.adp.com/scm/cs/data-generator.git</connection>
-		<developerConnection>scm:git:http://stash.ds.adp.com/scm/cs/data-generator.git</developerConnection>
-		<url>http://stash.ds.adp.com/scm/cs/data-generator/browse/</url>
-	</scm>
-
-	<ciManagement>
-		<system>Bamboo</system>
-		<url>http://bamboo.cdk.com/browse/DG-DGB</url>
-	</ciManagement>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
 
 	<developers>
 		<developer>
-			<id>dubeysa</id>
 			<name>Sarvesh Dubey</name>
-			<email>sarvesh.dubey@cdk.com</email>
+			<email>sarvesh.dubey@hotmail.com</email>
+			<organization>self</organization>
+			<organizationUrl>https://github.com/Sarvesh-D/</organizationUrl>
 		</developer>
 	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/Sarvesh-D/data-generator.git</connection>
+		<developerConnection>scm:git:ssh://github.com:Sarvesh-D/data-generator.git</developerConnection>
+		<url>http://github.com/Sarvesh-D/data-generator/tree/master</url>
+	</scm>
+
 
 
 	<properties>
@@ -136,13 +139,18 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.21.0</version>
+			</plugin>
 		</plugins>
 	</reporting>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.cdk.ea</groupId>
+				<groupId>com.ds.tools</groupId>
 				<artifactId>data-generator-core</artifactId>
 				<version>1.0.1-SNAPSHOT</version>
 			</dependency>
@@ -203,5 +211,6 @@
 	<modules>
 		<module>data-generator-core</module>
 		<module>data-generator-runnable</module>
-	</modules>
+    <module>data-generator-client</module>
+  </modules>
 </project>
