@@ -1,4 +1,4 @@
-# Release Notes - EA Data Generator - Version Release-1.0.1
+# Release Notes - Data Generator - Version Release-1.0.1
 
 ## Bug
 
