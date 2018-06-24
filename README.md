@@ -1,4 +1,3 @@
-![Build Status]()
 # Data Generation Tool
 
 ## Synopsis
